@@ -1,0 +1,1 @@
+/usr/bin/cc    CMakeFiles/gbcemu.dir/lib/bus.c.o CMakeFiles/gbcemu.dir/lib/cart.c.o CMakeFiles/gbcemu.dir/lib/cpu.c.o CMakeFiles/gbcemu.dir/lib/emu.c.o CMakeFiles/gbcemu.dir/lib/ppu.c.o CMakeFiles/gbcemu.dir/lib/timer.c.o  -o gbcemu 

@@ -1,0 +1,44 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+../include/cart.h
+common.h
+-
+
+../include/common.h
+stdint.h
+-
+stdbool.h
+-
+stdio.h
+-
+stdlib.h
+-
+
+../include/cpu.h
+common.h
+-
+
+../include/emu.h
+common.h
+-
+
+/home/Zir/project/GameBoy/GBig_Emu/lib/emu.c
+stdlib.h
+-
+stdio.h
+-
+emu.h
+-
+cpu.h
+-
+cart.h
+-
+cpu.h
+-
+
