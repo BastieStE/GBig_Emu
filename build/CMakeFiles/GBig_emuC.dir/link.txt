@@ -1,1 +1,1 @@
-/usr/bin/cc    CMakeFiles/GBig_emuC.dir/lib/bus.c.o CMakeFiles/GBig_emuC.dir/lib/cart.c.o CMakeFiles/GBig_emuC.dir/lib/cpu.c.o CMakeFiles/GBig_emuC.dir/lib/emu.c.o CMakeFiles/GBig_emuC.dir/lib/ppu.c.o CMakeFiles/GBig_emuC.dir/lib/timer.c.o  -o GBig_emuC 
+/usr/bin/cc    CMakeFiles/GBig_emuC.dir/lib/bus.c.o CMakeFiles/GBig_emuC.dir/lib/cart.c.o CMakeFiles/GBig_emuC.dir/lib/cpu.c.o CMakeFiles/GBig_emuC.dir/lib/orchestr.c.o CMakeFiles/GBig_emuC.dir/lib/ppu.c.o CMakeFiles/GBig_emuC.dir/lib/timer.c.o CMakeFiles/GBig_emuC.dir/lib/instruction.c.o  -o GBig_emuC 

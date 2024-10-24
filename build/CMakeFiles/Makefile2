@@ -94,12 +94,12 @@ clean: CMakeFiles/GBig_emuC.dir/clean
 CMakeFiles/GBig_emuC.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/GBig_emuC.dir/build.make CMakeFiles/GBig_emuC.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/GBig_emuC.dir/build.make CMakeFiles/GBig_emuC.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/Zir/project/GameBoy/GBig_Emu/build/CMakeFiles --progress-num=1,2,3,4,5,6,7 "Built target GBig_emuC"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/Zir/project/GameBoy/GBig_Emu/build/CMakeFiles --progress-num=1,2,3,4,5,6,7,8 "Built target GBig_emuC"
 .PHONY : CMakeFiles/GBig_emuC.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/GBig_emuC.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/Zir/project/GameBoy/GBig_Emu/build/CMakeFiles 7
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/Zir/project/GameBoy/GBig_Emu/build/CMakeFiles 8
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/GBig_emuC.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/Zir/project/GameBoy/GBig_Emu/build/CMakeFiles 0
 .PHONY : CMakeFiles/GBig_emuC.dir/rule

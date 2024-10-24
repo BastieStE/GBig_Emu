@@ -116,18 +116,18 @@ CMakeFiles/GBig_emuC.dir/lib/cpu.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/GBig_emuC.dir/lib/cpu.c.s"
 	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/Zir/project/GameBoy/GBig_Emu/lib/cpu.c -o CMakeFiles/GBig_emuC.dir/lib/cpu.c.s
 
-CMakeFiles/GBig_emuC.dir/lib/emu.c.o: CMakeFiles/GBig_emuC.dir/flags.make
-CMakeFiles/GBig_emuC.dir/lib/emu.c.o: ../lib/emu.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/Zir/project/GameBoy/GBig_Emu/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building C object CMakeFiles/GBig_emuC.dir/lib/emu.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/GBig_emuC.dir/lib/emu.c.o   -c /home/Zir/project/GameBoy/GBig_Emu/lib/emu.c
+CMakeFiles/GBig_emuC.dir/lib/orchestr.c.o: CMakeFiles/GBig_emuC.dir/flags.make
+CMakeFiles/GBig_emuC.dir/lib/orchestr.c.o: ../lib/orchestr.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/Zir/project/GameBoy/GBig_Emu/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building C object CMakeFiles/GBig_emuC.dir/lib/orchestr.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/GBig_emuC.dir/lib/orchestr.c.o   -c /home/Zir/project/GameBoy/GBig_Emu/lib/orchestr.c
 
-CMakeFiles/GBig_emuC.dir/lib/emu.c.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/GBig_emuC.dir/lib/emu.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/Zir/project/GameBoy/GBig_Emu/lib/emu.c > CMakeFiles/GBig_emuC.dir/lib/emu.c.i
+CMakeFiles/GBig_emuC.dir/lib/orchestr.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/GBig_emuC.dir/lib/orchestr.c.i"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/Zir/project/GameBoy/GBig_Emu/lib/orchestr.c > CMakeFiles/GBig_emuC.dir/lib/orchestr.c.i
 
-CMakeFiles/GBig_emuC.dir/lib/emu.c.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/GBig_emuC.dir/lib/emu.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/Zir/project/GameBoy/GBig_Emu/lib/emu.c -o CMakeFiles/GBig_emuC.dir/lib/emu.c.s
+CMakeFiles/GBig_emuC.dir/lib/orchestr.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/GBig_emuC.dir/lib/orchestr.c.s"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/Zir/project/GameBoy/GBig_Emu/lib/orchestr.c -o CMakeFiles/GBig_emuC.dir/lib/orchestr.c.s
 
 CMakeFiles/GBig_emuC.dir/lib/ppu.c.o: CMakeFiles/GBig_emuC.dir/flags.make
 CMakeFiles/GBig_emuC.dir/lib/ppu.c.o: ../lib/ppu.c
@@ -155,14 +155,28 @@ CMakeFiles/GBig_emuC.dir/lib/timer.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/GBig_emuC.dir/lib/timer.c.s"
 	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/Zir/project/GameBoy/GBig_Emu/lib/timer.c -o CMakeFiles/GBig_emuC.dir/lib/timer.c.s
 
+CMakeFiles/GBig_emuC.dir/lib/instruction.c.o: CMakeFiles/GBig_emuC.dir/flags.make
+CMakeFiles/GBig_emuC.dir/lib/instruction.c.o: ../lib/instruction.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/Zir/project/GameBoy/GBig_Emu/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building C object CMakeFiles/GBig_emuC.dir/lib/instruction.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/GBig_emuC.dir/lib/instruction.c.o   -c /home/Zir/project/GameBoy/GBig_Emu/lib/instruction.c
+
+CMakeFiles/GBig_emuC.dir/lib/instruction.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/GBig_emuC.dir/lib/instruction.c.i"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/Zir/project/GameBoy/GBig_Emu/lib/instruction.c > CMakeFiles/GBig_emuC.dir/lib/instruction.c.i
+
+CMakeFiles/GBig_emuC.dir/lib/instruction.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/GBig_emuC.dir/lib/instruction.c.s"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/Zir/project/GameBoy/GBig_Emu/lib/instruction.c -o CMakeFiles/GBig_emuC.dir/lib/instruction.c.s
+
 # Object files for target GBig_emuC
 GBig_emuC_OBJECTS = \
 "CMakeFiles/GBig_emuC.dir/lib/bus.c.o" \
 "CMakeFiles/GBig_emuC.dir/lib/cart.c.o" \
 "CMakeFiles/GBig_emuC.dir/lib/cpu.c.o" \
-"CMakeFiles/GBig_emuC.dir/lib/emu.c.o" \
+"CMakeFiles/GBig_emuC.dir/lib/orchestr.c.o" \
 "CMakeFiles/GBig_emuC.dir/lib/ppu.c.o" \
-"CMakeFiles/GBig_emuC.dir/lib/timer.c.o"
+"CMakeFiles/GBig_emuC.dir/lib/timer.c.o" \
+"CMakeFiles/GBig_emuC.dir/lib/instruction.c.o"
 
 # External object files for target GBig_emuC
 GBig_emuC_EXTERNAL_OBJECTS =
@@ -170,12 +184,13 @@ GBig_emuC_EXTERNAL_OBJECTS =
 GBig_emuC: CMakeFiles/GBig_emuC.dir/lib/bus.c.o
 GBig_emuC: CMakeFiles/GBig_emuC.dir/lib/cart.c.o
 GBig_emuC: CMakeFiles/GBig_emuC.dir/lib/cpu.c.o
-GBig_emuC: CMakeFiles/GBig_emuC.dir/lib/emu.c.o
+GBig_emuC: CMakeFiles/GBig_emuC.dir/lib/orchestr.c.o
 GBig_emuC: CMakeFiles/GBig_emuC.dir/lib/ppu.c.o
 GBig_emuC: CMakeFiles/GBig_emuC.dir/lib/timer.c.o
+GBig_emuC: CMakeFiles/GBig_emuC.dir/lib/instruction.c.o
 GBig_emuC: CMakeFiles/GBig_emuC.dir/build.make
 GBig_emuC: CMakeFiles/GBig_emuC.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/Zir/project/GameBoy/GBig_Emu/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Linking C executable GBig_emuC"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/Zir/project/GameBoy/GBig_Emu/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Linking C executable GBig_emuC"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/GBig_emuC.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

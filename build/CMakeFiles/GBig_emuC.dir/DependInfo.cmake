@@ -7,7 +7,8 @@ set(CMAKE_DEPENDS_CHECK_C
   "/home/Zir/project/GameBoy/GBig_Emu/lib/bus.c" "/home/Zir/project/GameBoy/GBig_Emu/build/CMakeFiles/GBig_emuC.dir/lib/bus.c.o"
   "/home/Zir/project/GameBoy/GBig_Emu/lib/cart.c" "/home/Zir/project/GameBoy/GBig_Emu/build/CMakeFiles/GBig_emuC.dir/lib/cart.c.o"
   "/home/Zir/project/GameBoy/GBig_Emu/lib/cpu.c" "/home/Zir/project/GameBoy/GBig_Emu/build/CMakeFiles/GBig_emuC.dir/lib/cpu.c.o"
-  "/home/Zir/project/GameBoy/GBig_Emu/lib/emu.c" "/home/Zir/project/GameBoy/GBig_Emu/build/CMakeFiles/GBig_emuC.dir/lib/emu.c.o"
+  "/home/Zir/project/GameBoy/GBig_Emu/lib/instruction.c" "/home/Zir/project/GameBoy/GBig_Emu/build/CMakeFiles/GBig_emuC.dir/lib/instruction.c.o"
+  "/home/Zir/project/GameBoy/GBig_Emu/lib/orchestr.c" "/home/Zir/project/GameBoy/GBig_Emu/build/CMakeFiles/GBig_emuC.dir/lib/orchestr.c.o"
   "/home/Zir/project/GameBoy/GBig_Emu/lib/ppu.c" "/home/Zir/project/GameBoy/GBig_Emu/build/CMakeFiles/GBig_emuC.dir/lib/ppu.c.o"
   "/home/Zir/project/GameBoy/GBig_Emu/lib/timer.c" "/home/Zir/project/GameBoy/GBig_Emu/build/CMakeFiles/GBig_emuC.dir/lib/timer.c.o"
   )

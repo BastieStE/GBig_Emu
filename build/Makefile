@@ -224,32 +224,59 @@ lib/cpu.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/GBig_emuC.dir/build.make CMakeFiles/GBig_emuC.dir/lib/cpu.c.s
 .PHONY : lib/cpu.c.s
 
-lib/emu.o: lib/emu.c.o
+lib/instruction.o: lib/instruction.c.o
 
-.PHONY : lib/emu.o
+.PHONY : lib/instruction.o
 
 # target to build an object file
-lib/emu.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/GBig_emuC.dir/build.make CMakeFiles/GBig_emuC.dir/lib/emu.c.o
-.PHONY : lib/emu.c.o
+lib/instruction.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/GBig_emuC.dir/build.make CMakeFiles/GBig_emuC.dir/lib/instruction.c.o
+.PHONY : lib/instruction.c.o
 
-lib/emu.i: lib/emu.c.i
+lib/instruction.i: lib/instruction.c.i
 
-.PHONY : lib/emu.i
+.PHONY : lib/instruction.i
 
 # target to preprocess a source file
-lib/emu.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/GBig_emuC.dir/build.make CMakeFiles/GBig_emuC.dir/lib/emu.c.i
-.PHONY : lib/emu.c.i
+lib/instruction.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/GBig_emuC.dir/build.make CMakeFiles/GBig_emuC.dir/lib/instruction.c.i
+.PHONY : lib/instruction.c.i
 
-lib/emu.s: lib/emu.c.s
+lib/instruction.s: lib/instruction.c.s
 
-.PHONY : lib/emu.s
+.PHONY : lib/instruction.s
 
 # target to generate assembly for a file
-lib/emu.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/GBig_emuC.dir/build.make CMakeFiles/GBig_emuC.dir/lib/emu.c.s
-.PHONY : lib/emu.c.s
+lib/instruction.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/GBig_emuC.dir/build.make CMakeFiles/GBig_emuC.dir/lib/instruction.c.s
+.PHONY : lib/instruction.c.s
+
+lib/orchestr.o: lib/orchestr.c.o
+
+.PHONY : lib/orchestr.o
+
+# target to build an object file
+lib/orchestr.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/GBig_emuC.dir/build.make CMakeFiles/GBig_emuC.dir/lib/orchestr.c.o
+.PHONY : lib/orchestr.c.o
+
+lib/orchestr.i: lib/orchestr.c.i
+
+.PHONY : lib/orchestr.i
+
+# target to preprocess a source file
+lib/orchestr.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/GBig_emuC.dir/build.make CMakeFiles/GBig_emuC.dir/lib/orchestr.c.i
+.PHONY : lib/orchestr.c.i
+
+lib/orchestr.s: lib/orchestr.c.s
+
+.PHONY : lib/orchestr.s
+
+# target to generate assembly for a file
+lib/orchestr.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/GBig_emuC.dir/build.make CMakeFiles/GBig_emuC.dir/lib/orchestr.c.s
+.PHONY : lib/orchestr.c.s
 
 lib/ppu.o: lib/ppu.c.o
 
@@ -323,9 +350,12 @@ help:
 	@echo "... lib/cpu.o"
 	@echo "... lib/cpu.i"
 	@echo "... lib/cpu.s"
-	@echo "... lib/emu.o"
-	@echo "... lib/emu.i"
-	@echo "... lib/emu.s"
+	@echo "... lib/instruction.o"
+	@echo "... lib/instruction.i"
+	@echo "... lib/instruction.s"
+	@echo "... lib/orchestr.o"
+	@echo "... lib/orchestr.i"
+	@echo "... lib/orchestr.s"
 	@echo "... lib/ppu.o"
 	@echo "... lib/ppu.i"
 	@echo "... lib/ppu.s"
