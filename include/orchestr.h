@@ -7,6 +7,8 @@ typedef struct {
     bool paused;
     bool running;
     int ticks;
-} emu_context;
+} main_context;
+
+
 
 #endif /* !EMU_H_ */

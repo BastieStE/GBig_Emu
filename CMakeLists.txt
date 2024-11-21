@@ -16,9 +16,10 @@ set(SOURCES
     lib/bus.c
     lib/cart.c
     lib/cpu.c
-    lib/emu.c
+    lib/orchestr.c
     lib/ppu.c
     lib/timer.c
+    lib/instruction.c
 )
 
 # Add the executable
