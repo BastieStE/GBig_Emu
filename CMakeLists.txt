@@ -1,31 +1,20 @@
-# Minimum CMake version
 cmake_minimum_required(VERSION 3.10)
+project(YourProjectName C)
 
-# Project name and language
-project(GBig_emuC LANGUAGES C)
-
-# Specify C standard (optional)
+# Set the C standard
 set(CMAKE_C_STANDARD 99)
-set(CMAKE_C_STANDARD_REQUIRED True)
 
-# Include the header files directory
+# Set the include directories
 include_directories(include)
 
-# Add source files
-set(SOURCES
-    lib/bus.c
-    lib/cart.c
-    lib/cpu.c
-    lib/orchestr.c
-    lib/ppu.c
-    lib/timer.c
-    lib/instruction.c
-)
+# Add all source files in the lib directory
+file(GLOB SOURCES "lib/*.c")
 
-# Add the executable
-add_executable(GBig_emuC ${SOURCES})
+# Create the executable
+add_executable(YourExecutable ${SOURCES})
 
-# Specify where the executable should be built
-set_target_properties(GBig_emuC PROPERTIES
-    RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/../build
-)
+# Optional: If you want to organize your build outputs, you can specify a different directory for the executable
+# set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+
+# You can also link any required libraries (if any)
+# target_link_libraries(YourExecutable <library>)
