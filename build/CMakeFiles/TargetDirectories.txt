@@ -1,3 +1,3 @@
-/home/bastien/project/GBig_Emu/build/CMakeFiles/YourExecutable.dir
-/home/bastien/project/GBig_Emu/build/CMakeFiles/edit_cache.dir
-/home/bastien/project/GBig_Emu/build/CMakeFiles/rebuild_cache.dir
+/home/zie/project/GameBoy/GBig_Emu/build/CMakeFiles/YourExecutable.dir
+/home/zie/project/GameBoy/GBig_Emu/build/CMakeFiles/edit_cache.dir
+/home/zie/project/GameBoy/GBig_Emu/build/CMakeFiles/rebuild_cache.dir

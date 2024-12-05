@@ -54,10 +54,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/bastien/project/GBig_Emu
+CMAKE_SOURCE_DIR = /home/zie/project/GameBoy/GBig_Emu
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/bastien/project/GBig_Emu/build
+CMAKE_BINARY_DIR = /home/zie/project/GameBoy/GBig_Emu/build
 
 #=============================================================================
 # Directory level rules for the build root directory
@@ -81,14 +81,14 @@ clean: CMakeFiles/YourExecutable.dir/clean
 CMakeFiles/YourExecutable.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/YourExecutable.dir/build.make CMakeFiles/YourExecutable.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/YourExecutable.dir/build.make CMakeFiles/YourExecutable.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/bastien/project/GBig_Emu/build/CMakeFiles --progress-num=1,2,3,4,5,6,7,8 "Built target YourExecutable"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/zie/project/GameBoy/GBig_Emu/build/CMakeFiles --progress-num=1,2,3,4,5,6,7,8,9 "Built target YourExecutable"
 .PHONY : CMakeFiles/YourExecutable.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/YourExecutable.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/bastien/project/GBig_Emu/build/CMakeFiles 8
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/zie/project/GameBoy/GBig_Emu/build/CMakeFiles 9
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/YourExecutable.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/bastien/project/GBig_Emu/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/zie/project/GameBoy/GBig_Emu/build/CMakeFiles 0
 .PHONY : CMakeFiles/YourExecutable.dir/rule
 
 # Convenience name for target.
