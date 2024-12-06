@@ -17,11 +17,11 @@
 
 u8 bus_read(u16 address) {
     if (address < 0x8000) {
-        return cart_read(address);         //ROM Data
+      //  return cart_read(address);         //ROM Data
     } else if (address < 0xA000) {
-        return ppu_vram_read(address);     //Char/Map Data
+     //   return ppu_vram_read(address);     //Char/Map Data
     } else if (address < 0xC000) {
-        return cart_read(address);         //Cartridge RAM
+     //   return cart_read(address);         //Cartridge RAM
     } else if (address < 0xE000) {
         fprintf(stderr, "not ready\n"); return(255);         //WRAM (Working RAM)
     } else if (address < 0xFE00) {
@@ -31,37 +31,38 @@ u8 bus_read(u16 address) {
     } else if (address < 0xFF00) {
         return 0;
     } else if (address < 0xFF80) {
-        return io_read(address);        //IO Registers...
+     //   return io_read(address);        //IO Registers...
     } else if (address == 0xFFFF) {
-        return cpu_get_ie_register();        //CPU ENABLE REGISTER...
+     //   return cpu_get_ie_register();        //CPU ENABLE REGISTER...
     }
-    return hram_read(address);
+   // return hram_read(address);
 }
+
+/*la mémoire est gérée indépendament par chaque composant en interne, a voir si je préfere faire une 
+grosse classe mémoire et faire passer tout les composants par cette classe pour accéder a la mémoire*/
+
 
 void bus_write(u16 address, u8 value) {
     if (address < 0x8000) {
-        cart_write(address, value);        //ROM Data
+     //   cart_write(address, value);        //ROM Data
     } else if (address < 0xA000) {
-        ppu_vram_write(address, value);    //Char/Map Data
+     //   ppu_vram_write(address, value);    //Char/Map Data
     } else if (address < 0xC000) {
-        cart_write(address, value);        //EXT-RAM
+     //   cart_write(address, value);        //EXT-RAM
     } else if (address < 0xE000) {
-        wram_write(address, value);        //WRAM
+     //   wram_write(address, value);        //WRAM
     } else if (address < 0xFE00) {
         return;                            //reserved echo ram
     } else if (address < 0xFEA0) {
-        ppu_oam_write(address, value);        //PPU
+     //   ppu_oam_write(address, value);     //PPU
     } else if (address < 0xFF00) {
-        //unusable reserved
+        return;                            // reserved
     } else if (address < 0xFF80) {
-        //IO Registers...
-        io_write(address, value);
+      //  io_write(address, value);          //IO Registers
     } else if (address == 0xFFFF) {
-        //CPU SET ENABLE REGISTER
-        
-        cpu_set_ie_register(value);
+      //  cpu_set_ie_register(value);        //CPU SET ENABLE REGISTER
     } else {
-        hram_write(address, value);
+      //  hram_write(address, value);
     }
 }
 

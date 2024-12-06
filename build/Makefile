@@ -201,29 +201,29 @@ lib/cpu.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/YourExecutable.dir/build.make CMakeFiles/YourExecutable.dir/lib/cpu.c.s
 .PHONY : lib/cpu.c.s
 
-lib/cpu_instructions.o: lib/cpu_instructions.c.o
-.PHONY : lib/cpu_instructions.o
+lib/cpu_LD_instructions.o: lib/cpu_LD_instructions.c.o
+.PHONY : lib/cpu_LD_instructions.o
 
 # target to build an object file
-lib/cpu_instructions.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/YourExecutable.dir/build.make CMakeFiles/YourExecutable.dir/lib/cpu_instructions.c.o
-.PHONY : lib/cpu_instructions.c.o
+lib/cpu_LD_instructions.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/YourExecutable.dir/build.make CMakeFiles/YourExecutable.dir/lib/cpu_LD_instructions.c.o
+.PHONY : lib/cpu_LD_instructions.c.o
 
-lib/cpu_instructions.i: lib/cpu_instructions.c.i
-.PHONY : lib/cpu_instructions.i
+lib/cpu_LD_instructions.i: lib/cpu_LD_instructions.c.i
+.PHONY : lib/cpu_LD_instructions.i
 
 # target to preprocess a source file
-lib/cpu_instructions.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/YourExecutable.dir/build.make CMakeFiles/YourExecutable.dir/lib/cpu_instructions.c.i
-.PHONY : lib/cpu_instructions.c.i
+lib/cpu_LD_instructions.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/YourExecutable.dir/build.make CMakeFiles/YourExecutable.dir/lib/cpu_LD_instructions.c.i
+.PHONY : lib/cpu_LD_instructions.c.i
 
-lib/cpu_instructions.s: lib/cpu_instructions.c.s
-.PHONY : lib/cpu_instructions.s
+lib/cpu_LD_instructions.s: lib/cpu_LD_instructions.c.s
+.PHONY : lib/cpu_LD_instructions.s
 
 # target to generate assembly for a file
-lib/cpu_instructions.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/YourExecutable.dir/build.make CMakeFiles/YourExecutable.dir/lib/cpu_instructions.c.s
-.PHONY : lib/cpu_instructions.c.s
+lib/cpu_LD_instructions.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/YourExecutable.dir/build.make CMakeFiles/YourExecutable.dir/lib/cpu_LD_instructions.c.s
+.PHONY : lib/cpu_LD_instructions.c.s
 
 lib/instruction.o: lib/instruction.c.o
 .PHONY : lib/instruction.o
@@ -339,9 +339,9 @@ help:
 	@echo "... lib/cpu.o"
 	@echo "... lib/cpu.i"
 	@echo "... lib/cpu.s"
-	@echo "... lib/cpu_instructions.o"
-	@echo "... lib/cpu_instructions.i"
-	@echo "... lib/cpu_instructions.s"
+	@echo "... lib/cpu_LD_instructions.o"
+	@echo "... lib/cpu_LD_instructions.i"
+	@echo "... lib/cpu_LD_instructions.s"
 	@echo "... lib/instruction.o"
 	@echo "... lib/instruction.i"
 	@echo "... lib/instruction.s"

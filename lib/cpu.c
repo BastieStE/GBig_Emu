@@ -7,8 +7,7 @@ void cpu_init(cpu_contex *ctx) {
 }
 
 static void fetch_instruction(cpu_contex *ctx) {
-    ctx->cur_op_code = bus_read(ctx->regi.pc++);
-    ctx->cur_inst = get_instr_by_opcode(ctx->cur_op_code);
+    ctx->cur_opcode = bus_read(ctx->regi.pc);
 }
 
 void fetch_data()
@@ -19,13 +18,13 @@ void fetch_data()
 bool cpu_step(cpu_contex *ctx) {
     if (!ctx->halted) {
         u16 pc = ctx->regi.pc;
+
         fetch_instruction(ctx);
         fetch_data();
-        if (ctx->cur_inst == NULL) {
-            printf("wrong instruction! %02X\n", ctx->cur_op_code);
-            exit(84);
-        }
+
+        execute_instruction(ctx);
     }
+
     return true;
 }
 
