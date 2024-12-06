@@ -7,12 +7,12 @@
 
 typedef struct {
     union {struct {
-            u8 f; 
-            u8 a; 
+            u8 f;
+            u8 a;
         };u16 af;};
     union {struct {
-            u8 c; 
-            u8 b; 
+            u8 c;
+            u8 b;
         };u16 bc;};
     union {struct {
             u8 e; 
@@ -26,7 +26,6 @@ typedef struct {
     u16 sp;
 } cpu_registers;
 
-
 ///  faire des unions 
 
 typedef struct
@@ -35,6 +34,8 @@ typedef struct
     u16 fetched_data;
     u16 mem_dest;
     u8 cur_opcode;
+
+    u8 cycles;
 
     uint8_t memory[0x10000];
 

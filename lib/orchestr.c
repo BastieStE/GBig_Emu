@@ -10,6 +10,7 @@ int ctx_init(main_context *ctx)
     ctx->paused = false;
     ctx->running = true;
     ctx->ticks = 0;
+    ctx->cycles = 0;
 }
 
 int run(int argc, char **argv) {

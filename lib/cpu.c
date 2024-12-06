@@ -5,6 +5,7 @@ void cpu_init(cpu_contex *ctx) {
     ctx->regi.pc = 0x100;
     ctx->regi.a = 0x01;
     ctx->IME = false;
+    ctx->cycles = 0;
 }
 
 static void fetch_instruction(cpu_contex *ctx) {
@@ -18,12 +19,13 @@ void fetch_data()
 
 bool cpu_step(cpu_contex *ctx) {
     if (!ctx->halted) {
-        u16 pc = ctx->regi.pc;
+        if (ctx->cycles == 0) {
+            u16 pc = ctx->regi.pc;
 
-        fetch_instruction(ctx);
-        fetch_data();
-
-        execute_instruction(ctx);
+            fetch_instruction(ctx);
+            fetch_data();
+            execute_instruction(ctx);
+        } else {ctx->cycles--;}
     }
 
     return true;
