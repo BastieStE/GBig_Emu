@@ -4,6 +4,7 @@
 void cpu_init(cpu_contex *ctx) {
     ctx->regi.pc = 0x100;
     ctx->regi.a = 0x01;
+    ctx->IME = false;
 }
 
 static void fetch_instruction(cpu_contex *ctx) {

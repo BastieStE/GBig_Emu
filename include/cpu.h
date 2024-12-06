@@ -36,8 +36,14 @@ typedef struct
     u16 mem_dest;
     u8 cur_opcode;
 
+    uint8_t memory[0x10000];
+
     bool halted;
     bool stepping;
+    
+    bool IME;
+    u8 ie_register;    //(Interrupt Enable Register)
+    u8 if_register;    //(Interrupt Flag Register)
 } cpu_contex;
 
 bool cpu_step(cpu_contex *ctx);
