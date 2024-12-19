@@ -1,5 +1,6 @@
 #include <bus.h>
 #include <cart.h>
+#include <wram.h>
 
 // 0x0000 - 0x3FFF : ROM Bank 0 (fixed)
 // 0x4000 - 0x7FFF : ROM Bank 1 (Switchable)
@@ -17,13 +18,13 @@
 
 u8 bus_read(u16 address) {
     if (address < 0x8000) {
-      //  return cart_read(address);         //ROM Data
+        return cart_read(address);         //ROM Data
     } else if (address < 0xA000) {
      //   return ppu_vram_read(address);     //Char/Map Data
     } else if (address < 0xC000) {
-     //   return cart_read(address);         //Cartridge RAM
+        return cart_read(address);         //Cartridge RAM
     } else if (address < 0xE000) {
-        fprintf(stderr, "not ready\n"); return(255);         //WRAM (Working RAM)
+        return read_wram(address);         //WRAM (Working RAM)
     } else if (address < 0xFE00) {
         return 0;
     } else if (address < 0xFEA0) {
@@ -44,13 +45,13 @@ grosse classe mémoire et faire passer tout les composants par cette classe pour
 
 void bus_write(u16 address, u8 value) {
     if (address < 0x8000) {
-     //   cart_write(address, value);        //ROM Data
+       cart_write(address, value);        //ROM Data
     } else if (address < 0xA000) {
      //   ppu_vram_write(address, value);    //Char/Map Data
     } else if (address < 0xC000) {
-     //   cart_write(address, value);        //EXT-RAM
+       cart_write(address, value);        //EXT-RAM
     } else if (address < 0xE000) {
-     //   wram_write(address, value);        //WRAM
+       write_wram(address, value);        //WRAM
     } else if (address < 0xFE00) {
         return;                            //reserved echo ram
     } else if (address < 0xFEA0) {

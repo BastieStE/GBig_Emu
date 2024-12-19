@@ -43,22 +43,23 @@ typedef struct
     bool stepping;
     
     bool IME;
+    bool IME_delay;
     u8 ie_register;    //(Interrupt Enable Register)
     u8 if_register;    //(Interrupt Flag Register)
-} cpu_contex;
+} cpu_context;
 
-bool cpu_step(cpu_contex *ctx);
+bool cpu_step(cpu_context *ctx);
 void cpu_init();
 
 
-typedef void (*IN_PROC)(cpu_contex *);
+typedef void (*IN_PROC)(cpu_context *);
 
 #define CPU_FLAG_Z BIT(ctx->regs.f, 7)
 #define CPU_FLAG_C BIT(ctx->regs.f, 4)
 
 
-void execute_instruction(cpu_contex *cpu);
-u16 cpu_read_reg(reg_type rt, cpu_contex *ctx);
-void cpu_set_reg(reg_type rt, u16 val, cpu_contex *ctx);
+void execute_instruction(cpu_context *cpu);
+u16 cpu_read_reg(reg_type rt, cpu_context *ctx);
+void cpu_set_reg(reg_type rt, u16 val, cpu_context *ctx);
 
 #endif /* !CPU_H_ */

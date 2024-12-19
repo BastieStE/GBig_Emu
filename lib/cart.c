@@ -1,13 +1,6 @@
 #include <cart.h>
 
-typedef struct {
-    char filename[1024];
-    u32 rom_size;
-    u8 *rom_data;
-    rom_header *header;
-} cart_context;
-
-static cart_context ctx;
+static cart_context cart_ctx;
 
 static const char *ROM_TYPES[] = {
     "ROM ONLY",
@@ -112,59 +105,95 @@ static const char *LIC_CODE[0xA5] = {
 };
 
 const char *cart_lic_name() {
-    if (ctx.header->new_lic_code <= 0xA4) {
-        return LIC_CODE[ctx.header->lic_code];
+    if (cart_ctx.header->new_lic_code <= 0xA4) {
+        return LIC_CODE[cart_ctx.header->lic_code];
     }
 
     return "UNKNOWN";
 }
 
 const char *cart_type_name() {
-    if (ctx.header->type <= 0x22) {
-        return ROM_TYPES[ctx.header->type];
+    if (cart_ctx.header->type <= 0x22) {
+        return ROM_TYPES[cart_ctx.header->type];
     }
 
     return "UNKNOWN";
 }
 
 bool cart_load(char *cart) {
-    snprintf(ctx.filename, sizeof(ctx.filename), "%s", cart);
+    snprintf(cart_ctx.filename, sizeof(cart_ctx.filename), "%s", cart);
 
-    FILE *fp = fopen(cart, "r");
-
+    FILE *fp = fopen(cart, "rb");
     if (!fp) {
         printf("Failed to open: %s\n", cart);
         return false;
     }
 
-    printf("Opened: %s\n", ctx.filename);
+    printf("Opened: %s\n", cart_ctx.filename);
 
+    // Load ROM data
     fseek(fp, 0, SEEK_END);
-    ctx.rom_size = ftell(fp);
-
+    cart_ctx.rom_size = ftell(fp);
     rewind(fp);
-
-    ctx.rom_data = malloc(ctx.rom_size);
-    fread(ctx.rom_data, ctx.rom_size, 1, fp);
+    cart_ctx.rom_data = malloc(cart_ctx.rom_size);
+    fread(cart_ctx.rom_data, cart_ctx.rom_size, 1, fp);
     fclose(fp);
 
-    ctx.header = (rom_header *)(ctx.rom_data + 0x100);
-    ctx.header->title[15] = 0;
+    // Initialize cartridge context
+    cart_ctx.header = (rom_header *)(cart_ctx.rom_data + 0x100);
+    cart_ctx.header->title[15] = 0;
+    cart_ctx.rom_bank = 1;  // Default ROM bank
+    cart_ctx.ram_bank = 0;  // Default RAM bank
+    cart_ctx.ram_enabled = false;
 
-    printf("Cartridge Loaded:\n");
-    printf("\t Title    : %s\n", ctx.header->title);
-    printf("\t Type     : %2.2X (%s)\n", ctx.header->type, cart_type_name());
-    printf("\t ROM Size : %d KB\n", 32 << ctx.header->rom_size);
-    printf("\t RAM Size : %2.2X\n", ctx.header->ram_size);
-    printf("\t LIC Code : %2.2X (%s)\n", ctx.header->lic_code, cart_lic_name());
-    printf("\t ROM Vers : %2.2X\n", ctx.header->version);
-
-    u16 x = 0;
-    for (u16 i=0x0134; i<=0x014C; i++) {
-        x = x - ctx.rom_data[i] - 1;
+    // Allocate RAM if necessary
+    uint8_t ram_size_lookup[] = {0, 2, 8, 32, 128, 64};
+    cart_ctx.ram_size = (cart_ctx.header->ram_size < sizeof(ram_size_lookup) ? ram_size_lookup[cart_ctx.header->ram_size] : 0) * RAM_BANK_SIZE;
+    if (cart_ctx.ram_size > 0) {
+        cart_ctx.ram_data = malloc(cart_ctx.ram_size);
+        memset(cart_ctx.ram_data, 0, cart_ctx.ram_size);
     }
 
-    printf("\t Checksum : %2.2X (%s)\n", ctx.header->checksum, (x & 0xFF) ? "PASSED" : "FAILED");
+    printf("Cartridge Loaded:\n");
+    printf("\t Title    : %s\n", cart_ctx.header->title);
+    printf("\t Type     : %2.2X (%s)\n", cart_ctx.header->type, cart_type_name());
+    printf("\t ROM Size : %d KB\n", 32 << cart_ctx.header->rom_size);
+    printf("\t RAM Size : %d KB\n", cart_ctx.ram_size / 1024);
 
     return true;
+}
+
+
+uint8_t cart_read(uint16_t address) {
+    if (address >= 0x0000 && address <= 0x3FFF) { // Fixed ROM bank (Bank 0)
+        return cart_ctx.rom_data[address];
+    } else if (address >= 0x4000 && address <= 0x7FFF) { // Switchable ROM bank
+        uint32_t bank_offset = cart_ctx.rom_bank * ROM_BANK_SIZE;
+        return cart_ctx.rom_data[bank_offset + (address - 0x4000)];
+    } else if (address >= 0xA000 && address <= 0xBFFF) { // Cartridge RAM
+        if (cart_ctx.ram_enabled && cart_ctx.ram_data) {
+            uint32_t ram_offset = cart_ctx.ram_bank * RAM_BANK_SIZE;
+            return cart_ctx.ram_data[ram_offset + (address - 0xA000)];
+        }
+        return 0xFF;  // Open bus behavior when RAM is disabled
+    }
+    return 0xFF;  // Invalid address
+}
+
+void cart_write(uint16_t address, uint8_t value) {
+    if (address >= 0x0000 && address <= 0x1FFF) { // Enable/disable external RAM
+        cart_ctx.ram_enabled = (value & 0x0A) == 0x0A;
+    } else if (address >= 0x2000 && address <= 0x3FFF) { // ROM bank switching
+        cart_ctx.rom_bank = value & 0x1F;  // MBC1 example: 5-bit ROM bank number
+        if (cart_ctx.rom_bank == 0) cart_ctx.rom_bank = 1;  // Bank 0 is not selectable
+    } else if (address >= 0x4000 && address <= 0x5FFF) {
+        // RAM bank switching or upper ROM bank bits
+        cart_ctx.ram_bank = value & 0x03;  // MBC1 example: 2-bit RAM bank number
+    } else if (address >= 0xA000 && address <= 0xBFFF) {
+        // Write to cartridge RAM
+        if (cart_ctx.ram_enabled && cart_ctx.ram_data) {
+            uint32_t ram_offset = cart_ctx.ram_bank * RAM_BANK_SIZE;
+            cart_ctx.ram_data[ram_offset + (address - 0xA000)] = value;
+        }
+    }
 }

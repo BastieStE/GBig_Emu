@@ -2,7 +2,7 @@
 #include <cpu.h>
 
 
-void execute_instruction(cpu_contex *cpu) {
+void execute_instruction(cpu_context *cpu) {
     switch (cpu->cur_opcode) {
         // Immediate Addressing
         case 0x3E:  // LD A, u8
@@ -93,7 +93,13 @@ void execute_instruction(cpu_contex *cpu) {
             load_indirect(cpu, cpu->regi.a, cpu->regi.hl);
             cpu->regi.hl--;
             break;
-
+        case 0xF3: // DI
+            cpu->IME = false;
+            break;
+        case 0xFB: // EI
+            cpu->IME = false;
+            cpu->IME_delay = true;
+            break;
         default:
             printf("Unknown opcode: 0x%02X\n", cpu->cur_opcode);
             break;

@@ -64,6 +64,7 @@
         "typeinfo": "cpp",
         "orchestr.h": "c",
         "cpu.h": "c",
-        "cart.h": "c"
+        "cart.h": "c",
+        "cpu_ld_instructions.h": "c"
     }
 }

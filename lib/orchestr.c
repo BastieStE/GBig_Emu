@@ -4,21 +4,22 @@
 #include <cpu.h>
 #include <cart.h>
 #include <cpu.h>
+#include <wram.h>
 
 int ctx_init(main_context *ctx)
 {
     ctx->paused = false;
     ctx->running = true;
     ctx->ticks = 0;
-    ctx->cycles = 0;
 }
 
 int run(int argc, char **argv) {
     main_context ctx;
-    cpu_contex cpu_ctx;
+    cpu_context cpu_ctx;
 
     ctx_init(&ctx);
     cpu_init();
+    init_wram();
 
     while(ctx.running) {
         printf("%d ticks\n", ctx.ticks);
