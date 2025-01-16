@@ -26,8 +26,6 @@ typedef struct {
     u16 sp;
 } cpu_registers;
 
-///  faire des unions 
-
 typedef struct
 {
     cpu_registers regi;
@@ -54,8 +52,18 @@ void cpu_init();
 
 typedef void (*IN_PROC)(cpu_context *);
 
-#define CPU_FLAG_Z BIT(ctx->regs.f, 7)
-#define CPU_FLAG_C BIT(ctx->regs.f, 4)
+
+#define ZERO_FLAG BIT(cpu->regi.f, 7)
+#define CARRY_FLAG BIT(cpu->regi.f, 4)
+
+#define SET_ZERO_FLAG(cpu) (cpu->regi.f |= (1 << 7))
+#define CLEAR_ZERO_FLAG(cpu) (cpu->regi.f &= ~(1 << 7))
+#define SET_CARRY_FLAG(cpu) (cpu->regi.f |= (1 << 4))
+#define CLEAR_CARRY_FLAG(cpu) (cpu->regi.f &= ~(1 << 4))
+#define SET_HALF_CARRY_FLAG(cpu) (cpu->regi.f |= (1 << 5))
+#define CLEAR_HALF_CARRY_FLAG(cpu) (cpu->regi.f &= ~(1 << 5))
+#define SET_SUBTRACT_FLAG(cpu) (cpu->regi.f |= (1 << 6))
+#define CLEAR_SUBTRACT_FLAG(cpu) (cpu->regi.f &= ~(1 << 6))
 
 
 void execute_instruction(cpu_context *cpu);

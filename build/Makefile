@@ -129,6 +129,30 @@ YourExecutable/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/YourExecutable.dir/build.make CMakeFiles/YourExecutable.dir/build
 .PHONY : YourExecutable/fast
 
+lib/bios.o: lib/bios.c.o
+.PHONY : lib/bios.o
+
+# target to build an object file
+lib/bios.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/YourExecutable.dir/build.make CMakeFiles/YourExecutable.dir/lib/bios.c.o
+.PHONY : lib/bios.c.o
+
+lib/bios.i: lib/bios.c.i
+.PHONY : lib/bios.i
+
+# target to preprocess a source file
+lib/bios.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/YourExecutable.dir/build.make CMakeFiles/YourExecutable.dir/lib/bios.c.i
+.PHONY : lib/bios.c.i
+
+lib/bios.s: lib/bios.c.s
+.PHONY : lib/bios.s
+
+# target to generate assembly for a file
+lib/bios.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/YourExecutable.dir/build.make CMakeFiles/YourExecutable.dir/lib/bios.c.s
+.PHONY : lib/bios.c.s
+
 lib/bus.o: lib/bus.c.o
 .PHONY : lib/bus.o
 
@@ -321,6 +345,30 @@ lib/timer.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/YourExecutable.dir/build.make CMakeFiles/YourExecutable.dir/lib/timer.c.s
 .PHONY : lib/timer.c.s
 
+lib/wram.o: lib/wram.c.o
+.PHONY : lib/wram.o
+
+# target to build an object file
+lib/wram.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/YourExecutable.dir/build.make CMakeFiles/YourExecutable.dir/lib/wram.c.o
+.PHONY : lib/wram.c.o
+
+lib/wram.i: lib/wram.c.i
+.PHONY : lib/wram.i
+
+# target to preprocess a source file
+lib/wram.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/YourExecutable.dir/build.make CMakeFiles/YourExecutable.dir/lib/wram.c.i
+.PHONY : lib/wram.c.i
+
+lib/wram.s: lib/wram.c.s
+.PHONY : lib/wram.s
+
+# target to generate assembly for a file
+lib/wram.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/YourExecutable.dir/build.make CMakeFiles/YourExecutable.dir/lib/wram.c.s
+.PHONY : lib/wram.c.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -330,6 +378,9 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... YourExecutable"
+	@echo "... lib/bios.o"
+	@echo "... lib/bios.i"
+	@echo "... lib/bios.s"
 	@echo "... lib/bus.o"
 	@echo "... lib/bus.i"
 	@echo "... lib/bus.s"
@@ -354,6 +405,9 @@ help:
 	@echo "... lib/timer.o"
 	@echo "... lib/timer.i"
 	@echo "... lib/timer.s"
+	@echo "... lib/wram.o"
+	@echo "... lib/wram.i"
+	@echo "... lib/wram.s"
 .PHONY : help
 
 

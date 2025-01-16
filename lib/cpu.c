@@ -1,18 +1,22 @@
 #include <cpu.h>
 #include <orchestr.h>
 
-/*
-x / implémenter le bios/cartouche dans le membus
-done implémenter la wram dans le membus
-done (I think) / implémenter les interrupts
-done / boucle d'exécution avec le timing
-*/
 
-void cpu_init(cpu_context *ctx) {
-    ctx->regi.pc = 0x100;
-    ctx->regi.a = 0x01;
-    ctx->IME = false;
+void cpu_init(cpu_context *ctx, const char *bios_path) {
+    // Load the BIOS using the bus
+    load_bios(bios_path);
+
+    // Set the program counter to the start of BIOS (0x0000)
+    ctx->regi.pc = 0x0000;
+
+    // Other initialization steps (set up registers, flags, etc.)
     ctx->cycles = 0;
+    ctx->halted = false;
+    ctx->stepping = false;
+    ctx->IME = false;
+    ctx->IME_delay = false;
+    ctx->ie_register = 0;
+    ctx->if_register = 0;
 }
 
 static void fetch_instruction(cpu_context *ctx) {
