@@ -2,7 +2,7 @@
 
 void jump_indirect(cpu_context *cpu) {
     cpu->regi.pc = cpu->regi.hl;  // Jump to the address stored in HL
-    cpu->cycles += 4;              // JP (HL) takes 4 cycles
+    INCR_CYCLE(4);              // JP (HL) takes 4 cycles
 }
 
 void jump_cond(cpu_context *cpu, bool condition) {
@@ -10,10 +10,10 @@ void jump_cond(cpu_context *cpu, bool condition) {
     
     if (condition) {
         cpu->regi.pc = address;
-        cpu->cycles += 16;  // JP takes 16 cycles if taken
+        INCR_CYCLE(16);  // JP takes 16 cycles if taken
     } else {
         cpu->regi.pc += 3;  // Skip operand bytes if not taken
-        cpu->cycles += 12;  // JP takes 12 cycles if not taken
+        INCR_CYCLE(12);  // JP takes 12 cycles if not taken
     }
 }
 
@@ -22,10 +22,10 @@ void jump_relative_cond(cpu_context *cpu, bool condition) {
 
     if (condition) {
         cpu->regi.pc += offset + 2; // Offset is relative to next instruction
-        cpu->cycles += 12;  // JR takes 12 cycles if taken
+        INCR_CYCLE(12);  // JR takes 12 cycles if taken
     } else {
         cpu->regi.pc += 2;  // Skip offset byte if not taken
-        cpu->cycles += 8;   // JR takes 8 cycles if not taken
+        INCR_CYCLE(8);   // JR takes 8 cycles if not taken
     }
 }
 
@@ -33,14 +33,14 @@ void jump_relative(cpu_context *cpu) {
     int8_t offset = (int8_t)bus_read(cpu->regi.pc + 1);
     
     cpu->regi.pc += offset + 2;  // Offset is relative to the next instruction
-    cpu->cycles += 12;           // JR takes 12 cycles
+    INCR_CYCLE(12);           // JR takes 12 cycles
 }
 
 void jump(cpu_context *cpu) {
     uint16_t address = bus_read(cpu->regi.pc + 1) | (bus_read(cpu->regi.pc + 2) << 8);
     
     cpu->regi.pc = address;  // Jump to the address
-    cpu->cycles += 16;       // JP nn takes 16 cycles
+    INCR_CYCLE(16);       // JP nn takes 16 cycles
 }
 
 void rotate_left_carry(cpu_context *cpu, uint8_t *reg) {
@@ -54,7 +54,7 @@ void rotate_left_carry(cpu_context *cpu, uint8_t *reg) {
     CLEAR_HALF_CARRY_FLAG(cpu);
 
     cpu->regi.pc += 1;
-    cpu->cycles += 8;
+    INCR_CYCLE(8);
 }
 
 void rotate_right_carry(cpu_context *cpu, uint8_t *reg) {
@@ -68,7 +68,7 @@ void rotate_right_carry(cpu_context *cpu, uint8_t *reg) {
     CLEAR_HALF_CARRY_FLAG(cpu);
 
     cpu->regi.pc += 1;
-    cpu->cycles += 8;
+    INCR_CYCLE(8);
 }
 
 void rotate_left(cpu_context *cpu, uint8_t *reg) {
@@ -83,7 +83,7 @@ void rotate_left(cpu_context *cpu, uint8_t *reg) {
     CLEAR_HALF_CARRY_FLAG(cpu);
 
     cpu->regi.pc += 1;
-    cpu->cycles += 8;
+    INCR_CYCLE(8);
 }
 
 void rotate_right(cpu_context *cpu, uint8_t *reg) {
@@ -98,5 +98,5 @@ void rotate_right(cpu_context *cpu, uint8_t *reg) {
     CLEAR_HALF_CARRY_FLAG(cpu);
 
     cpu->regi.pc += 1;
-    cpu->cycles += 8;
+    INCR_CYCLE(8);
 }

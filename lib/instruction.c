@@ -5,7 +5,7 @@ void execute_instruction(cpu_context *cpu) {
     switch (cpu->cur_opcode) {
         case 0x00:
             cpu->regi.pc += 1;
-            cpu->cycles += 4;
+            INCR_CYCLE(4);
             break;
         case 0x01:
             load_immediate_16(cpu, &cpu->regi.bc);

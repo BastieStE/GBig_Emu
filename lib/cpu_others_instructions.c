@@ -23,7 +23,7 @@ void add_register(cpu_context *cpu, uint8_t *dst, uint8_t *src) {
 
     *dst = (uint8_t)result;
     cpu->regi.pc += 1;
-    cpu->cycles += 4;
+    INCR_CYCLE(4);
 }
 
 void adc_register(cpu_context *cpu, uint8_t *dst, uint8_t *src) {
@@ -50,7 +50,7 @@ void adc_register(cpu_context *cpu, uint8_t *dst, uint8_t *src) {
 
     *dst = (uint8_t)result;
     cpu->regi.pc += 1;
-    cpu->cycles += 4;
+    INCR_CYCLE(4);
 }
 
 void sub_register(cpu_context *cpu, uint8_t *dst, uint8_t *src) {
@@ -75,7 +75,7 @@ void sub_register(cpu_context *cpu, uint8_t *dst, uint8_t *src) {
 
     *dst = (uint8_t)result;
     cpu->regi.pc += 1;
-    cpu->cycles += 4;
+    INCR_CYCLE(4);
 }
 
 void sbc_register(cpu_context *cpu, uint8_t *dst, uint8_t *src) {
@@ -101,7 +101,7 @@ void sbc_register(cpu_context *cpu, uint8_t *dst, uint8_t *src) {
 
     *dst = (uint8_t)result;
     cpu->regi.pc += 1;
-    cpu->cycles += 4;
+    INCR_CYCLE(4);
 }
 
 void and_register(cpu_context *cpu, uint8_t *dst, uint8_t *src) {
@@ -117,7 +117,7 @@ void and_register(cpu_context *cpu, uint8_t *dst, uint8_t *src) {
     CLEAR_SUBTRACT_FLAG(cpu);
 
     cpu->regi.pc += 1;
-    cpu->cycles += 4;
+    INCR_CYCLE(4);
 }
 
 void add_indirect(cpu_context *cpu, uint8_t *src) {
@@ -148,7 +148,7 @@ void add_indirect(cpu_context *cpu, uint8_t *src) {
     cpu->regi.a = (uint8_t)result;
 
     cpu->regi.pc += 1;
-    cpu->cycles += 8;
+    INCR_CYCLE(8);
 }
 
 void adc_indirect(cpu_context *cpu) {
@@ -179,7 +179,7 @@ void adc_indirect(cpu_context *cpu) {
     cpu->regi.a = (uint8_t)result;
 
     cpu->regi.pc += 1;
-    cpu->cycles += 8;
+    INCR_CYCLE(8);
 }
 
 void sub_indirect(cpu_context *cpu) {
@@ -211,7 +211,7 @@ void sub_indirect(cpu_context *cpu) {
     cpu->regi.a = (uint8_t)result;
 
     cpu->regi.pc += 1;
-    cpu->cycles += 8;
+    INCR_CYCLE(8);
 }
 
 void sbc_indirect(cpu_context *cpu) {
@@ -244,7 +244,7 @@ void sbc_indirect(cpu_context *cpu) {
     cpu->regi.a = (uint8_t)result;
 
     cpu->regi.pc += 1;
-    cpu->cycles += 8;
+    INCR_CYCLE(8);
 }
 
 void and_indirect(cpu_context *cpu) {
@@ -264,7 +264,7 @@ void and_indirect(cpu_context *cpu) {
     CLEAR_SUBTRACT_FLAG(cpu);
 
     cpu->regi.pc += 1;
-    cpu->cycles += 8;
+    INCR_CYCLE(8);
 }
 
 void xor_register(cpu_context *cpu, uint8_t *src) {
@@ -282,7 +282,7 @@ void xor_register(cpu_context *cpu, uint8_t *src) {
     CLEAR_SUBTRACT_FLAG(cpu);
 
     cpu->regi.pc += 1;
-    cpu->cycles += 4;
+    INCR_CYCLE(4);
 }
 
 void xor_indirect(cpu_context *cpu) {
@@ -302,7 +302,7 @@ void xor_indirect(cpu_context *cpu) {
     CLEAR_SUBTRACT_FLAG(cpu);
 
     cpu->regi.pc += 1;
-    cpu->cycles += 8;
+    INCR_CYCLE(8);
 }
 
 void or_register(cpu_context *cpu, uint8_t *src) {
@@ -320,7 +320,7 @@ void or_register(cpu_context *cpu, uint8_t *src) {
     CLEAR_SUBTRACT_FLAG(cpu);
 
     cpu->regi.pc += 1;
-    cpu->cycles += 4;
+    INCR_CYCLE(4);
 }
 
 void or_indirect(cpu_context *cpu) {
@@ -340,7 +340,7 @@ void or_indirect(cpu_context *cpu) {
     CLEAR_SUBTRACT_FLAG(cpu);
 
     cpu->regi.pc += 1;
-    cpu->cycles += 8;
+    INCR_CYCLE(8);
 }
 
 void cp_register(cpu_context *cpu, uint8_t *src) {
@@ -368,7 +368,7 @@ void cp_register(cpu_context *cpu, uint8_t *src) {
     SET_SUBTRACT_FLAG(cpu);
 
     cpu->regi.pc += 1;
-    cpu->cycles += 4;
+    INCR_CYCLE(4);
 }
 
 void cp_indirect(cpu_context *cpu) {
@@ -398,7 +398,7 @@ void cp_indirect(cpu_context *cpu) {
     SET_SUBTRACT_FLAG(cpu);
 
     cpu->regi.pc += 1;
-    cpu->cycles += 8;
+    INCR_CYCLE(8);
 }
 
 void cp_immediate(cpu_context *cpu) {
@@ -418,7 +418,7 @@ void cp_immediate(cpu_context *cpu) {
     SET_SUBTRACT_FLAG(cpu);
 
     cpu->regi.pc += 2;
-    cpu->cycles += 8;
+    INCR_CYCLE(8);
 }
 
 void xor_immediate(cpu_context *cpu) {
@@ -435,7 +435,7 @@ void xor_immediate(cpu_context *cpu) {
     CLEAR_SUBTRACT_FLAG(cpu);
 
     cpu->regi.pc += 2;
-    cpu->cycles += 8;
+    INCR_CYCLE(8);
 }
 
 void and_immediate(cpu_context *cpu) {
@@ -452,7 +452,7 @@ void and_immediate(cpu_context *cpu) {
     CLEAR_SUBTRACT_FLAG(cpu);
 
     cpu->regi.pc += 2;
-    cpu->cycles += 8;
+    INCR_CYCLE(8);
 }
 
 void sbc_immediate(cpu_context *cpu) {
@@ -474,7 +474,7 @@ void sbc_immediate(cpu_context *cpu) {
 
     cpu->regi.a = (uint8_t)result;
     cpu->regi.pc += 2;
-    cpu->cycles += 8;
+    INCR_CYCLE(8);
 }
 
 void sub_immediate(cpu_context *cpu) {
@@ -495,7 +495,7 @@ void sub_immediate(cpu_context *cpu) {
 
     cpu->regi.a = (uint8_t)result;
     cpu->regi.pc += 2;
-    cpu->cycles += 8;
+    INCR_CYCLE(8);
 }
 
 void adc_immediate(cpu_context *cpu) {
@@ -517,7 +517,7 @@ void adc_immediate(cpu_context *cpu) {
 
     cpu->regi.a = (uint8_t)result;
     cpu->regi.pc += 2;
-    cpu->cycles += 8;
+    INCR_CYCLE(8);
 }
 
 void add_immediate(cpu_context *cpu) {
@@ -538,6 +538,6 @@ void add_immediate(cpu_context *cpu) {
 
     cpu->regi.a = (uint8_t)result;
     cpu->regi.pc += 2;
-    cpu->cycles += 8;
+    INCR_CYCLE(8);
 }
 

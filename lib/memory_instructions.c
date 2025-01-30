@@ -6,7 +6,7 @@ void store_immediate(cpu_context *cpu) {
     bus_write(cpu->regi.hl, value);
 
     cpu->regi.pc += 2;
-    cpu->cycles += 12;
+    INCR_CYCLE(12);
 }
 
 void store_direct_16(cpu_context *cpu, uint16_t *reg) {
@@ -15,7 +15,7 @@ void store_direct_16(cpu_context *cpu, uint16_t *reg) {
     bus_write16(address, *reg); // Use bus_write16 to store both bytes
 
     cpu->regi.pc += 3;
-    cpu->cycles += 20;
+    INCR_CYCLE(20);
 }
 
 void ld_absolute(cpu_context *cpu) {
@@ -24,14 +24,14 @@ void ld_absolute(cpu_context *cpu) {
     cpu->regi.a = bus_read(address); // Use bus_read instead of direct memory access
 
     cpu->regi.pc += 3;
-    cpu->cycles += 16;
+    INCR_CYCLE(16);
 }
 
 void ld_absolute_store(cpu_context *cpu) {
     uint16_t address = bus_read16(cpu->regi.pc + 1);
     bus_write(address, cpu->regi.a);  // Store value from A into memory
     cpu->regi.pc += 3;
-    cpu->cycles += 16;
+    INCR_CYCLE(16);
 }
 
 
@@ -39,7 +39,7 @@ void ld_sp_hl(cpu_context *cpu) {
     cpu->regi.hl = cpu->regi.sp;
 
     cpu->regi.pc += 1;
-    cpu->cycles += 8;
+    INCR_CYCLE(8);
 }
 
 void ld_io_offset_indirect(cpu_context *cpu) {
@@ -48,13 +48,13 @@ void ld_io_offset_indirect(cpu_context *cpu) {
     cpu->regi.a = bus_read(address);
 
     cpu->regi.pc += 1;
-    cpu->cycles += 8;
+    INCR_CYCLE(8);
 }
 
 void ld_io_offset_indirect_store(cpu_context *cpu) {
     bus_write(0xFF00 + cpu->regi.c, cpu->regi.a);
     cpu->regi.pc += 1;
-    cpu->cycles += 8;
+    INCR_CYCLE(8);
 }
 
 
@@ -62,14 +62,14 @@ void ld_io_offset(cpu_context *cpu) {
     uint16_t address = 0xFF00 + bus_read(cpu->regi.pc + 1);
     cpu->regi.a = bus_read(address);  // Load from memory into A
     cpu->regi.pc += 2;
-    cpu->cycles += 12;
+    INCR_CYCLE(12);
 }
 
 void ld_io_offset_store(cpu_context *cpu) {
     uint16_t address = 0xFF00 + bus_read(cpu->regi.pc + 1);
     bus_write(address, cpu->regi.a);  // Store A into memory
     cpu->regi.pc += 2;
-    cpu->cycles += 12;
+    INCR_CYCLE(12);
 }
 
 
@@ -87,7 +87,7 @@ void ld_hl_sp_offset(cpu_context *cpu) {
     cpu->regi.hl = result;
 
     cpu->regi.pc += 2;
-    cpu->cycles += 12;
+    INCR_CYCLE(12);
 }
 
 
@@ -105,7 +105,7 @@ void add_sp_offset(cpu_context *cpu) {
     cpu->regi.sp = result;
 
     cpu->regi.pc += 2;
-    cpu->cycles += 16;
+    INCR_CYCLE(16);
 }
 
 void add_16(cpu_context *cpu, uint16_t *reg) {
@@ -120,5 +120,5 @@ void add_16(cpu_context *cpu, uint16_t *reg) {
     cpu->regi.hl = (uint16_t)result;
 
     cpu->regi.pc += 1;
-    cpu->cycles += 8;
+    INCR_CYCLE(8);
 }

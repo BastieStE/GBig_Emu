@@ -49,6 +49,7 @@ void cpu_init();
 
 typedef void (*IN_PROC)(cpu_context *);
 
+#define INCR_CYCLE(x) (cpu->cycles += (x)) 
 
 #define ZERO_FLAG BIT(cpu->regi.f, 7)
 #define CARRY_FLAG BIT(cpu->regi.f, 4)
@@ -64,6 +65,7 @@ typedef void (*IN_PROC)(cpu_context *);
 #define CLEAR_HALF_CARRY_FLAG(cpu) (cpu->regi.f &= ~(1 << 5))
 #define SET_SUBTRACT_FLAG(cpu) (cpu->regi.f |= (1 << 6))
 #define CLEAR_SUBTRACT_FLAG(cpu) (cpu->regi.f &= ~(1 << 6))
+
 
 
 void execute_instruction(cpu_context *cpu);

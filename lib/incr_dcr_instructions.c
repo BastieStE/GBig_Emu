@@ -21,13 +21,13 @@ void increment_indirect(cpu_context *cpu) {
    bus_write(cpu->regi.hl, result);
 
     cpu->regi.pc += 1;
-    cpu->cycles += 12;
+    INCR_CYCLE(12);
 }
 
 void increment_16(cpu_context *cpu, uint16_t *reg) {
     (*reg)++;
     cpu->regi.pc += 1;
-    cpu->cycles += 8;
+    INCR_CYCLE(8);
 }
 
 void increment(cpu_context *cpu, uint8_t *reg) {
@@ -50,7 +50,7 @@ void increment(cpu_context *cpu, uint8_t *reg) {
     *reg = result;
 
     cpu->regi.pc += 1;
-    cpu->cycles += 4;
+    INCR_CYCLE(4);
 }
 
 void decrement_indirect(cpu_context *cpu) {
@@ -74,13 +74,13 @@ void decrement_indirect(cpu_context *cpu) {
     bus_write(cpu->regi.hl, result);
 
     cpu->regi.pc += 1;
-    cpu->cycles += 12;
+    INCR_CYCLE(12);
 }
 
 void decrement_16(cpu_context *cpu, uint16_t *reg) {
     (*reg)--;
     cpu->regi.pc += 1;
-    cpu->cycles += 8;
+    INCR_CYCLE(8);
 }
 
 void decrement(cpu_context *cpu, uint8_t *reg) {
@@ -103,5 +103,5 @@ void decrement(cpu_context *cpu, uint8_t *reg) {
     *reg = result;
 
     cpu->regi.pc += 1;
-    cpu->cycles += 4;
+    INCR_CYCLE(4);
 }
