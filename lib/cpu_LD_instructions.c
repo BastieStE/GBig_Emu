@@ -1,10 +1,17 @@
-#include "cpu_LD_instructions.h"
+#include "instruction.h"
 
 void load_immediate(cpu_context *cpu, uint8_t *dst) {
     u8 value = bus_read(cpu->regi.pc + 1);
     *dst = value;
     cpu->regi.pc += 2;
     cpu->cycles += 8;
+}
+
+void load_immediate_16(cpu_context *cpu, uint16_t *dst) {
+    uint16_t value = bus_read(cpu->regi.pc + 1) | (bus_read(cpu->regi.pc + 2) << 8);
+    *dst = value;
+    cpu->regi.pc += 3;
+    cpu->cycles += 12;
 }
 
 void load_register(cpu_context *cpu, uint8_t *dst, uint8_t *src) {

@@ -1,117 +1,82 @@
-#ifndef INSTRUCTION_H_
-#define INSTRUCTION_H_
+#pragma once
 
 #include <common.h>
+#include "cpu.h"
+#include "bus.h"
+#include <cpu.h>
 
-typedef enum {
-    AM_IMP,
-    AM_R_D16,
-    AM_R_R,
-    AM_MR_R,
-    AM_R,
-    AM_R_D8,
-    AM_R_MR,
-    AM_R_HLI,
-    AM_R_HLD,
-    AM_HLI_R,
-    AM_HLD_R,
-    AM_R_A8,
-    AM_A8_R,
-    AM_HL_SPR,
-    AM_D16,
-    AM_D8,
-    AM_D16_R,
-    AM_MR_D8,
-    AM_MR,
-    AM_A16_R,
-    AM_R_A16
-} addr_mode;
+void load_immediate(cpu_context *cpu, uint8_t *dst);
+void load_immediate_16(cpu_context *cpu, uint16_t *dst);
+void load_register(cpu_context *cpu, uint8_t *dst, uint8_t *src);
+void add_register(cpu_context *cpu, uint8_t *dst, uint8_t *src);
+void store_direct(cpu_context *cpu, uint8_t *src);
+void store_indirect(cpu_context *cpu, uint8_t *src, uint16_t *address_reg);
+void store_register(cpu_context *cpu, uint8_t *dst, uint8_t *src);
+void load_indirect(cpu_context *cpu, uint8_t *dst, uint16_t *address_reg);
+void load_direct(cpu_context *cpu, uint8_t *dst);
+void and_indirect(cpu_context *cpu);
+void and_register(cpu_context *cpu, uint8_t *dst, uint8_t *src);
+void sbc_register(cpu_context *cpu, uint8_t *dst, uint8_t *src);
+void sub_register(cpu_context *cpu, uint8_t *dst, uint8_t *src);
+void adc_register(cpu_context *cpu, uint8_t *dst, uint8_t *src); 
+void sbc_indirect(cpu_context *cpu);
+void sub_indirect(cpu_context *cpu);
+void adc_indirect(cpu_context *cpu);
+void add_indirect(cpu_context *cpu, uint8_t *src);
+void or_indirect(cpu_context *cpu);
+void or_register(cpu_context *cpu, uint8_t *src);
+void xor_indirect(cpu_context *cpu);
+void xor_register(cpu_context *cpu, uint8_t *src);
 
-typedef enum {
-    RT_NONE,
-    RT_A,
-    RT_F,
-    RT_B,
-    RT_C,
-    RT_D,
-    RT_E,
-    RT_H,
-    RT_L,
-    RT_AF,
-    RT_BC,
-    RT_DE,
-    RT_HL,
-    RT_SP,
-    RT_PC
-} reg_type;
-
-typedef enum {
-    IN_NONE,
-    IN_NOP,
-    IN_LD,
-    IN_INC,
-    IN_DEC,
-    IN_RLCA,
-    IN_ADD,
-    IN_RRCA,
-    IN_STOP,
-    IN_RLA,
-    IN_JR,
-    IN_RRA,
-    IN_DAA,
-    IN_CPL,
-    IN_SCF,
-    IN_CCF,
-    IN_HALT,
-    IN_ADC,
-    IN_SUB,
-    IN_SBC,
-    IN_AND,
-    IN_XOR,
-    IN_OR,
-    IN_CP,
-    IN_POP,
-    IN_JP,
-    IN_PUSH,
-    IN_RET,
-    IN_CB,
-    IN_CALL,
-    IN_RETI,
-    IN_LDH,
-    IN_JPHL,
-    IN_DI,
-    IN_EI,
-    IN_RST,
-    IN_ERR,
-    //CB instructions...
-    IN_RLC, 
-    IN_RRC,
-    IN_RL, 
-    IN_RR,
-    IN_SLA, 
-    IN_SRA,
-    IN_SWAP, 
-    IN_SRL,
-    IN_BIT, 
-    IN_RES, 
-    IN_SET
-} in_type;
-
-typedef enum {
-    CT_NONE, CT_NZ, CT_Z, CT_NC, CT_C
-} cond_type;
-
-typedef struct {
-    in_type type;
-    addr_mode mode;
-    reg_type reg_1;
-    reg_type reg_2;
-    cond_type cond;
-    u8 param;
-} instruction;
-
-instruction *get_instr_by_opcode(u8 opcode);
-
-char *inst_name(in_type t);
-
-#endif /* !INSTRUCTION_H_ */
+void cp_register(cpu_context *cpu, uint8_t *src);
+void cp_indirect(cpu_context *cpu);
+void cp_immediate(cpu_context *cpu);
+void xor_immediate(cpu_context *cpu);
+void and_immediate(cpu_context *cpu);
+void sbc_immediate(cpu_context *cpu);
+void sub_immediate(cpu_context *cpu);
+void adc_immediate(cpu_context *cpu);
+void add_immediate(cpu_context *cpu);
+void store_immediate(cpu_context *cpu);
+void store_direct_16(cpu_context *cpu, uint16_t *reg);
+void ld_sp_hl(cpu_context *cpu);
+void ld_absolute(cpu_context *cpu);
+void ld_io_offset_indirect(cpu_context *cpu);
+void ld_io_offset(cpu_context *cpu);
+void ld_hl_sp_offset(cpu_context *cpu);
+void add_sp_offset(cpu_context *cpu);
+void add_16(cpu_context *cpu, uint16_t *reg);
+void increment_indirect(cpu_context *cpu);
+void increment_16(cpu_context *cpu, uint16_t *reg);
+void increment(cpu_context *cpu, uint8_t *reg);
+void decrement_indirect(cpu_context *cpu);
+void decrement_16(cpu_context *cpu, uint16_t *reg);
+void decrement(cpu_context *cpu, uint8_t *reg);
+void push_register_pair(cpu_context *cpu, uint16_t reg);
+void stop(cpu_context *cpu);
+void decimal_adjust(cpu_context *cpu);
+void complement(cpu_context *cpu);
+void set_carry(cpu_context *cpu);
+void halt(cpu_context *cpu);
+void complement_carry(cpu_context *cpu);
+void call_cond(cpu_context *cpu, bool condition);
+void pop_register_pair(cpu_context *cpu, uint16_t *reg);
+void ret_cond(cpu_context *cpu, bool condition);
+void ret(cpu_context *cpu);
+void restart(cpu_context *cpu, uint8_t address);
+void execute_cb_instruction(cpu_context *cpu);
+void call(cpu_context *cpu);
+void invalid_opcode(cpu_context *cpu);
+void reti(cpu_context *cpu);
+void or_immediate(cpu_context *cpu);
+void enable_interrupts(cpu_context *cpu);
+void disable_interrupts(cpu_context *cpu);
+void jump_relative_cond(cpu_context *cpu, bool condition);
+void jump_indirect(cpu_context *cpu);
+void jump_cond(cpu_context *cpu, bool condition);
+void jump_relative(cpu_context *cpu);
+void jump(cpu_context *cpu);
+void rotate_left_carry(cpu_context *cpu, uint8_t *reg);
+void rotate_right_carry(cpu_context *cpu, uint8_t *reg);
+void rotate_left(cpu_context *cpu, uint8_t *reg);
+void rotate_right(cpu_context *cpu, uint8_t *reg);

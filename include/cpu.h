@@ -2,7 +2,6 @@
 #define CPU_H_
 
 #include <common.h>
-#include <instruction.h>
 #include <orchestr.h>
 
 typedef struct {
@@ -24,6 +23,8 @@ typedef struct {
         };u16 hl;};
     u16 pc;
     u16 sp;
+    u8 ie_register;    //(Interrupt Enable Register)
+    u8 if_register;    //(Interrupt Flag Register)
 } cpu_registers;
 
 typedef struct
@@ -35,15 +36,11 @@ typedef struct
 
     u8 cycles;
 
-    uint8_t memory[0x10000];
-
     bool halted;
     bool stepping;
     
     bool IME;
     bool IME_delay;
-    u8 ie_register;    //(Interrupt Enable Register)
-    u8 if_register;    //(Interrupt Flag Register)
 } cpu_context;
 
 bool cpu_step(cpu_context *ctx);
@@ -55,6 +52,9 @@ typedef void (*IN_PROC)(cpu_context *);
 
 #define ZERO_FLAG BIT(cpu->regi.f, 7)
 #define CARRY_FLAG BIT(cpu->regi.f, 4)
+#define SUBTRACT_FLAG (1 << 6)
+#define HALF_CARRY_FLAG (1 << 5)
+
 
 #define SET_ZERO_FLAG(cpu) (cpu->regi.f |= (1 << 7))
 #define CLEAR_ZERO_FLAG(cpu) (cpu->regi.f &= ~(1 << 7))
@@ -67,7 +67,5 @@ typedef void (*IN_PROC)(cpu_context *);
 
 
 void execute_instruction(cpu_context *cpu);
-u16 cpu_read_reg(reg_type rt, cpu_context *ctx);
-void cpu_set_reg(reg_type rt, u16 val, cpu_context *ctx);
 
 #endif /* !CPU_H_ */

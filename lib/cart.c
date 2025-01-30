@@ -1,5 +1,5 @@
 #include <cart.h>
-
+/*
 static cart_context cart_ctx;
 
 static const char *ROM_TYPES[] = {
@@ -196,4 +196,4 @@ void cart_write(uint16_t address, uint8_t value) {
             cart_ctx.ram_data[ram_offset + (address - 0xA000)] = value;
         }
     }
-}
+} */

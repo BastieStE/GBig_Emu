@@ -1,11 +1,10 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <orchestr.h>
+#include "wram.h"
 #include <cpu.h>
 #include <cart.h>
 #include <cpu.h>
-#include "bios.c"
-#include <wram.h>
 
 int ctx_init(main_context *ctx)
 {
@@ -23,8 +22,6 @@ int run(int argc, char **argv) {
     init_wram();
 
     load_bios("../gbc_bios.bin");
-    execute_bios(&cpu_ctx);
-    cpu_ctx.regi.pc = 0x0100;
 
     while(ctx.running) {
         printf("%d ticks\n", ctx.ticks);

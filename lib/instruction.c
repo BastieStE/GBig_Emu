@@ -32,7 +32,7 @@ void execute_instruction(cpu_context *cpu) {
             store_direct_16(cpu, cpu->regi.sp);
             break;
         case 0x09:
-            add_16(cpu, &cpu->regi.hl, cpu->regi.bc);
+            add_16(cpu, cpu->regi.bc);
             break;
         case 0x0A:
             load_indirect(cpu, &cpu->regi.a, &cpu->regi.bc);
@@ -80,7 +80,7 @@ void execute_instruction(cpu_context *cpu) {
             jump_relative(cpu);
             break;
         case 0x19:
-            add_16(cpu, &cpu->regi.hl, cpu->regi.de);
+            add_16(cpu, cpu->regi.de);
             break;
         case 0x1A:
             load_indirect(cpu, &cpu->regi.a, &cpu->regi.de);
@@ -129,7 +129,7 @@ void execute_instruction(cpu_context *cpu) {
             jump_relative_cond(cpu, !(cpu->regi.f & ZERO_FLAG));
             break;
         case 0x29:
-            add_16(cpu, &cpu->regi.hl, cpu->regi.hl);
+            add_16(cpu, cpu->regi.hl);
             break;
         case 0x2A:
             load_indirect(cpu, &cpu->regi.a, &cpu->regi.hl);
@@ -164,13 +164,13 @@ void execute_instruction(cpu_context *cpu) {
             increment_16(cpu, &cpu->regi.sp);
             break;
         case 0x34:
-            increment_indirect(cpu, &cpu->regi.hl);
+            increment_indirect(cpu);
             break;
         case 0x35:
-            decrement_indirect(cpu, &cpu->regi.hl);
+            decrement_indirect(cpu);
             break;
         case 0x36:
-            store_immediate(cpu, &cpu->regi.hl);
+            store_immediate(cpu);
             break;
         case 0x37:
             set_carry(cpu);
@@ -179,7 +179,7 @@ void execute_instruction(cpu_context *cpu) {
             jump_relative_cond(cpu, !(cpu->regi.f & CARRY_FLAG));
             break;
         case 0x39:
-            add_16(cpu, &cpu->regi.hl, cpu->regi.sp);
+            add_16(cpu, cpu->regi.sp);
             break;
         case 0x3A:
             load_indirect(cpu, &cpu->regi.a, &cpu->regi.hl);
@@ -411,7 +411,7 @@ void execute_instruction(cpu_context *cpu) {
             add_register(cpu, &cpu->regi.a, &cpu->regi.l);
             break;
         case 0x86:
-            add_indirect(cpu, &cpu->regi.a, &cpu->regi.hl);
+            add_indirect(cpu, &cpu->regi.a);
             break;
         case 0x87:
             add_register(cpu, &cpu->regi.a, &cpu->regi.a);
@@ -435,7 +435,7 @@ void execute_instruction(cpu_context *cpu) {
             adc_register(cpu, &cpu->regi.a, &cpu->regi.l);
             break;
         case 0x8E:
-            adc_indirect(cpu, &cpu->regi.a, &cpu->regi.hl);
+            adc_indirect(cpu);
             break;
         case 0x8F:
             adc_register(cpu, &cpu->regi.a, &cpu->regi.a);
@@ -459,7 +459,7 @@ void execute_instruction(cpu_context *cpu) {
             sub_register(cpu, &cpu->regi.a, &cpu->regi.l);
             break;
         case 0x96:
-            sub_indirect(cpu, &cpu->regi.a, &cpu->regi.hl);
+            sub_indirect(cpu);
             break;
         case 0x97:
             sub_register(cpu, &cpu->regi.a, &cpu->regi.a);
@@ -483,7 +483,7 @@ void execute_instruction(cpu_context *cpu) {
             sbc_register(cpu, &cpu->regi.a, &cpu->regi.l);
             break;
         case 0x9E:
-            sbc_indirect(cpu, &cpu->regi.a, &cpu->regi.hl);
+            sbc_indirect(cpu);
             break;
         case 0x9F:
             sbc_register(cpu, &cpu->regi.a, &cpu->regi.a);
@@ -507,82 +507,82 @@ void execute_instruction(cpu_context *cpu) {
             and_register(cpu, &cpu->regi.a, &cpu->regi.l);
             break;
         case 0xA6:
-            and_indirect(cpu, &cpu->regi.a, &cpu->regi.hl);
+            and_indirect(cpu);
             break;
         case 0xA7:
             and_register(cpu, &cpu->regi.a, &cpu->regi.a);
             break;
         case 0xA8:
-            xor_register(cpu, &cpu->regi.a, &cpu->regi.b);
+            xor_register(cpu, &cpu->regi.b);
             break;
         case 0xA9:
-            xor_register(cpu, &cpu->regi.a, &cpu->regi.c);
+            xor_register(cpu, &cpu->regi.c);
             break;
         case 0xAA:
-            xor_register(cpu, &cpu->regi.a, &cpu->regi.d);
+            xor_register(cpu, &cpu->regi.d);
             break;
         case 0xAB:
-            xor_register(cpu, &cpu->regi.a, &cpu->regi.e);
+            xor_register(cpu, &cpu->regi.e);
             break;
         case 0xAC:
-            xor_register(cpu, &cpu->regi.a, &cpu->regi.h);
+            xor_register(cpu, &cpu->regi.h);
             break;
         case 0xAD:
-            xor_register(cpu, &cpu->regi.a, &cpu->regi.l);
+            xor_register(cpu, &cpu->regi.l);
             break;
         case 0xAE:
-            xor_indirect(cpu, &cpu->regi.a, &cpu->regi.hl);
+            xor_indirect(cpu);
             break;
         case 0xAF:
-            xor_register(cpu, &cpu->regi.a, &cpu->regi.a);
+            xor_register(cpu, &cpu->regi.a);
             break;
         case 0xB0:
-            or_register(cpu, &cpu->regi.a, &cpu->regi.b);
+            or_register(cpu, &cpu->regi.b);
             break;
         case 0xB1:
-            or_register(cpu, &cpu->regi.a, &cpu->regi.c);
+            or_register(cpu, &cpu->regi.c);
             break;
         case 0xB2:
-            or_register(cpu, &cpu->regi.a, &cpu->regi.d);
+            or_register(cpu, &cpu->regi.d);
             break;
         case 0xB3:
-            or_register(cpu, &cpu->regi.a, &cpu->regi.e);
+            or_register(cpu, &cpu->regi.e);
             break;
         case 0xB4:
-            or_register(cpu, &cpu->regi.a, &cpu->regi.h);
+            or_register(cpu, &cpu->regi.h);
             break;
         case 0xB5:
-            or_register(cpu, &cpu->regi.a, &cpu->regi.l);
+            or_register(cpu, &cpu->regi.l);
             break;
         case 0xB6:
-            or_indirect(cpu, &cpu->regi.a, &cpu->regi.hl);
+            or_indirect(cpu);
             break;
         case 0xB7:
-            or_register(cpu, &cpu->regi.a, &cpu->regi.a);
+            or_register(cpu, &cpu->regi.a);
             break;
         case 0xB8:
-            cp_register(cpu, &cpu->regi.a, &cpu->regi.b);
+            cp_register(cpu, &cpu->regi.b);
             break;
         case 0xB9:
-            cp_register(cpu, &cpu->regi.a, &cpu->regi.c);
+            cp_register(cpu, &cpu->regi.c);
             break;
         case 0xBA:
-            cp_register(cpu, &cpu->regi.a, &cpu->regi.d);
+            cp_register(cpu, &cpu->regi.d);
             break;
         case 0xBB:
-            cp_register(cpu, &cpu->regi.a, &cpu->regi.e);
+            cp_register(cpu, &cpu->regi.e);
             break;
         case 0xBC:
-            cp_register(cpu, &cpu->regi.a, &cpu->regi.h);
+            cp_register(cpu, &cpu->regi.h);
             break;
         case 0xBD:
-            cp_register(cpu, &cpu->regi.a, &cpu->regi.l);
+            cp_register(cpu, &cpu->regi.l);
             break;
         case 0xBE:
-            cp_indirect(cpu, &cpu->regi.a, &cpu->regi.hl);
+            cp_indirect(cpu);
             break;
         case 0xBF:
-            cp_register(cpu, &cpu->regi.a, &cpu->regi.a);
+            cp_register(cpu, &cpu->regi.a);
             break;
         case 0xC0:
             ret_cond(cpu, !(cpu->regi.f & ZERO_FLAG));
@@ -603,7 +603,7 @@ void execute_instruction(cpu_context *cpu) {
             push_register_pair(cpu, &cpu->regi.bc);
             break;
         case 0xC6:
-            add_immediate(cpu, &cpu->regi.a);
+            add_immediate(cpu);
             break;
         case 0xC7:
             restart(cpu, 0x00);
@@ -627,7 +627,7 @@ void execute_instruction(cpu_context *cpu) {
             call(cpu);
             break;
         case 0xCE:
-            adc_immediate(cpu, &cpu->regi.a);
+            adc_immediate(cpu);
             break;
         case 0xCF:
             restart(cpu, 0x08);
@@ -651,7 +651,7 @@ void execute_instruction(cpu_context *cpu) {
             push_register_pair(cpu, &cpu->regi.de);
             break;
         case 0xD6:
-            sub_immediate(cpu, &cpu->regi.a);
+            sub_immediate(cpu);
             break;
         case 0xD7:
             restart(cpu, 0x10);
@@ -675,19 +675,19 @@ void execute_instruction(cpu_context *cpu) {
             invalid_opcode(cpu);
             break;
         case 0xDE:
-            sbc_immediate(cpu, &cpu->regi.a);
+            sbc_immediate(cpu);
             break;
         case 0xDF:
             restart(cpu, 0x18);
             break;
         case 0xE0:
-            ld_io_offset(cpu, &cpu->regi.a);
+            ld_io_offset_store(cpu);
             break;
         case 0xE1:
             pop_register_pair(cpu, &cpu->regi.hl);
             break;
         case 0xE2:
-            ld_io_offset_indirect(cpu, &cpu->regi.c, &cpu->regi.a);
+            ld_io_offset_indirect_store(cpu);
             break;
         case 0xE3:
             invalid_opcode(cpu);
@@ -699,7 +699,7 @@ void execute_instruction(cpu_context *cpu) {
             push_register_pair(cpu, &cpu->regi.hl);
             break;
         case 0xE6:
-            and_immediate(cpu, &cpu->regi.a);
+            and_immediate(cpu);
             break;
         case 0xE7:
             restart(cpu, 0x20);
@@ -708,10 +708,10 @@ void execute_instruction(cpu_context *cpu) {
             add_sp_offset(cpu);
             break;
         case 0xE9:
-            jump_indirect(cpu, &cpu->regi.hl);
+            jump_indirect(cpu);
             break;
         case 0xEA:
-            ld_absolute(cpu, &cpu->regi.a);
+            ld_absolute_store(cpu);
             break;
         case 0xEB:
             invalid_opcode(cpu);
@@ -723,19 +723,19 @@ void execute_instruction(cpu_context *cpu) {
             invalid_opcode(cpu);
             break;
         case 0xEE:
-            xor_immediate(cpu, &cpu->regi.a);
+            xor_immediate(cpu);
             break;
         case 0xEF:
             restart(cpu, 0x28);
             break;
         case 0xF0:
-            ld_io_offset(cpu, &cpu->regi.a);
+            ld_io_offset(cpu);
             break;
         case 0xF1:
             pop_register_pair(cpu, &cpu->regi.af);
             break;
         case 0xF2:
-            ld_io_offset_indirect(cpu, &cpu->regi.a, &cpu->regi.c);
+            ld_io_offset_indirect(cpu);
             break;
         case 0xF3:
             disable_interrupts(cpu);
@@ -747,7 +747,7 @@ void execute_instruction(cpu_context *cpu) {
             push_register_pair(cpu, &cpu->regi.af);
             break;
         case 0xF6:
-            or_immediate(cpu, &cpu->regi.a);
+            or_immediate(cpu);
             break;
         case 0xF7:
             restart(cpu, 0x30);
@@ -759,7 +759,7 @@ void execute_instruction(cpu_context *cpu) {
             ld_sp_hl(cpu);
             break;
         case 0xFA:
-            ld_absolute(cpu, &cpu->regi.a);
+            ld_absolute(cpu);
             break;
         case 0xFB:
             enable_interrupts(cpu);
@@ -771,7 +771,7 @@ void execute_instruction(cpu_context *cpu) {
             invalid_opcode(cpu);
             break;
         case 0xFE:
-            cp_immediate(cpu, &cpu->regi.a);
+            cp_immediate(cpu);
             break;
         case 0xFF:
             restart(cpu, 0x38);

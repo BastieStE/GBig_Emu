@@ -1,32 +1,20 @@
-#include <cpu.h>
+#include "cpu.h"
+#include <bus.h>
 
-void load_bios(const char *bios_filename) {
-    FILE *bios_file = fopen(bios_filename, "rb");
-    if (!bios_file) {
-        printf("Error: BIOS file could not be opened.\n");
-        exit(1);  // Exit if the BIOS file can't be opened
+void load_bios(cpu_context *ctx, const char *bios_path) {
+    FILE *bios_file = fopen(bios_path, "rb");
+    if (bios_file == NULL) {
+        fprintf(stderr, "Error: Could not load BIOS file\n");
+        return;
     }
 
-    // Read BIOS into a buffer
-    uint8_t bios[BIOS_SIZE];
-    size_t bytes_read = fread(bios, 1, BIOS_SIZE, bios_file);
-    if (bytes_read != BIOS_SIZE) {
-        printf("Error: BIOS file does not have the expected size.\n");
-        fclose(bios_file);
-        exit(1);
-    }
-
-    for (uint16_t i = 0; i < BIOS_SIZE; i++) {
-        bus_write(i, bios[i]);
-    }
-
-    printf("BIOS loaded successfully.\n");
-
+    // Read BIOS data into the memory space reserved for the BIOS (0x0000–0x00FF)
+    uint8_t bios_data[BIOS_SIZE];
+    fread(bios_data, 1, BIOS_SIZE, bios_file);
     fclose(bios_file);
-}
 
-void execute_bios(cpu_context *cpu) {
-    while (cpu->regi.pc < BIOS_SIZE) {
-        execute_instruction(cpu);
+    // Load BIOS into the bus memory (0x0000–0x00FF)
+    for (int i = 0; i < BIOS_SIZE; ++i) {
+        bus_write(i, bios_data[i]);
     }
 }

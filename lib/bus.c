@@ -1,6 +1,4 @@
 #include <bus.h>
-#include <cart.h>
-#include <wram.h>
 
 // 0x0000 - 0x3FFF : ROM Bank 0 (fixed)
 // 0x4000 - 0x7FFF : ROM Bank 1 (Switchable)
@@ -16,13 +14,19 @@
 // 0xFF00 - 0xFF7F : I/O Registers
 // 0xFF80 - 0xFFFE : Zero Page
 
+uint8_t bios_mem[0x100];
+
 u8 bus_read(u16 address) {
+    if (address < 0x900 && bios_mem[0xFF50] == 0x00) {
+        return bios_mem[address];
+    } ///  Bios Managment
+
     if (address < 0x8000) {
-        return cart_read(address);         //ROM Data
+     //   return cart_read(address);         //ROM Data
     } else if (address < 0xA000) {
      //   return ppu_vram_read(address);     //Char/Map Data
     } else if (address < 0xC000) {
-        return cart_read(address);         //Cartridge RAM
+     //   return cart_read(address);         //Cartridge RAM
     } else if (address < 0xE000) {
         return read_wram(address);         //WRAM (Working RAM)
     } else if (address < 0xFE00) {
@@ -39,19 +43,23 @@ u8 bus_read(u16 address) {
    // return hram_read(address);
 }
 
-/*la mémoire est gérée indépendament par chaque composant en interne, a voir si je préfere faire une 
-grosse classe mémoire et faire passer tout les composants par cette classe pour accéder a la mémoire*/
-
-
 void bus_write(u16 address, u8 value) {
+    if (address == 0xFF50) {
+        bios_mem[0xFF50] = value;  // BIOS disable control register
+        if (value == 0x01) {
+            printf("BIOS disabled, switching to cartridge ROM.\n");
+        }
+        return;
+    } /// Bios Handling
+
     if (address < 0x8000) {
-       cart_write(address, value);        //ROM Data
+       //cart_write(address, value);        //ROM Data
     } else if (address < 0xA000) {
      //   ppu_vram_write(address, value);    //Char/Map Data
     } else if (address < 0xC000) {
-       cart_write(address, value);        //EXT-RAM
+       //cart_write(address, value);        //EXT-RAM
     } else if (address < 0xE000) {
-       write_wram(address, value);        //WRAM
+       // write_wram(address, value);        //WRAM
     } else if (address < 0xFE00) {
         return;                            //reserved echo ram
     } else if (address < 0xFEA0) {

@@ -249,6 +249,54 @@ lib/cpu_LD_instructions.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/YourExecutable.dir/build.make CMakeFiles/YourExecutable.dir/lib/cpu_LD_instructions.c.s
 .PHONY : lib/cpu_LD_instructions.c.s
 
+lib/cpu_others_instructions.o: lib/cpu_others_instructions.c.o
+.PHONY : lib/cpu_others_instructions.o
+
+# target to build an object file
+lib/cpu_others_instructions.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/YourExecutable.dir/build.make CMakeFiles/YourExecutable.dir/lib/cpu_others_instructions.c.o
+.PHONY : lib/cpu_others_instructions.c.o
+
+lib/cpu_others_instructions.i: lib/cpu_others_instructions.c.i
+.PHONY : lib/cpu_others_instructions.i
+
+# target to preprocess a source file
+lib/cpu_others_instructions.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/YourExecutable.dir/build.make CMakeFiles/YourExecutable.dir/lib/cpu_others_instructions.c.i
+.PHONY : lib/cpu_others_instructions.c.i
+
+lib/cpu_others_instructions.s: lib/cpu_others_instructions.c.s
+.PHONY : lib/cpu_others_instructions.s
+
+# target to generate assembly for a file
+lib/cpu_others_instructions.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/YourExecutable.dir/build.make CMakeFiles/YourExecutable.dir/lib/cpu_others_instructions.c.s
+.PHONY : lib/cpu_others_instructions.c.s
+
+lib/incr_dcr_instructions.o: lib/incr_dcr_instructions.c.o
+.PHONY : lib/incr_dcr_instructions.o
+
+# target to build an object file
+lib/incr_dcr_instructions.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/YourExecutable.dir/build.make CMakeFiles/YourExecutable.dir/lib/incr_dcr_instructions.c.o
+.PHONY : lib/incr_dcr_instructions.c.o
+
+lib/incr_dcr_instructions.i: lib/incr_dcr_instructions.c.i
+.PHONY : lib/incr_dcr_instructions.i
+
+# target to preprocess a source file
+lib/incr_dcr_instructions.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/YourExecutable.dir/build.make CMakeFiles/YourExecutable.dir/lib/incr_dcr_instructions.c.i
+.PHONY : lib/incr_dcr_instructions.c.i
+
+lib/incr_dcr_instructions.s: lib/incr_dcr_instructions.c.s
+.PHONY : lib/incr_dcr_instructions.s
+
+# target to generate assembly for a file
+lib/incr_dcr_instructions.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/YourExecutable.dir/build.make CMakeFiles/YourExecutable.dir/lib/incr_dcr_instructions.c.s
+.PHONY : lib/incr_dcr_instructions.c.s
+
 lib/instruction.o: lib/instruction.c.o
 .PHONY : lib/instruction.o
 
@@ -272,6 +320,102 @@ lib/instruction.s: lib/instruction.c.s
 lib/instruction.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/YourExecutable.dir/build.make CMakeFiles/YourExecutable.dir/lib/instruction.c.s
 .PHONY : lib/instruction.c.s
+
+lib/jump_rotate_instructions.o: lib/jump_rotate_instructions.c.o
+.PHONY : lib/jump_rotate_instructions.o
+
+# target to build an object file
+lib/jump_rotate_instructions.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/YourExecutable.dir/build.make CMakeFiles/YourExecutable.dir/lib/jump_rotate_instructions.c.o
+.PHONY : lib/jump_rotate_instructions.c.o
+
+lib/jump_rotate_instructions.i: lib/jump_rotate_instructions.c.i
+.PHONY : lib/jump_rotate_instructions.i
+
+# target to preprocess a source file
+lib/jump_rotate_instructions.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/YourExecutable.dir/build.make CMakeFiles/YourExecutable.dir/lib/jump_rotate_instructions.c.i
+.PHONY : lib/jump_rotate_instructions.c.i
+
+lib/jump_rotate_instructions.s: lib/jump_rotate_instructions.c.s
+.PHONY : lib/jump_rotate_instructions.s
+
+# target to generate assembly for a file
+lib/jump_rotate_instructions.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/YourExecutable.dir/build.make CMakeFiles/YourExecutable.dir/lib/jump_rotate_instructions.c.s
+.PHONY : lib/jump_rotate_instructions.c.s
+
+lib/logic_instructions.o: lib/logic_instructions.c.o
+.PHONY : lib/logic_instructions.o
+
+# target to build an object file
+lib/logic_instructions.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/YourExecutable.dir/build.make CMakeFiles/YourExecutable.dir/lib/logic_instructions.c.o
+.PHONY : lib/logic_instructions.c.o
+
+lib/logic_instructions.i: lib/logic_instructions.c.i
+.PHONY : lib/logic_instructions.i
+
+# target to preprocess a source file
+lib/logic_instructions.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/YourExecutable.dir/build.make CMakeFiles/YourExecutable.dir/lib/logic_instructions.c.i
+.PHONY : lib/logic_instructions.c.i
+
+lib/logic_instructions.s: lib/logic_instructions.c.s
+.PHONY : lib/logic_instructions.s
+
+# target to generate assembly for a file
+lib/logic_instructions.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/YourExecutable.dir/build.make CMakeFiles/YourExecutable.dir/lib/logic_instructions.c.s
+.PHONY : lib/logic_instructions.c.s
+
+lib/memory_instructions.o: lib/memory_instructions.c.o
+.PHONY : lib/memory_instructions.o
+
+# target to build an object file
+lib/memory_instructions.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/YourExecutable.dir/build.make CMakeFiles/YourExecutable.dir/lib/memory_instructions.c.o
+.PHONY : lib/memory_instructions.c.o
+
+lib/memory_instructions.i: lib/memory_instructions.c.i
+.PHONY : lib/memory_instructions.i
+
+# target to preprocess a source file
+lib/memory_instructions.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/YourExecutable.dir/build.make CMakeFiles/YourExecutable.dir/lib/memory_instructions.c.i
+.PHONY : lib/memory_instructions.c.i
+
+lib/memory_instructions.s: lib/memory_instructions.c.s
+.PHONY : lib/memory_instructions.s
+
+# target to generate assembly for a file
+lib/memory_instructions.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/YourExecutable.dir/build.make CMakeFiles/YourExecutable.dir/lib/memory_instructions.c.s
+.PHONY : lib/memory_instructions.c.s
+
+lib/more_instructions.o: lib/more_instructions.c.o
+.PHONY : lib/more_instructions.o
+
+# target to build an object file
+lib/more_instructions.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/YourExecutable.dir/build.make CMakeFiles/YourExecutable.dir/lib/more_instructions.c.o
+.PHONY : lib/more_instructions.c.o
+
+lib/more_instructions.i: lib/more_instructions.c.i
+.PHONY : lib/more_instructions.i
+
+# target to preprocess a source file
+lib/more_instructions.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/YourExecutable.dir/build.make CMakeFiles/YourExecutable.dir/lib/more_instructions.c.i
+.PHONY : lib/more_instructions.c.i
+
+lib/more_instructions.s: lib/more_instructions.c.s
+.PHONY : lib/more_instructions.s
+
+# target to generate assembly for a file
+lib/more_instructions.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/YourExecutable.dir/build.make CMakeFiles/YourExecutable.dir/lib/more_instructions.c.s
+.PHONY : lib/more_instructions.c.s
 
 lib/orchestr.o: lib/orchestr.c.o
 .PHONY : lib/orchestr.o
@@ -393,9 +537,27 @@ help:
 	@echo "... lib/cpu_LD_instructions.o"
 	@echo "... lib/cpu_LD_instructions.i"
 	@echo "... lib/cpu_LD_instructions.s"
+	@echo "... lib/cpu_others_instructions.o"
+	@echo "... lib/cpu_others_instructions.i"
+	@echo "... lib/cpu_others_instructions.s"
+	@echo "... lib/incr_dcr_instructions.o"
+	@echo "... lib/incr_dcr_instructions.i"
+	@echo "... lib/incr_dcr_instructions.s"
 	@echo "... lib/instruction.o"
 	@echo "... lib/instruction.i"
 	@echo "... lib/instruction.s"
+	@echo "... lib/jump_rotate_instructions.o"
+	@echo "... lib/jump_rotate_instructions.i"
+	@echo "... lib/jump_rotate_instructions.s"
+	@echo "... lib/logic_instructions.o"
+	@echo "... lib/logic_instructions.i"
+	@echo "... lib/logic_instructions.s"
+	@echo "... lib/memory_instructions.o"
+	@echo "... lib/memory_instructions.i"
+	@echo "... lib/memory_instructions.s"
+	@echo "... lib/more_instructions.o"
+	@echo "... lib/more_instructions.i"
+	@echo "... lib/more_instructions.s"
 	@echo "... lib/orchestr.o"
 	@echo "... lib/orchestr.i"
 	@echo "... lib/orchestr.s"

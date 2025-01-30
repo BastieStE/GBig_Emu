@@ -1,5 +1,9 @@
 #include "wram.h"
 
+u8 wram[WRAM_NUM_BANKS][WRAM_BANK_SIZE];  // 8 banks of 4 KB each
+u8 wram_bank;  // Active bank for `0xD000 - 0xDFFF` (default: 1)
+
+
 void init_wram() {
     for (int bank = 0; bank < WRAM_NUM_BANKS; bank++) {
         for (int i = 0; i < WRAM_BANK_SIZE; i++) {
