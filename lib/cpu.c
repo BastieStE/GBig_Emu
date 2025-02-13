@@ -3,10 +3,11 @@
 #include <bus.h>
 
 
-/*   o | Ajouter le timing aux instructions
-     o | Implémenter vraiment toutes les instruction
-     d | Exécuter le bios dans la boucle principale
-     x | Etudier le PPU */
+/*  
+        Reactiver l'execution bios + MBC0
+        Implémenter les IO du PPU
+        Architecture générale du PPU
+*/
 
 void cpu_init(cpu_context *ctx, const char *bios_path) {
 
