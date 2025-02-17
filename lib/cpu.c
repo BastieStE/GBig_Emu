@@ -9,9 +9,8 @@
         Architecture générale du PPU
 */
 
-void cpu_init(cpu_context *ctx, const char *bios_path) {
-
-    // Set the program counter to the start of BIOS (0x0000)
+void cpu_init(cpu_context *ctx, const char *bios_path) 
+{
     ctx->regi.pc = 0x0000;
 
     // Other initialization steps (set up registers, flags, etc.)

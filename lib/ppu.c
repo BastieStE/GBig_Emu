@@ -47,9 +47,7 @@ void updatePPU(ppu_context *ppu, int cycles) {
         case PPU_MODE_VRAM:
             if (ppu->cycleCounter >= 172) {
                 ppu->cycleCounter -= 172;
-                // During Pixel Transfer, you render the scanline:
                 renderScanline(ppu);
-                // Transition to HBlank after rendering the scanline:
                 ppu->mode = PPU_MODE_HBLANK;
             }
             break;
@@ -65,7 +63,6 @@ void updatePPU(ppu_context *ppu, int cycles) {
                     ppu->mode = PPU_MODE_VBLANK;
                     triggerVBlankInterrupt();
                 } else {
-                    // Start the next scanline’s OAM search:
                     ppu->mode = PPU_MODE_OAM;
                 }
             }
