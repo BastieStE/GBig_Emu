@@ -9,6 +9,11 @@ typedef struct {
     int ticks;
 } main_context;
 
-
+typedef struct {
+    int speed;
+    int step;
+    bool is_on;
+    bool is_display_register;
+} debug_ctx;
 
 #endif /* !EMU_H_ */

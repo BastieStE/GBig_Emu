@@ -117,24 +117,24 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named YourExecutable
+# Target rules for targets named GBemu
 
 # Build rule for target.
-YourExecutable: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 YourExecutable
-.PHONY : YourExecutable
+GBemu: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 GBemu
+.PHONY : GBemu
 
 # fast build rule for target.
-YourExecutable/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/YourExecutable.dir/build.make CMakeFiles/YourExecutable.dir/build
-.PHONY : YourExecutable/fast
+GBemu/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/GBemu.dir/build.make CMakeFiles/GBemu.dir/build
+.PHONY : GBemu/fast
 
 lib/bios.o: lib/bios.c.o
 .PHONY : lib/bios.o
 
 # target to build an object file
 lib/bios.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/YourExecutable.dir/build.make CMakeFiles/YourExecutable.dir/lib/bios.c.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/GBemu.dir/build.make CMakeFiles/GBemu.dir/lib/bios.c.o
 .PHONY : lib/bios.c.o
 
 lib/bios.i: lib/bios.c.i
@@ -142,7 +142,7 @@ lib/bios.i: lib/bios.c.i
 
 # target to preprocess a source file
 lib/bios.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/YourExecutable.dir/build.make CMakeFiles/YourExecutable.dir/lib/bios.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/GBemu.dir/build.make CMakeFiles/GBemu.dir/lib/bios.c.i
 .PHONY : lib/bios.c.i
 
 lib/bios.s: lib/bios.c.s
@@ -150,7 +150,7 @@ lib/bios.s: lib/bios.c.s
 
 # target to generate assembly for a file
 lib/bios.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/YourExecutable.dir/build.make CMakeFiles/YourExecutable.dir/lib/bios.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/GBemu.dir/build.make CMakeFiles/GBemu.dir/lib/bios.c.s
 .PHONY : lib/bios.c.s
 
 lib/bus.o: lib/bus.c.o
@@ -158,7 +158,7 @@ lib/bus.o: lib/bus.c.o
 
 # target to build an object file
 lib/bus.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/YourExecutable.dir/build.make CMakeFiles/YourExecutable.dir/lib/bus.c.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/GBemu.dir/build.make CMakeFiles/GBemu.dir/lib/bus.c.o
 .PHONY : lib/bus.c.o
 
 lib/bus.i: lib/bus.c.i
@@ -166,7 +166,7 @@ lib/bus.i: lib/bus.c.i
 
 # target to preprocess a source file
 lib/bus.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/YourExecutable.dir/build.make CMakeFiles/YourExecutable.dir/lib/bus.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/GBemu.dir/build.make CMakeFiles/GBemu.dir/lib/bus.c.i
 .PHONY : lib/bus.c.i
 
 lib/bus.s: lib/bus.c.s
@@ -174,7 +174,7 @@ lib/bus.s: lib/bus.c.s
 
 # target to generate assembly for a file
 lib/bus.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/YourExecutable.dir/build.make CMakeFiles/YourExecutable.dir/lib/bus.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/GBemu.dir/build.make CMakeFiles/GBemu.dir/lib/bus.c.s
 .PHONY : lib/bus.c.s
 
 lib/cart.o: lib/cart.c.o
@@ -182,7 +182,7 @@ lib/cart.o: lib/cart.c.o
 
 # target to build an object file
 lib/cart.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/YourExecutable.dir/build.make CMakeFiles/YourExecutable.dir/lib/cart.c.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/GBemu.dir/build.make CMakeFiles/GBemu.dir/lib/cart.c.o
 .PHONY : lib/cart.c.o
 
 lib/cart.i: lib/cart.c.i
@@ -190,7 +190,7 @@ lib/cart.i: lib/cart.c.i
 
 # target to preprocess a source file
 lib/cart.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/YourExecutable.dir/build.make CMakeFiles/YourExecutable.dir/lib/cart.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/GBemu.dir/build.make CMakeFiles/GBemu.dir/lib/cart.c.i
 .PHONY : lib/cart.c.i
 
 lib/cart.s: lib/cart.c.s
@@ -198,7 +198,7 @@ lib/cart.s: lib/cart.c.s
 
 # target to generate assembly for a file
 lib/cart.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/YourExecutable.dir/build.make CMakeFiles/YourExecutable.dir/lib/cart.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/GBemu.dir/build.make CMakeFiles/GBemu.dir/lib/cart.c.s
 .PHONY : lib/cart.c.s
 
 lib/cpu.o: lib/cpu.c.o
@@ -206,7 +206,7 @@ lib/cpu.o: lib/cpu.c.o
 
 # target to build an object file
 lib/cpu.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/YourExecutable.dir/build.make CMakeFiles/YourExecutable.dir/lib/cpu.c.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/GBemu.dir/build.make CMakeFiles/GBemu.dir/lib/cpu.c.o
 .PHONY : lib/cpu.c.o
 
 lib/cpu.i: lib/cpu.c.i
@@ -214,7 +214,7 @@ lib/cpu.i: lib/cpu.c.i
 
 # target to preprocess a source file
 lib/cpu.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/YourExecutable.dir/build.make CMakeFiles/YourExecutable.dir/lib/cpu.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/GBemu.dir/build.make CMakeFiles/GBemu.dir/lib/cpu.c.i
 .PHONY : lib/cpu.c.i
 
 lib/cpu.s: lib/cpu.c.s
@@ -222,7 +222,7 @@ lib/cpu.s: lib/cpu.c.s
 
 # target to generate assembly for a file
 lib/cpu.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/YourExecutable.dir/build.make CMakeFiles/YourExecutable.dir/lib/cpu.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/GBemu.dir/build.make CMakeFiles/GBemu.dir/lib/cpu.c.s
 .PHONY : lib/cpu.c.s
 
 lib/cpu_LD_instructions.o: lib/cpu_LD_instructions.c.o
@@ -230,7 +230,7 @@ lib/cpu_LD_instructions.o: lib/cpu_LD_instructions.c.o
 
 # target to build an object file
 lib/cpu_LD_instructions.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/YourExecutable.dir/build.make CMakeFiles/YourExecutable.dir/lib/cpu_LD_instructions.c.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/GBemu.dir/build.make CMakeFiles/GBemu.dir/lib/cpu_LD_instructions.c.o
 .PHONY : lib/cpu_LD_instructions.c.o
 
 lib/cpu_LD_instructions.i: lib/cpu_LD_instructions.c.i
@@ -238,7 +238,7 @@ lib/cpu_LD_instructions.i: lib/cpu_LD_instructions.c.i
 
 # target to preprocess a source file
 lib/cpu_LD_instructions.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/YourExecutable.dir/build.make CMakeFiles/YourExecutable.dir/lib/cpu_LD_instructions.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/GBemu.dir/build.make CMakeFiles/GBemu.dir/lib/cpu_LD_instructions.c.i
 .PHONY : lib/cpu_LD_instructions.c.i
 
 lib/cpu_LD_instructions.s: lib/cpu_LD_instructions.c.s
@@ -246,7 +246,7 @@ lib/cpu_LD_instructions.s: lib/cpu_LD_instructions.c.s
 
 # target to generate assembly for a file
 lib/cpu_LD_instructions.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/YourExecutable.dir/build.make CMakeFiles/YourExecutable.dir/lib/cpu_LD_instructions.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/GBemu.dir/build.make CMakeFiles/GBemu.dir/lib/cpu_LD_instructions.c.s
 .PHONY : lib/cpu_LD_instructions.c.s
 
 lib/cpu_others_instructions.o: lib/cpu_others_instructions.c.o
@@ -254,7 +254,7 @@ lib/cpu_others_instructions.o: lib/cpu_others_instructions.c.o
 
 # target to build an object file
 lib/cpu_others_instructions.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/YourExecutable.dir/build.make CMakeFiles/YourExecutable.dir/lib/cpu_others_instructions.c.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/GBemu.dir/build.make CMakeFiles/GBemu.dir/lib/cpu_others_instructions.c.o
 .PHONY : lib/cpu_others_instructions.c.o
 
 lib/cpu_others_instructions.i: lib/cpu_others_instructions.c.i
@@ -262,7 +262,7 @@ lib/cpu_others_instructions.i: lib/cpu_others_instructions.c.i
 
 # target to preprocess a source file
 lib/cpu_others_instructions.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/YourExecutable.dir/build.make CMakeFiles/YourExecutable.dir/lib/cpu_others_instructions.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/GBemu.dir/build.make CMakeFiles/GBemu.dir/lib/cpu_others_instructions.c.i
 .PHONY : lib/cpu_others_instructions.c.i
 
 lib/cpu_others_instructions.s: lib/cpu_others_instructions.c.s
@@ -270,7 +270,7 @@ lib/cpu_others_instructions.s: lib/cpu_others_instructions.c.s
 
 # target to generate assembly for a file
 lib/cpu_others_instructions.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/YourExecutable.dir/build.make CMakeFiles/YourExecutable.dir/lib/cpu_others_instructions.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/GBemu.dir/build.make CMakeFiles/GBemu.dir/lib/cpu_others_instructions.c.s
 .PHONY : lib/cpu_others_instructions.c.s
 
 lib/incr_dcr_instructions.o: lib/incr_dcr_instructions.c.o
@@ -278,7 +278,7 @@ lib/incr_dcr_instructions.o: lib/incr_dcr_instructions.c.o
 
 # target to build an object file
 lib/incr_dcr_instructions.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/YourExecutable.dir/build.make CMakeFiles/YourExecutable.dir/lib/incr_dcr_instructions.c.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/GBemu.dir/build.make CMakeFiles/GBemu.dir/lib/incr_dcr_instructions.c.o
 .PHONY : lib/incr_dcr_instructions.c.o
 
 lib/incr_dcr_instructions.i: lib/incr_dcr_instructions.c.i
@@ -286,7 +286,7 @@ lib/incr_dcr_instructions.i: lib/incr_dcr_instructions.c.i
 
 # target to preprocess a source file
 lib/incr_dcr_instructions.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/YourExecutable.dir/build.make CMakeFiles/YourExecutable.dir/lib/incr_dcr_instructions.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/GBemu.dir/build.make CMakeFiles/GBemu.dir/lib/incr_dcr_instructions.c.i
 .PHONY : lib/incr_dcr_instructions.c.i
 
 lib/incr_dcr_instructions.s: lib/incr_dcr_instructions.c.s
@@ -294,7 +294,7 @@ lib/incr_dcr_instructions.s: lib/incr_dcr_instructions.c.s
 
 # target to generate assembly for a file
 lib/incr_dcr_instructions.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/YourExecutable.dir/build.make CMakeFiles/YourExecutable.dir/lib/incr_dcr_instructions.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/GBemu.dir/build.make CMakeFiles/GBemu.dir/lib/incr_dcr_instructions.c.s
 .PHONY : lib/incr_dcr_instructions.c.s
 
 lib/instruction.o: lib/instruction.c.o
@@ -302,7 +302,7 @@ lib/instruction.o: lib/instruction.c.o
 
 # target to build an object file
 lib/instruction.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/YourExecutable.dir/build.make CMakeFiles/YourExecutable.dir/lib/instruction.c.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/GBemu.dir/build.make CMakeFiles/GBemu.dir/lib/instruction.c.o
 .PHONY : lib/instruction.c.o
 
 lib/instruction.i: lib/instruction.c.i
@@ -310,7 +310,7 @@ lib/instruction.i: lib/instruction.c.i
 
 # target to preprocess a source file
 lib/instruction.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/YourExecutable.dir/build.make CMakeFiles/YourExecutable.dir/lib/instruction.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/GBemu.dir/build.make CMakeFiles/GBemu.dir/lib/instruction.c.i
 .PHONY : lib/instruction.c.i
 
 lib/instruction.s: lib/instruction.c.s
@@ -318,7 +318,7 @@ lib/instruction.s: lib/instruction.c.s
 
 # target to generate assembly for a file
 lib/instruction.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/YourExecutable.dir/build.make CMakeFiles/YourExecutable.dir/lib/instruction.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/GBemu.dir/build.make CMakeFiles/GBemu.dir/lib/instruction.c.s
 .PHONY : lib/instruction.c.s
 
 lib/jump_rotate_instructions.o: lib/jump_rotate_instructions.c.o
@@ -326,7 +326,7 @@ lib/jump_rotate_instructions.o: lib/jump_rotate_instructions.c.o
 
 # target to build an object file
 lib/jump_rotate_instructions.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/YourExecutable.dir/build.make CMakeFiles/YourExecutable.dir/lib/jump_rotate_instructions.c.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/GBemu.dir/build.make CMakeFiles/GBemu.dir/lib/jump_rotate_instructions.c.o
 .PHONY : lib/jump_rotate_instructions.c.o
 
 lib/jump_rotate_instructions.i: lib/jump_rotate_instructions.c.i
@@ -334,7 +334,7 @@ lib/jump_rotate_instructions.i: lib/jump_rotate_instructions.c.i
 
 # target to preprocess a source file
 lib/jump_rotate_instructions.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/YourExecutable.dir/build.make CMakeFiles/YourExecutable.dir/lib/jump_rotate_instructions.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/GBemu.dir/build.make CMakeFiles/GBemu.dir/lib/jump_rotate_instructions.c.i
 .PHONY : lib/jump_rotate_instructions.c.i
 
 lib/jump_rotate_instructions.s: lib/jump_rotate_instructions.c.s
@@ -342,7 +342,7 @@ lib/jump_rotate_instructions.s: lib/jump_rotate_instructions.c.s
 
 # target to generate assembly for a file
 lib/jump_rotate_instructions.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/YourExecutable.dir/build.make CMakeFiles/YourExecutable.dir/lib/jump_rotate_instructions.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/GBemu.dir/build.make CMakeFiles/GBemu.dir/lib/jump_rotate_instructions.c.s
 .PHONY : lib/jump_rotate_instructions.c.s
 
 lib/logic_instructions.o: lib/logic_instructions.c.o
@@ -350,7 +350,7 @@ lib/logic_instructions.o: lib/logic_instructions.c.o
 
 # target to build an object file
 lib/logic_instructions.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/YourExecutable.dir/build.make CMakeFiles/YourExecutable.dir/lib/logic_instructions.c.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/GBemu.dir/build.make CMakeFiles/GBemu.dir/lib/logic_instructions.c.o
 .PHONY : lib/logic_instructions.c.o
 
 lib/logic_instructions.i: lib/logic_instructions.c.i
@@ -358,7 +358,7 @@ lib/logic_instructions.i: lib/logic_instructions.c.i
 
 # target to preprocess a source file
 lib/logic_instructions.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/YourExecutable.dir/build.make CMakeFiles/YourExecutable.dir/lib/logic_instructions.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/GBemu.dir/build.make CMakeFiles/GBemu.dir/lib/logic_instructions.c.i
 .PHONY : lib/logic_instructions.c.i
 
 lib/logic_instructions.s: lib/logic_instructions.c.s
@@ -366,7 +366,7 @@ lib/logic_instructions.s: lib/logic_instructions.c.s
 
 # target to generate assembly for a file
 lib/logic_instructions.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/YourExecutable.dir/build.make CMakeFiles/YourExecutable.dir/lib/logic_instructions.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/GBemu.dir/build.make CMakeFiles/GBemu.dir/lib/logic_instructions.c.s
 .PHONY : lib/logic_instructions.c.s
 
 lib/memory_instructions.o: lib/memory_instructions.c.o
@@ -374,7 +374,7 @@ lib/memory_instructions.o: lib/memory_instructions.c.o
 
 # target to build an object file
 lib/memory_instructions.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/YourExecutable.dir/build.make CMakeFiles/YourExecutable.dir/lib/memory_instructions.c.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/GBemu.dir/build.make CMakeFiles/GBemu.dir/lib/memory_instructions.c.o
 .PHONY : lib/memory_instructions.c.o
 
 lib/memory_instructions.i: lib/memory_instructions.c.i
@@ -382,7 +382,7 @@ lib/memory_instructions.i: lib/memory_instructions.c.i
 
 # target to preprocess a source file
 lib/memory_instructions.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/YourExecutable.dir/build.make CMakeFiles/YourExecutable.dir/lib/memory_instructions.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/GBemu.dir/build.make CMakeFiles/GBemu.dir/lib/memory_instructions.c.i
 .PHONY : lib/memory_instructions.c.i
 
 lib/memory_instructions.s: lib/memory_instructions.c.s
@@ -390,7 +390,7 @@ lib/memory_instructions.s: lib/memory_instructions.c.s
 
 # target to generate assembly for a file
 lib/memory_instructions.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/YourExecutable.dir/build.make CMakeFiles/YourExecutable.dir/lib/memory_instructions.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/GBemu.dir/build.make CMakeFiles/GBemu.dir/lib/memory_instructions.c.s
 .PHONY : lib/memory_instructions.c.s
 
 lib/more_instructions.o: lib/more_instructions.c.o
@@ -398,7 +398,7 @@ lib/more_instructions.o: lib/more_instructions.c.o
 
 # target to build an object file
 lib/more_instructions.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/YourExecutable.dir/build.make CMakeFiles/YourExecutable.dir/lib/more_instructions.c.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/GBemu.dir/build.make CMakeFiles/GBemu.dir/lib/more_instructions.c.o
 .PHONY : lib/more_instructions.c.o
 
 lib/more_instructions.i: lib/more_instructions.c.i
@@ -406,7 +406,7 @@ lib/more_instructions.i: lib/more_instructions.c.i
 
 # target to preprocess a source file
 lib/more_instructions.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/YourExecutable.dir/build.make CMakeFiles/YourExecutable.dir/lib/more_instructions.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/GBemu.dir/build.make CMakeFiles/GBemu.dir/lib/more_instructions.c.i
 .PHONY : lib/more_instructions.c.i
 
 lib/more_instructions.s: lib/more_instructions.c.s
@@ -414,7 +414,7 @@ lib/more_instructions.s: lib/more_instructions.c.s
 
 # target to generate assembly for a file
 lib/more_instructions.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/YourExecutable.dir/build.make CMakeFiles/YourExecutable.dir/lib/more_instructions.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/GBemu.dir/build.make CMakeFiles/GBemu.dir/lib/more_instructions.c.s
 .PHONY : lib/more_instructions.c.s
 
 lib/orchestr.o: lib/orchestr.c.o
@@ -422,7 +422,7 @@ lib/orchestr.o: lib/orchestr.c.o
 
 # target to build an object file
 lib/orchestr.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/YourExecutable.dir/build.make CMakeFiles/YourExecutable.dir/lib/orchestr.c.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/GBemu.dir/build.make CMakeFiles/GBemu.dir/lib/orchestr.c.o
 .PHONY : lib/orchestr.c.o
 
 lib/orchestr.i: lib/orchestr.c.i
@@ -430,7 +430,7 @@ lib/orchestr.i: lib/orchestr.c.i
 
 # target to preprocess a source file
 lib/orchestr.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/YourExecutable.dir/build.make CMakeFiles/YourExecutable.dir/lib/orchestr.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/GBemu.dir/build.make CMakeFiles/GBemu.dir/lib/orchestr.c.i
 .PHONY : lib/orchestr.c.i
 
 lib/orchestr.s: lib/orchestr.c.s
@@ -438,7 +438,7 @@ lib/orchestr.s: lib/orchestr.c.s
 
 # target to generate assembly for a file
 lib/orchestr.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/YourExecutable.dir/build.make CMakeFiles/YourExecutable.dir/lib/orchestr.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/GBemu.dir/build.make CMakeFiles/GBemu.dir/lib/orchestr.c.s
 .PHONY : lib/orchestr.c.s
 
 lib/ppu.o: lib/ppu.c.o
@@ -446,7 +446,7 @@ lib/ppu.o: lib/ppu.c.o
 
 # target to build an object file
 lib/ppu.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/YourExecutable.dir/build.make CMakeFiles/YourExecutable.dir/lib/ppu.c.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/GBemu.dir/build.make CMakeFiles/GBemu.dir/lib/ppu.c.o
 .PHONY : lib/ppu.c.o
 
 lib/ppu.i: lib/ppu.c.i
@@ -454,7 +454,7 @@ lib/ppu.i: lib/ppu.c.i
 
 # target to preprocess a source file
 lib/ppu.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/YourExecutable.dir/build.make CMakeFiles/YourExecutable.dir/lib/ppu.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/GBemu.dir/build.make CMakeFiles/GBemu.dir/lib/ppu.c.i
 .PHONY : lib/ppu.c.i
 
 lib/ppu.s: lib/ppu.c.s
@@ -462,7 +462,7 @@ lib/ppu.s: lib/ppu.c.s
 
 # target to generate assembly for a file
 lib/ppu.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/YourExecutable.dir/build.make CMakeFiles/YourExecutable.dir/lib/ppu.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/GBemu.dir/build.make CMakeFiles/GBemu.dir/lib/ppu.c.s
 .PHONY : lib/ppu.c.s
 
 lib/timer.o: lib/timer.c.o
@@ -470,7 +470,7 @@ lib/timer.o: lib/timer.c.o
 
 # target to build an object file
 lib/timer.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/YourExecutable.dir/build.make CMakeFiles/YourExecutable.dir/lib/timer.c.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/GBemu.dir/build.make CMakeFiles/GBemu.dir/lib/timer.c.o
 .PHONY : lib/timer.c.o
 
 lib/timer.i: lib/timer.c.i
@@ -478,7 +478,7 @@ lib/timer.i: lib/timer.c.i
 
 # target to preprocess a source file
 lib/timer.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/YourExecutable.dir/build.make CMakeFiles/YourExecutable.dir/lib/timer.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/GBemu.dir/build.make CMakeFiles/GBemu.dir/lib/timer.c.i
 .PHONY : lib/timer.c.i
 
 lib/timer.s: lib/timer.c.s
@@ -486,7 +486,7 @@ lib/timer.s: lib/timer.c.s
 
 # target to generate assembly for a file
 lib/timer.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/YourExecutable.dir/build.make CMakeFiles/YourExecutable.dir/lib/timer.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/GBemu.dir/build.make CMakeFiles/GBemu.dir/lib/timer.c.s
 .PHONY : lib/timer.c.s
 
 lib/wram.o: lib/wram.c.o
@@ -494,7 +494,7 @@ lib/wram.o: lib/wram.c.o
 
 # target to build an object file
 lib/wram.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/YourExecutable.dir/build.make CMakeFiles/YourExecutable.dir/lib/wram.c.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/GBemu.dir/build.make CMakeFiles/GBemu.dir/lib/wram.c.o
 .PHONY : lib/wram.c.o
 
 lib/wram.i: lib/wram.c.i
@@ -502,7 +502,7 @@ lib/wram.i: lib/wram.c.i
 
 # target to preprocess a source file
 lib/wram.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/YourExecutable.dir/build.make CMakeFiles/YourExecutable.dir/lib/wram.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/GBemu.dir/build.make CMakeFiles/GBemu.dir/lib/wram.c.i
 .PHONY : lib/wram.c.i
 
 lib/wram.s: lib/wram.c.s
@@ -510,7 +510,7 @@ lib/wram.s: lib/wram.c.s
 
 # target to generate assembly for a file
 lib/wram.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/YourExecutable.dir/build.make CMakeFiles/YourExecutable.dir/lib/wram.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/GBemu.dir/build.make CMakeFiles/GBemu.dir/lib/wram.c.s
 .PHONY : lib/wram.c.s
 
 # Help Target
@@ -521,7 +521,7 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
-	@echo "... YourExecutable"
+	@echo "... GBemu"
 	@echo "... lib/bios.o"
 	@echo "... lib/bios.i"
 	@echo "... lib/bios.s"

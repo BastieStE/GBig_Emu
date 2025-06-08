@@ -120,6 +120,16 @@ const char *cart_type_name() {
     return "UNKNOWN";
 }
 
+void cart_init_ctx()
+{
+        // Initialize cartridge context
+    cart_ctx.header = (rom_header *)(cart_ctx.rom_data + 0x100);
+    cart_ctx.header->title[15] = 0;
+    cart_ctx.rom_bank = 1;  // Default ROM bank
+    cart_ctx.ram_bank = 0;  // Default RAM bank
+    cart_ctx.ram_enabled = false;
+}
+
 bool cart_load(char *cart) {
     snprintf(cart_ctx.filename, sizeof(cart_ctx.filename), "%s", cart);
 
@@ -139,12 +149,7 @@ bool cart_load(char *cart) {
     fread(cart_ctx.rom_data, cart_ctx.rom_size, 1, fp);
     fclose(fp);
 
-    // Initialize cartridge context
-    cart_ctx.header = (rom_header *)(cart_ctx.rom_data + 0x100);
-    cart_ctx.header->title[15] = 0;
-    cart_ctx.rom_bank = 1;  // Default ROM bank
-    cart_ctx.ram_bank = 0;  // Default RAM bank
-    cart_ctx.ram_enabled = false;
+    cart_init_ctx();
 
     // Allocate RAM if necessary
     uint8_t ram_size_lookup[] = {0, 2, 8, 32, 128, 64};

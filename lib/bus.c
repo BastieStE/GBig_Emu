@@ -14,10 +14,13 @@
 // 0xFF00 - 0xFF7F : I/O Registers
 // 0xFF80 - 0xFFFE : Zero Page
 
-uint8_t bios_mem[0x100];
+uint8_t bios_mem[0x10000];
 
 u8 bus_read(u16 address) {
+    printf("bus 1 : adress %d \n", address);
     if (address < 0x900 && bios_mem[0xFF50] == 0x00) {
+        printf("bus 1 : adress %d \n", address);
+
         return bios_mem[address];
     } ///  Bios Managment
 

@@ -4,9 +4,15 @@
 
 
 /*  
-        Reactiver l'execution bios + MBC0
-        Implémenter les IO du PPU
-        Architecture générale du PPU
+Affichage complet des registres du CPU sur la console. 
+                        done
+
+Terminer le membus avec gestion cartouche/bios, CPU, registres du CPU.
+
+Terminer le MBC0 (no MBC).
+
+Création d'un header .h pour chaque composant fonctionnel exposant les fonctions interfaces.
+Cacher les fonctions privées.
 */
 
 void cpu_init(cpu_context *ctx, const char *bios_path) 
@@ -61,13 +67,21 @@ bool cpu_interrupt(cpu_context *ctx)
 
 bool cpu_step(cpu_context *ctx) 
 {
+
+
     if (ctx->cycles > 0) {ctx->cycles--;return true;}
 
     if (!cpu_interrupt(ctx)) {
+
         uint16_t pc = ctx->regi.pc;
         fetch_instruction(ctx);
-        fetch_data(ctx);
-        execute_instruction(ctx);
+
+
+
+    fetch_data(ctx);
+
+    execute_instruction(ctx);
+
     }
     return true;
 }
