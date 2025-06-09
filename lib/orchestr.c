@@ -15,7 +15,9 @@ void init_debug(int argc, char **argv, debug_ctx *ctx)
         printf("debug mode activated\n");
         ctx->is_on = true;
     }
-    ctx->speed = 1;
+    if (argc > 3)
+        if(ctx->speed = atoi(argv[2]) == 0)
+            ctx->speed = 1;
     ctx->step = 0;
 }
 
@@ -44,20 +46,20 @@ int debug_step(debug_ctx *debug, cpu_context cpu_ctx)
         debug->step++;
         if (debug->step >= debug->speed) {
             
-            char cmd[5];
+            char cmd[5];      // pause and get command
             char c;
             for (int i = 0; (c = getchar()) != '\n' && c != EOF && i < sizeof(cmd) - 1; i++) {
                 cmd[i] = c;
             }
             
-            if (cmd[0] == 's')
+            if (cmd[0] == 's')  // exit debug
                 debug->is_on = false;
             else if (cmd[0] == '+')
-                debug->speed++;
+                debug->speed++; // incresse speed
             else if (cmd[0] == '-')
-                debug->speed--;
+                debug->speed--; // decresse speed
             else if (cmd[0] == 'q')
-                return 1;
+                return 1; // leave loop
             debug->step = 0;
 
             print_cpu_registers(cpu_ctx.regi);

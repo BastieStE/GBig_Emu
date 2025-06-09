@@ -3,13 +3,12 @@
 #include <bus.h>
 
 
-/*  
-Affichage complet des registres du CPU sur la console. 
-                        done
-
+/*
 Terminer le membus avec gestion cartouche/bios, CPU, registres du CPU.
+                done (I hope)
 
 Terminer le MBC0 (no MBC).
+        done (and even more)
 
 Création d'un header .h pour chaque composant fonctionnel exposant les fonctions interfaces.
 Cacher les fonctions privées.
@@ -20,6 +19,7 @@ void cpu_init(cpu_context *ctx, const char *bios_path)
     ctx->regi.pc = 0x0000;
 
     // Other initialization steps (set up registers, flags, etc.)
+    
     ctx->cycles = 0;
     ctx->halted = false;
     ctx->stepping = false;
@@ -33,17 +33,17 @@ static void fetch_instruction(cpu_context *ctx) {
     ctx->cur_opcode = bus_read(ctx->regi.pc);
 }
 
-void handle_interrupt(cpu_context *ctx, uint8_t interrupts)
+static void handle_interrupt(cpu_context *ctx, uint8_t interrupts)
 {
     NOT_YET
 }
 
-void fetch_data()
+static void fetch_data()
 {
     NOT_YET
 }
 
-bool cpu_interrupt(cpu_context *ctx) 
+static bool cpu_interrupt(cpu_context *ctx) 
 {
     if (ctx->IME) {
         uint8_t interrupts = ctx->regi.ie_register & ctx->regi.if_register;

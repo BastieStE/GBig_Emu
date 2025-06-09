@@ -65,6 +65,8 @@
         "orchestr.h": "c",
         "cpu.h": "c",
         "cart.h": "c",
-        "cpu_ld_instructions.h": "c"
+        "cpu_ld_instructions.h": "c",
+        "bus.h": "c",
+        "instruction.h": "c"
     }
 }

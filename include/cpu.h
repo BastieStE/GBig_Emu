@@ -43,9 +43,6 @@ typedef struct
     bool IME_delay;
 } cpu_context;
 
-bool cpu_step(cpu_context *ctx);
-void cpu_init();
-
 
 typedef void (*IN_PROC)(cpu_context *);
 
@@ -69,5 +66,6 @@ typedef void (*IN_PROC)(cpu_context *);
 
 
 void execute_instruction(cpu_context *cpu);
+bool cpu_step(cpu_context *ctx);
 
 #endif /* !CPU_H_ */
