@@ -7,7 +7,7 @@
 #include <cpu.h>
 #include <ppu.h>
 
-void init_debug(int argc, char **argv, debug_ctx *ctx)
+static void init_debug(int argc, char **argv, debug_ctx *ctx)
 {
     if (argc < 2) { ctx->is_on = false; return;}
 
@@ -22,7 +22,7 @@ void init_debug(int argc, char **argv, debug_ctx *ctx)
 }
 
 
-void print_cpu_registers(const cpu_registers regs) {
+static void print_cpu_registers(const cpu_registers regs) {
     printf("=== CPU Registers ===\n");
 
     printf("AF: 0x%04X (A: 0x%02X, F: 0x%02X)\n", regs.af, regs.a, regs.f);
@@ -39,7 +39,7 @@ void print_cpu_registers(const cpu_registers regs) {
     printf("======================\n");
 }
 
-int debug_step(debug_ctx *debug, cpu_context cpu_ctx)
+static int debug_step(debug_ctx *debug, cpu_context cpu_ctx)
 {
     if (debug->is_on == true) {
         puts("debug :");
@@ -68,7 +68,7 @@ int debug_step(debug_ctx *debug, cpu_context cpu_ctx)
     return 0;
 }
 
-int ctx_init(main_context *ctx)
+static int ctx_init(main_context *ctx)
 {
     ctx->paused = false;
     ctx->running = true;

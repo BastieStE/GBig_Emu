@@ -67,5 +67,6 @@ typedef void (*IN_PROC)(cpu_context *);
 
 void execute_instruction(cpu_context *cpu);
 bool cpu_step(cpu_context *ctx);
+void cpu_init(cpu_context *ctx);
 
 #endif /* !CPU_H_ */

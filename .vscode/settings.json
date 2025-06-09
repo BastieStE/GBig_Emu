@@ -67,6 +67,9 @@
         "cart.h": "c",
         "cpu_ld_instructions.h": "c",
         "bus.h": "c",
-        "instruction.h": "c"
+        "instruction.h": "c",
+        "common.h": "c",
+        "stdint.h": "c",
+        "stdbool.h": "c"
     }
 }

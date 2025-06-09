@@ -104,7 +104,7 @@ static const char *LIC_CODE[0xA5] = {
     [0xA4] = "Konami (Yu-Gi-Oh!)"
 };
 
-const char *cart_lic_name() {
+static const char *cart_lic_name() {
     if (cart_ctx.header->new_lic_code <= 0xA4) {
         return LIC_CODE[cart_ctx.header->lic_code];
     }
@@ -112,7 +112,7 @@ const char *cart_lic_name() {
     return "UNKNOWN";
 }
 
-const char *cart_type_name() {
+static const char *cart_type_name() {
     if (cart_ctx.header->type <= 0x22) {
         return ROM_TYPES[cart_ctx.header->type];
     }
@@ -120,7 +120,7 @@ const char *cart_type_name() {
     return "UNKNOWN";
 }
 
-void cart_init_ctx()
+static void cart_init_ctx()
 {
         // Initialize cartridge context
     cart_ctx.header = (rom_header *)(cart_ctx.rom_data + 0x100);

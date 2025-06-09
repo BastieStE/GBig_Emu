@@ -5,7 +5,7 @@
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
-
+#include <string.h>
 
 typedef uint8_t u8;
 typedef uint16_t u16;

@@ -27,6 +27,10 @@ void or_indirect(cpu_context *cpu);
 void or_register(cpu_context *cpu, uint8_t *src);
 void xor_indirect(cpu_context *cpu);
 void xor_register(cpu_context *cpu, uint8_t *src);
+void ld_absolute(cpu_context *cpu);
+void ld_io_offset_store(cpu_context *cpu);
+void ld_io_offset_indirect_store(cpu_context *cpu);
+void ld_absolute_store(cpu_context *cpu);
 
 void cp_register(cpu_context *cpu, uint8_t *src);
 void cp_indirect(cpu_context *cpu);

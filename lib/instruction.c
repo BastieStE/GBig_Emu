@@ -29,10 +29,10 @@ void execute_instruction(cpu_context *cpu) {
             rotate_left_carry(cpu, &cpu->regi.a);
             break;
         case 0x08:
-            store_direct_16(cpu, cpu->regi.sp);
+            store_direct_16(cpu, &cpu->regi.sp);
             break;
         case 0x09:
-            add_16(cpu, cpu->regi.bc);
+            add_16(cpu, &cpu->regi.bc);
             break;
         case 0x0A:
             load_indirect(cpu, &cpu->regi.a, &cpu->regi.bc);
@@ -80,7 +80,7 @@ void execute_instruction(cpu_context *cpu) {
             jump_relative(cpu);
             break;
         case 0x19:
-            add_16(cpu, cpu->regi.de);
+            add_16(cpu, &cpu->regi.de);
             break;
         case 0x1A:
             load_indirect(cpu, &cpu->regi.a, &cpu->regi.de);
@@ -129,7 +129,7 @@ void execute_instruction(cpu_context *cpu) {
             jump_relative_cond(cpu, !(cpu->regi.f & ZERO_FLAG));
             break;
         case 0x29:
-            add_16(cpu, cpu->regi.hl);
+            add_16(cpu, &cpu->regi.hl);
             break;
         case 0x2A:
             load_indirect(cpu, &cpu->regi.a, &cpu->regi.hl);
@@ -179,7 +179,7 @@ void execute_instruction(cpu_context *cpu) {
             jump_relative_cond(cpu, !(cpu->regi.f & CARRY_FLAG));
             break;
         case 0x39:
-            add_16(cpu, cpu->regi.sp);
+            add_16(cpu, &cpu->regi.sp);
             break;
         case 0x3A:
             load_indirect(cpu, &cpu->regi.a, &cpu->regi.hl);
@@ -600,7 +600,7 @@ void execute_instruction(cpu_context *cpu) {
             call_cond(cpu, !(cpu->regi.f & ZERO_FLAG));
             break;
         case 0xC5:
-            push_register_pair(cpu, &cpu->regi.bc);
+            push_register_pair(cpu, cpu->regi.bc);
             break;
         case 0xC6:
             add_immediate(cpu);
@@ -648,7 +648,7 @@ void execute_instruction(cpu_context *cpu) {
             call_cond(cpu, !(cpu->regi.f & CARRY_FLAG));
             break;
         case 0xD5:
-            push_register_pair(cpu, &cpu->regi.de);
+            push_register_pair(cpu, cpu->regi.de);
             break;
         case 0xD6:
             sub_immediate(cpu);
@@ -696,7 +696,7 @@ void execute_instruction(cpu_context *cpu) {
             invalid_opcode(cpu);
             break;
         case 0xE5:
-            push_register_pair(cpu, &cpu->regi.hl);
+            push_register_pair(cpu, cpu->regi.hl);
             break;
         case 0xE6:
             and_immediate(cpu);
@@ -744,7 +744,7 @@ void execute_instruction(cpu_context *cpu) {
             invalid_opcode(cpu);
             break;
         case 0xF5:
-            push_register_pair(cpu, &cpu->regi.af);
+            push_register_pair(cpu, cpu->regi.af);
             break;
         case 0xF6:
             or_immediate(cpu);

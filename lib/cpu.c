@@ -14,7 +14,7 @@ Création d'un header .h pour chaque composant fonctionnel exposant les fonction
 Cacher les fonctions privées.
 */
 
-void cpu_init(cpu_context *ctx, const char *bios_path) 
+void cpu_init(cpu_context *ctx) 
 {
     ctx->regi.pc = 0x0000;
 
