@@ -4,14 +4,11 @@
 
 
 /*
-Terminer le membus avec gestion cartouche/bios, CPU, registres du CPU.
-                done (I hope)
+Implémenter les IO de DMG (sauf Audio/wave pattern, serial transfer) :
 
-Terminer le MBC0 (no MBC).
-        done (and even more)
+https://gbdev.io/pandocs/Memory_Map.html#io-ranges
 
-Création d'un header .h pour chaque composant fonctionnel exposant les fonctions interfaces.
-Cacher les fonctions privées.
+Implémenter les interrupts dans le CPU.
 */
 
 void cpu_init(cpu_context *ctx) 
@@ -45,12 +42,38 @@ static void fetch_data()
 
 static bool cpu_interrupt(cpu_context *ctx) 
 {
-    if (ctx->IME) {
-        uint8_t interrupts = ctx->regi.ie_register & ctx->regi.if_register;
-        if (interrupts) {
-            handle_interrupt(ctx, interrupts);
-            ctx->cycles += 20;
-            return true;
+     uint8_t interrupt_flags = ctx->regi.if_register;
+    uint8_t interrupt_enable = ctx->regi.ie_register;
+
+    uint8_t pending = interrupt_flags & interrupt_enable;
+
+    if (ctx->IME && pending) {
+        // Find the highest priority interrupt
+        for (int i = 0; i < 5; i++) {
+            if (pending & (1 << i)) {
+                // Clear IF bit
+                ctx->regi.if_register &= ~(1 << i);
+
+                // Push PC to stack
+                ctx->regi.sp -= 2;
+                bus_write(ctx->regi.sp, ctx->regi.pc & 0xFF);
+                bus_write(ctx->regi.sp + 1, (ctx->regi.pc >> 8) & 0xFF);
+
+                // Jump to interrupt vector
+                switch (i) {
+                    case 0: ctx->regi.pc = 0x40; break; // V-Blank
+                    case 1: ctx->regi.pc = 0x48; break; // LCD STAT
+                    case 2: ctx->regi.pc = 0x50; break; // Timer
+                    case 3: ctx->regi.pc = 0x58; break; // Serial
+                    case 4: ctx->regi.pc = 0x60; break; // Joypad
+                }
+
+                ctx->IME = false;        // Disable further interrupts
+                ctx->halted = false;     // Exit HALT state if needed
+                ctx->cycles += 20;       // Interrupt handling cycle cost
+
+                return true;
+            }
         }
     } else if (ctx->halted) {
         if (ctx->regi.if_register & ctx->regi.ie_register) {

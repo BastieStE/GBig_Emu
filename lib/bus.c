@@ -18,6 +18,57 @@ bus_context ctx;
 
 uint8_t bios_mem[0x100];
 
+static uint8_t io_read(uint16_t address) {
+    if (address == 0xFF00) {
+        return joypad_read();
+    }
+    else if (address >= 0xFF01 && address <= 0xFF02) {
+        return serial_read(address);
+    }
+    else if (address >= 0xFF04 && address <= 0xFF07) {
+        return timer_read(address);
+    }
+    else if (address == 0xFF0F) {
+        return interrupt_flag_read();
+    }
+    // Audio (APU)
+    else if (address >= 0xFF10 && address <= 0xFF3F) {
+        return apu_read(address);
+    }
+    else if (address >= 0xFF40 && address <= 0xFF4B) {
+        return ppu_read_register(address);
+    }
+    else if (address == 0xFF46) {
+        return 0xFF;
+    }
+    return 0xFF;
+}
+
+static void io_write(uint16_t address, uint8_t value) {
+    if (address == 0xFF00) {
+        joypad_write(value);
+    }
+    else if (address >= 0xFF01 && address <= 0xFF02) {
+        serial_write(address, value);
+    }
+    else if (address >= 0xFF04 && address <= 0xFF07) {
+        timer_write(address, value);
+    }
+    else if (address == 0xFF0F) {
+        interrupt_flag_write(value);
+    }
+    // Audio (APU)
+    else if (address >= 0xFF10 && address <= 0xFF3F) {
+        apu_write(address, value);
+    }
+    else if (address >= 0xFF40 && address <= 0xFF4B) {
+        ppu_write_register(address, value);
+    }
+    else if (address == 0xFF46) {
+        dma_transfer(value);
+    }
+}
+
 u8 bus_read(u16 address) {
     printf("bus read in : adress %d \n", address);
     if (address < 0x900 && ctx.bios_enabled == 0x00) {
