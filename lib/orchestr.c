@@ -22,24 +22,7 @@ static void init_debug(int argc, char **argv, debug_ctx *ctx)
 }
 
 
-static void print_cpu_registers(const cpu_registers regs) {
-    printf("=== CPU Registers ===\n");
-
-    printf("AF: 0x%04X (A: 0x%02X, F: 0x%02X)\n", regs.af, regs.a, regs.f);
-    printf("BC: 0x%04X (B: 0x%02X, C: 0x%02X)\n", regs.bc, regs.b, regs.c);
-    printf("DE: 0x%04X (D: 0x%02X, E: 0x%02X)\n", regs.de, regs.d, regs.e);
-    printf("HL: 0x%04X (H: 0x%02X, L: 0x%02X)\n", regs.hl, regs.h, regs.l);
-
-    printf("PC: 0x%04X\n", regs.pc);
-    printf("SP: 0x%04X\n", regs.sp);
-
-    printf("IE Register:  0x%02X\n", regs.ie_register);
-    printf("IF Register:  0x%02X\n", regs.if_register);
-
-    printf("======================\n");
-}
-
-static int debug_step(debug_ctx *debug, cpu_context cpu_ctx)
+static int debug_step(debug_ctx *debug)
 {
     if (debug->is_on == true) {
         puts("debug :");
@@ -62,7 +45,7 @@ static int debug_step(debug_ctx *debug, cpu_context cpu_ctx)
                 return 1; // leave loop
             debug->step = 0;
 
-            print_cpu_registers(cpu_ctx.regi);
+            print_cpu_registers();
         }
     }
     return 0;
@@ -77,7 +60,7 @@ static int ctx_init(main_context *ctx)
 
 int run(int argc, char **argv) {
     main_context ctx;
-    cpu_context cpu_ctx;
+    cpu_context ;
     ppu_context ppu;  // Create an instance of your PPU
     debug_ctx debug;
 
@@ -85,7 +68,7 @@ int run(int argc, char **argv) {
     cart_load("../Tetris.gb");
     init_debug(argc, argv, &debug);
     ctx_init(&ctx);
-    cpu_init(&cpu_ctx);
+    cpu_init();
     init_wram();
     ppu_init(&ppu); // Initialize your PPU state
     printf("end of init\n");
@@ -99,7 +82,7 @@ int run(int argc, char **argv) {
         }
 
         // Execute the next CPU instruction and obtain the number of cycles taken.
-        int cycles = cpu_step(&cpu_ctx);
+        int cycles = cpu_step();
         printf("step\n");
 
         if (cycles < 0) {
@@ -113,7 +96,7 @@ int run(int argc, char **argv) {
         // You might also update other systems (timers, sound, etc.) here with the same cycle count.
         
         ctx.ticks++;
-        if (debug_step(&debug, cpu_ctx)) break;
+        if (debug_step(&debug)) break;
     }
     return 0;
 }

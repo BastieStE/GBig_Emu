@@ -20,23 +20,23 @@ uint8_t bios_mem[0x100];
 
 static uint8_t io_read(uint16_t address) {
     if (address == 0xFF00) {
-        return joypad_read();
+        //return joypad_read();
     }
     else if (address >= 0xFF01 && address <= 0xFF02) {
-        return serial_read(address);
+      //  return serial_read(address);
     }
     else if (address >= 0xFF04 && address <= 0xFF07) {
-        return timer_read(address);
+      //  return timer_read(address);
     }
     else if (address == 0xFF0F) {
-        return interrupt_flag_read();
+     //   return interrupt_flag_read();
     }
     // Audio (APU)
     else if (address >= 0xFF10 && address <= 0xFF3F) {
-        return apu_read(address);
+     //   return apu_read(address);
     }
     else if (address >= 0xFF40 && address <= 0xFF4B) {
-        return ppu_read_register(address);
+     //   return ppu_read_register(address);
     }
     else if (address == 0xFF46) {
         return 0xFF;
@@ -46,26 +46,26 @@ static uint8_t io_read(uint16_t address) {
 
 static void io_write(uint16_t address, uint8_t value) {
     if (address == 0xFF00) {
-        joypad_write(value);
+      //  joypad_write(value);
     }
     else if (address >= 0xFF01 && address <= 0xFF02) {
-        serial_write(address, value);
+      //  serial_write(address, value);
     }
     else if (address >= 0xFF04 && address <= 0xFF07) {
-        timer_write(address, value);
+       // timer_write(address, value);
     }
     else if (address == 0xFF0F) {
-        interrupt_flag_write(value);
+       // interrupt_flag_write(value);
     }
     // Audio (APU)
     else if (address >= 0xFF10 && address <= 0xFF3F) {
-        apu_write(address, value);
+      //  apu_write(address, value);
     }
     else if (address >= 0xFF40 && address <= 0xFF4B) {
-        ppu_write_register(address, value);
+     //   ppu_write_register(address, value);
     }
     else if (address == 0xFF46) {
-        dma_transfer(value);
+      //  dma_transfer(value);
     }
 }
 
@@ -90,7 +90,7 @@ u8 bus_read(u16 address) {
     } else if (address < 0xFF00) {
         return 0;
     } else if (address < 0xFF80) {
-     //   return io_read(address);        //IO Registers...
+       return io_read(address);        //IO Registers...
     } else if (address == 0xFFFF) {
      //   return cpu_get_ie_register();        //CPU ENABLE REGISTER...
     }
@@ -126,7 +126,7 @@ void bus_write(u16 address, u8 value) {
     } else if (address < 0xFF80) {
       //  io_write(address, value);          //IO Registers
     } else if (address == 0xFFFF) {
-      //  cpu_set_ie_register(value);        //CPU SET ENABLE REGISTER
+     //   cpu_set_ie_register(value);        //CPU SET ENABLE REGISTER
     } else {
       //  hram_write(address, value);
     }

@@ -65,8 +65,16 @@ typedef void (*IN_PROC)(cpu_context *);
 
 
 
-void execute_instruction(cpu_context *cpu);
-bool cpu_step(cpu_context *ctx);
-void cpu_init(cpu_context *ctx);
+void execute_instruction();
+bool cpu_step();
+void cpu_init();
+void print_cpu_registers();
+
+// bus register funtions
+
+u8 interrupt_flag_read();
+u8 cpu_get_ie_register();
+void interrupt_flag_write(u8 value);
+void cpu_set_ie_register(value);
 
 #endif /* !CPU_H_ */
