@@ -2,6 +2,7 @@
 #define EMU_H_
 
 #include <common.h>
+#include <io_register.h>
 
 typedef struct {
     bool paused;
@@ -15,5 +16,7 @@ typedef struct {
     bool is_on;
     bool is_display_register;
 } debug_ctx;
+
+
 
 #endif /* !EMU_H_ */

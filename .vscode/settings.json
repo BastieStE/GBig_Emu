@@ -70,6 +70,8 @@
         "instruction.h": "c",
         "common.h": "c",
         "stdint.h": "c",
-        "stdbool.h": "c"
+        "stdbool.h": "c",
+        "io_register.h": "c",
+        "stdlib.h": "c"
     }
 }

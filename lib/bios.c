@@ -1,7 +1,6 @@
-#include "cpu.h"
 #include <bus.h>
 
-void load_bios(cpu_context *ctx, const char *bios_path) {
+void load_bios(const char *bios_path) {
     FILE *bios_file = fopen(bios_path, "rb");
     if (bios_file == NULL) {
         fprintf(stderr, "Error: Could not load BIOS file\n");

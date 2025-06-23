@@ -22,4 +22,5 @@ typedef uint64_t u64;
 #define NOT_YET {fprintf(stderr, "not ready\n"); return;}
 
 
+
 #endif /* !COMMON_H_ */

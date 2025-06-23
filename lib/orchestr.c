@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <orchestr.h>
-#include "wram.h"
+#include <wram.h>
 #include <cpu.h>
 #include <cart.h>
 #include <cpu.h>
@@ -22,7 +22,7 @@ static void init_debug(int argc, char **argv, debug_ctx *ctx)
 }
 
 
-static int debug_step(debug_ctx *debug)
+static int debug_step(debug_ctx *debug, IO_register_t *io_regs)
 {
     if (debug->is_on == true) {
         puts("debug :");
@@ -34,6 +34,7 @@ static int debug_step(debug_ctx *debug)
             for (int i = 0; (c = getchar()) != '\n' && c != EOF && i < sizeof(cmd) - 1; i++) {
                 cmd[i] = c;
             }
+            poll_sdl_input(io_regs->joypad);
             
             if (cmd[0] == 's')  // exit debug
                 debug->is_on = false;
@@ -46,6 +47,7 @@ static int debug_step(debug_ctx *debug)
             debug->step = 0;
 
             print_cpu_registers();
+            printf("the IO registers : \n\tjoypad hard : %02X\n\tjoypad joyp:%02X\n", io_regs->joypad.hard, io_regs->joypad.joyp);
         }
     }
     return 0;
@@ -63,13 +65,14 @@ int run(int argc, char **argv) {
     cpu_context ;
     ppu_context ppu;  // Create an instance of your PPU
     debug_ctx debug;
+    IO_register_t io_regs;
 
     // Initialize the main context, CPU, WRAM, and PPU.
     cart_load("../Tetris.gb");
     init_debug(argc, argv, &debug);
     ctx_init(&ctx);
     cpu_init();
-    init_wram();
+    bus_init(&io_regs);
     ppu_init(&ppu); // Initialize your PPU state
     printf("end of init\n");
 
@@ -93,10 +96,12 @@ int run(int argc, char **argv) {
         // Update the PPU with the cycles executed by the CPU.
         updatePPU(&ppu, cycles);
 
-        // You might also update other systems (timers, sound, etc.) here with the same cycle count.
+        if (debug.is_on == false)
+            poll_sdl_input(&io_regs.joypad);
+        // update other systems (timers, sound, etc.) here with the same cycle count.
         
         ctx.ticks++;
-        if (debug_step(&debug)) break;
+        if (debug_step(&debug, &io_regs)) break;
     }
     return 0;
 }

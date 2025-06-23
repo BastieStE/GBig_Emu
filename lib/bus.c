@@ -1,6 +1,6 @@
 #include <bus.h>
 
-bus_context ctx;
+static bus_context ctx;
 
 // 0x0000 - 0x3FFF : ROM Bank 0 (fixed)
 // 0x4000 - 0x7FFF : ROM Bank 1 (Switchable)
@@ -18,9 +18,15 @@ bus_context ctx;
 
 uint8_t bios_mem[0x100];
 
-static uint8_t io_read(uint16_t address) {
+void bus_init(IO_register_t *io_regs)
+{
+    ctx.io_regs = io_regs;
+}
+
+static uint8_t io_read(uint16_t address) 
+{
     if (address == 0xFF00) {
-        //return joypad_read();
+        return joypad_read(&ctx.io_regs->joypad);
     }
     else if (address >= 0xFF01 && address <= 0xFF02) {
       //  return serial_read(address);
@@ -44,7 +50,8 @@ static uint8_t io_read(uint16_t address) {
     return 0xFF;
 }
 
-static void io_write(uint16_t address, uint8_t value) {
+static void io_write(uint16_t address, uint8_t value) 
+{
     if (address == 0xFF00) {
       //  joypad_write(value);
     }
@@ -69,7 +76,8 @@ static void io_write(uint16_t address, uint8_t value) {
     }
 }
 
-u8 bus_read(u16 address) {
+u8 bus_read(u16 address) 
+{
     printf("bus read in : adress %d \n", address);
     if (address < 0x900 && ctx.bios_enabled == 0x00) {
         return bios_mem[address];
@@ -97,7 +105,8 @@ u8 bus_read(u16 address) {
    // return hram_read(address);
 }
 
-void bus_write(u16 address, u8 value) {
+void bus_write(u16 address, u8 value) 
+{
     if (address == 0xFF50) {
         ctx.bios_enabled = value;  // BIOS disable control register
         if (value == 0x01) {
@@ -132,14 +141,16 @@ void bus_write(u16 address, u8 value) {
     }
 }
 
-u16 bus_read16(u16 address) {
+u16 bus_read16(u16 address) 
+{
     u16 lo = bus_read(address);
     u16 hi = bus_read(address + 1);
 
     return lo | (hi << 8);
 }
 
-void bus_write16(u16 address, u16 value) {
+void bus_write16(u16 address, u16 value) 
+{
     bus_write(address + 1, (value >> 8) & 0xFF);
     bus_write(address, value & 0xFF);
 }
