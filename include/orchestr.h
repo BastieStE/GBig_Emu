@@ -3,6 +3,17 @@
 
 #include <common.h>
 #include <io_register.h>
+#include <wram.h>
+#include <cpu.h>
+#include <cart.h>
+#include <cpu.h>
+#include <ppu.h>
+
+typedef struct {
+    SDL_Window *window;
+    SDL_Renderer* renderer;
+    SDL_Event event;
+} visual_t;
 
 typedef struct {
     bool paused;

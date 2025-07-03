@@ -14,7 +14,7 @@ include_directories(include ${SDL2_INCLUDE_DIRS})
 file(GLOB SOURCES "lib/*.c")
 
 # Create the executable
-add_executable(YourExecutable ${SOURCES})
+add_executable(GB_emu ${SOURCES})
 
 # Link SDL2 to your executable
 target_link_libraries(YourExecutable ${SDL2_LIBRARIES})

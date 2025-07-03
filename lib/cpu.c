@@ -48,19 +48,9 @@ static void fetch_instruction() {
     ctx.cur_opcode = bus_read(ctx.regi.pc);
 }
 
-static void handle_interrupt(uint8_t interrupts)
-{
-    NOT_YET
-}
-
-static void fetch_data()
-{
-    NOT_YET
-}
-
 static bool cpu_interrupt() 
 {
-     uint8_t interrupt_flags = ctx.regi.if_register;
+    uint8_t interrupt_flags = ctx.regi.if_register;
     uint8_t interrupt_enable = ctx.regi.ie_register;
 
     uint8_t pending = interrupt_flags & interrupt_enable;
@@ -108,18 +98,12 @@ static bool cpu_interrupt()
 
 bool cpu_step() 
 {
-
-
     if (ctx.cycles > 0) {ctx.cycles--;return true;}
 
     if (!cpu_interrupt(ctx)) {
 
         uint16_t pc = ctx.regi.pc;
         fetch_instruction(ctx);
-
-
-
-    fetch_data(ctx);
 
     execute_instruction(&ctx);
 

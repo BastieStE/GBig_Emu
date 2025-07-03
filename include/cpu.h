@@ -65,7 +65,6 @@ typedef void (*IN_PROC)(cpu_context *);
 
 
 
-void execute_instruction();
 bool cpu_step();
 void cpu_init();
 void print_cpu_registers();

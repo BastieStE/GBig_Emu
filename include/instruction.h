@@ -5,6 +5,8 @@
 #include "bus.h"
 #include <cpu.h>
 
+void execute_instruction();
+
 void load_immediate(cpu_context *cpu, uint8_t *dst);
 void load_immediate_16(cpu_context *cpu, uint16_t *dst);
 void load_register(cpu_context *cpu, uint8_t *dst, uint8_t *src);

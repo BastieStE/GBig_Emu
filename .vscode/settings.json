@@ -72,6 +72,7 @@
         "stdint.h": "c",
         "stdbool.h": "c",
         "io_register.h": "c",
-        "stdlib.h": "c"
+        "stdlib.h": "c",
+        "ppu.h": "c"
     }
 }
