@@ -114,8 +114,8 @@ void ret(cpu_context *cpu) {
 }
 
 void execute_cb_instruction(cpu_context *cpu) {
-    uint8_t opcode = bus_read(cpu->regi.pc + 1);
-    // Implement CB instruction decoding and execution
+    // uint8_t opcode = bus_read(cpu->regi.pc + 1);
+    puts("\n\n\n\n\n\n\n\nTHIS INSTRUCTION IS NOT IMPLEMENTED CUZ I'M TOO TIRED PLS FUTUR ME DO IT\n\n\n\n\n\n\n\n");
     cpu->regi.pc += 2;
     INCR_CYCLE(8);
 }

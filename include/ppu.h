@@ -1,3 +1,6 @@
+#ifndef PPU_H_
+#define PPU_H_
+
 #include <common.h>
 
 
@@ -50,3 +53,8 @@ void ppu_tick();
 u8 ppu_vram_read(u16 address);
 void ppu_vram_write(u16 address, u8 value);
 uint8_t ppu_read_register(uint16_t address);
+void ppu_write_register(uint16_t addr, uint8_t value);
+void updatePPU(int cycles);
+
+
+#endif /* !PPU_H_ */

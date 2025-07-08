@@ -122,7 +122,7 @@ CMAKE_PROJECT_DESCRIPTION:STATIC=
 CMAKE_PROJECT_HOMEPAGE_URL:STATIC=
 
 //Value Computed by CMake
-CMAKE_PROJECT_NAME:STATIC=YourProjectName
+CMAKE_PROJECT_NAME:STATIC=GBig_emu
 
 //Path to a program.
 CMAKE_RANLIB:FILEPATH=/usr/bin/ranlib
@@ -189,17 +189,17 @@ CMAKE_TAPI:FILEPATH=CMAKE_TAPI-NOTFOUND
 // Studio IDE projects all commands are done without /nologo.
 CMAKE_VERBOSE_MAKEFILE:BOOL=FALSE
 
+//Value Computed by CMake
+GBig_emu_BINARY_DIR:STATIC=/home/bastien/project/GBig_Emu/build
+
+//Value Computed by CMake
+GBig_emu_IS_TOP_LEVEL:STATIC=ON
+
+//Value Computed by CMake
+GBig_emu_SOURCE_DIR:STATIC=/home/bastien/project/GBig_Emu
+
 //The directory containing a CMake configuration file for SDL2.
 SDL2_DIR:PATH=/usr/lib/x86_64-linux-gnu/cmake/SDL2
-
-//Value Computed by CMake
-YourProjectName_BINARY_DIR:STATIC=/home/bastien/project/GBig_Emu/build
-
-//Value Computed by CMake
-YourProjectName_IS_TOP_LEVEL:STATIC=ON
-
-//Value Computed by CMake
-YourProjectName_SOURCE_DIR:STATIC=/home/bastien/project/GBig_Emu
 
 
 ########################

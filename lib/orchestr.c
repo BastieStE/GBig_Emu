@@ -1,20 +1,5 @@
 #include <orchestr.h>
 
-
-static void init_debug(int argc, char **argv, debug_ctx *ctx)
-{
-    if (argc < 2) { ctx->is_on = false; return;}
-
-    if (argv[1][0] == '-' && argv[1][1] == 'd') {
-        printf("debug mode activated\n");
-        ctx->is_on = true;
-    }
-    if (argc > 3)
-        if(ctx->speed = atoi(argv[2]) == 0)
-            ctx->speed = 1;
-    ctx->step = 0;
-}
-
 visual_t init_SDL(visual_t visual)
 {
     visual.window = SDL_CreateWindow(
@@ -30,42 +15,10 @@ visual_t init_SDL(visual_t visual)
         SDL_Quit();
         exit(1);
     }
-    
+    return visual;
 }
 
-
-static int debug_step(debug_ctx *debug, IO_register_t *io_regs)
-{
-    if (debug->is_on == true) {
-        puts("debug :");
-        debug->step++;
-        if (debug->step >= debug->speed) {
-            
-            char cmd[5];      // pause and get command
-            char c;
-            for (int i = 0; (c = getchar()) != '\n' && c != EOF && i < sizeof(cmd) - 1; i++) {
-                cmd[i] = c;
-            }
-            poll_sdl_input(io_regs->joypad);
-            
-            if (cmd[0] == 's')  // exit debug
-                debug->is_on = false;
-            else if (cmd[0] == '+')
-                debug->speed++; // incresse speed
-            else if (cmd[0] == '-')
-                debug->speed--; // decresse speed
-            else if (cmd[0] == 'q')
-                return 1; // leave loop
-            debug->step = 0;
-
-            print_cpu_registers();
-            printf("the IO registers : \n\tjoypad hard: %02X\n\tjoypad joyp: %02X\n", io_regs->joypad.hard, io_regs->joypad.joyp);
-        }
-    }
-    return 0;
-}
-
-static int ctx_init(main_context *ctx)
+static void ctx_init(main_context *ctx)
 {
     ctx->paused = false;
     ctx->running = true;
@@ -84,35 +37,65 @@ bool handle_SDL(visual_t vis)
 
     // Draw things
     SDL_RenderPresent(vis.renderer);
+    return true;
+}
+
+
+void render_screen(visual_t *vis, ppu_context *ppu) {
+    // Create the texture once
+    static SDL_Texture *texture = NULL;
+    if (!texture) {
+        texture = SDL_CreateTexture(
+            vis->renderer,
+            SDL_PIXELFORMAT_RGBA8888,
+            SDL_TEXTUREACCESS_STREAMING,
+            SCREEN_WIDTH,
+            SCREEN_HEIGHT
+        );
+    }
+
+    // Upload framebuffer into the texture
+    void *pixels;
+    int   pitch;
+    SDL_LockTexture(texture, NULL, &pixels, &pitch);
+    // ppu->framebuffer is uint32_t[SCREEN_WIDTH*SCREEN_HEIGHT] in RGBA8888
+    memcpy(pixels, ppu->framebuffer, SCREEN_WIDTH * SCREEN_HEIGHT * sizeof(uint32_t));
+    SDL_UnlockTexture(texture);
+
+    // Draw it
+    SDL_RenderClear(vis->renderer);
+    // Stretch to fill the window (or you can set a dst rect for 1× scale)
+    SDL_RenderCopy(vis->renderer, texture, NULL, NULL);
+    SDL_RenderPresent(vis->renderer);
+    free(pixels);
 }
 
 int run(int argc, char **argv) {
+
     main_context ctx;
-    cpu_context ;
-    ppu_context ppu;  // Create an instance of your PPU
-    debug_ctx debug;
+    ppu_context ppu;  // Create an instance of PPU
     IO_register_t io_regs;
     visual_t screen;
+    cpu_context cpu = cpu_init();
+    bus_context *bus = bus_init(&io_regs, &cpu);
+    debug_ctx debug = init_debug(argc, argv, bus, &ppu, &cpu);
 
     // Initialize the main context, CPU, WRAM, and PPU.
-    cart_load("../Tetris.gb"); // load cart
-    init_debug(argc, argv, &debug);
+    cart_load("Tetris.gb"); // load cart
     ctx_init(&ctx); // init orchestrator context
     cpu_init(); // init cpu
-    bus_init(&io_regs); // init bus and bios
     ppu_init(&ppu); // init PPU state
     screen = init_SDL(screen);
     puts("end of init");
 
+
     while(ctx.running) {
-        printf("%d ticks\n", ctx.ticks);
         if (ctx.paused) {
             puts("pause not implemented");
         }
 
         // Execute the next CPU instruction and obtain the number of cycles taken.
-        int cycles = cpu_step();
-        puts("step");
+        int cycles = cpu_step(&cpu);
 
         if (cycles < 0) {
             puts("CPU Stopped");
@@ -120,8 +103,9 @@ int run(int argc, char **argv) {
         }
 
         // Update the PPU with the cycles executed by the CPU.
-        updatePPU(&ppu, cycles);
+        //updatePPU(cycles);
         ctx.running = handle_SDL(screen);
+        //render_screen(&screen, &ppu);
 
         if (debug.is_on == false)
             poll_sdl_input(&io_regs.joypad);
@@ -129,6 +113,7 @@ int run(int argc, char **argv) {
         
         // debug print and leave if Q pressed
         if (debug_step(&debug, &io_regs)) break;
+
 
     }
     return 0;

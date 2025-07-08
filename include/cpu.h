@@ -2,22 +2,21 @@
 #define CPU_H_
 
 #include <common.h>
-#include <orchestr.h>
 
 typedef struct {
-    union {struct {
+    __extension__ union {struct {
             u8 f;
             u8 a;
         };u16 af;};
-    union {struct {
+    __extension__ union {struct {
             u8 c;
             u8 b;
         };u16 bc;};
-    union {struct {
+    __extension__ union {struct {
             u8 e; 
             u8 d; 
         };u16 de;};
-    union { struct {
+    __extension__ union { struct {
             u8 l; 
             u8 h; 
         };u16 hl;};
@@ -66,14 +65,13 @@ typedef void (*IN_PROC)(cpu_context *);
 
 
 bool cpu_step();
-void cpu_init();
-void print_cpu_registers();
+cpu_context cpu_init();
 
 // bus register funtions
 
-u8 interrupt_flag_read();
-u8 cpu_get_ie_register();
-void interrupt_flag_write(u8 value);
-void cpu_set_ie_register(value);
+u8 interrupt_flag_read(cpu_context *ctx);
+u8 cpu_get_ie_register(cpu_context *ctx);
+void interrupt_flag_write(cpu_context *ctx, u8 value);
+void cpu_set_ie_register(cpu_context *ctx, u8 value);
 
 #endif /* !CPU_H_ */

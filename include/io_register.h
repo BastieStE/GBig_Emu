@@ -24,7 +24,9 @@ typedef struct IO_register
 }IO_register_t;
 
 u8 joypad_read(joypad_t *pad);
-void joypad_write(joypad_t *pad, u8 val) ;
+void joypad_write(joypad_t *pad, u8 val);
+void poll_sdl_input(joypad_t *joypad);
+
 
 
 #endif /* !IOREG_H_ */

@@ -5,7 +5,8 @@
 #include "bus.h"
 #include <cpu.h>
 
-void execute_instruction();
+void execute_instruction(cpu_context *cpu);
+
 
 void load_immediate(cpu_context *cpu, uint8_t *dst);
 void load_immediate_16(cpu_context *cpu, uint16_t *dst);
@@ -24,7 +25,7 @@ void adc_register(cpu_context *cpu, uint8_t *dst, uint8_t *src);
 void sbc_indirect(cpu_context *cpu);
 void sub_indirect(cpu_context *cpu);
 void adc_indirect(cpu_context *cpu);
-void add_indirect(cpu_context *cpu, uint8_t *src);
+void add_indirect(cpu_context *cpu);
 void or_indirect(cpu_context *cpu);
 void or_register(cpu_context *cpu, uint8_t *src);
 void xor_indirect(cpu_context *cpu);

@@ -63,7 +63,7 @@ CMAKE_BINARY_DIR = /home/bastien/project/GBig_Emu/build
 # Directory level rules for the build root directory
 
 # The main recursive "all" target.
-all: CMakeFiles/YourExecutable.dir/all
+all: CMakeFiles/GB_emu.dir/all
 .PHONY : all
 
 # The main recursive "preinstall" target.
@@ -71,34 +71,34 @@ preinstall:
 .PHONY : preinstall
 
 # The main recursive "clean" target.
-clean: CMakeFiles/YourExecutable.dir/clean
+clean: CMakeFiles/GB_emu.dir/clean
 .PHONY : clean
 
 #=============================================================================
-# Target rules for target CMakeFiles/YourExecutable.dir
+# Target rules for target CMakeFiles/GB_emu.dir
 
 # All Build rule for target.
-CMakeFiles/YourExecutable.dir/all:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/YourExecutable.dir/build.make CMakeFiles/YourExecutable.dir/depend
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/YourExecutable.dir/build.make CMakeFiles/YourExecutable.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/bastien/project/GBig_Emu/build/CMakeFiles --progress-num=1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18 "Built target YourExecutable"
-.PHONY : CMakeFiles/YourExecutable.dir/all
+CMakeFiles/GB_emu.dir/all:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/GB_emu.dir/build.make CMakeFiles/GB_emu.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/GB_emu.dir/build.make CMakeFiles/GB_emu.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/bastien/project/GBig_Emu/build/CMakeFiles --progress-num=1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18 "Built target GB_emu"
+.PHONY : CMakeFiles/GB_emu.dir/all
 
 # Build rule for subdir invocation for target.
-CMakeFiles/YourExecutable.dir/rule: cmake_check_build_system
+CMakeFiles/GB_emu.dir/rule: cmake_check_build_system
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/bastien/project/GBig_Emu/build/CMakeFiles 18
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/YourExecutable.dir/all
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/GB_emu.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/bastien/project/GBig_Emu/build/CMakeFiles 0
-.PHONY : CMakeFiles/YourExecutable.dir/rule
+.PHONY : CMakeFiles/GB_emu.dir/rule
 
 # Convenience name for target.
-YourExecutable: CMakeFiles/YourExecutable.dir/rule
-.PHONY : YourExecutable
+GB_emu: CMakeFiles/GB_emu.dir/rule
+.PHONY : GB_emu
 
 # clean rule for target.
-CMakeFiles/YourExecutable.dir/clean:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/YourExecutable.dir/build.make CMakeFiles/YourExecutable.dir/clean
-.PHONY : CMakeFiles/YourExecutable.dir/clean
+CMakeFiles/GB_emu.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/GB_emu.dir/build.make CMakeFiles/GB_emu.dir/clean
+.PHONY : CMakeFiles/GB_emu.dir/clean
 
 #=============================================================================
 # Special targets to cleanup operation of make.

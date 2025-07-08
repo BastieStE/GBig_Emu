@@ -120,7 +120,7 @@ void and_register(cpu_context *cpu, uint8_t *dst, uint8_t *src) {
     INCR_CYCLE(4);
 }
 
-void add_indirect(cpu_context *cpu, uint8_t *src) {
+void add_indirect(cpu_context *cpu) {
     // Fetch the value from memory address HL
     uint8_t hl_value = bus_read(cpu->regi.hl);
 

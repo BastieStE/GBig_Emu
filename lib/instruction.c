@@ -2,6 +2,7 @@
 #include <cpu.h>
 
 void execute_instruction(cpu_context *cpu) {
+    printf("executed instruction %02X \n" , cpu->cur_opcode);
     switch (cpu->cur_opcode) {
         case 0x00:
             cpu->regi.pc += 1;
@@ -411,7 +412,7 @@ void execute_instruction(cpu_context *cpu) {
             add_register(cpu, &cpu->regi.a, &cpu->regi.l);
             break;
         case 0x86:
-            add_indirect(cpu, &cpu->regi.a);
+            add_indirect(cpu);
             break;
         case 0x87:
             add_register(cpu, &cpu->regi.a, &cpu->regi.a);

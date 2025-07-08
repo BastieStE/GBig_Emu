@@ -18,9 +18,13 @@ static bus_context ctx;
 
 uint8_t bios_mem[0x100];
 
-void bus_init(IO_register_t *io_regs)
+bus_context *bus_init(IO_register_t *io_regs, cpu_context *cpu_ctx)
 {
+
+    load_bios("gb_bios.bin", bios_mem);
     ctx.io_regs = io_regs;
+    ctx.cpu = cpu_ctx;
+    return &ctx;
 }
 
 static uint8_t io_read(uint16_t address) 
@@ -35,14 +39,14 @@ static uint8_t io_read(uint16_t address)
       //  return timer_read(address);
     }
     else if (address == 0xFF0F) {
-     //   return interrupt_flag_read();
+       return interrupt_flag_read(ctx.cpu);
     }
     // Audio (APU)
     else if (address >= 0xFF10 && address <= 0xFF3F) {
      //   return apu_read(address);
     }
     else if (address >= 0xFF40 && address <= 0xFF4B) {
-     //   return ppu_read_register(address);
+       return ppu_read_register(address);
     }
     else if (address == 0xFF46) {
         return 0xFF;
@@ -53,7 +57,7 @@ static uint8_t io_read(uint16_t address)
 static void io_write(uint16_t address, uint8_t value) 
 {
     if (address == 0xFF00) {
-      //  joypad_write(value);
+       joypad_write(&ctx.io_regs->joypad, value);
     }
     else if (address >= 0xFF01 && address <= 0xFF02) {
       //  serial_write(address, value);
@@ -62,14 +66,14 @@ static void io_write(uint16_t address, uint8_t value)
        // timer_write(address, value);
     }
     else if (address == 0xFF0F) {
-       // interrupt_flag_write(value);
+       interrupt_flag_write(ctx.cpu, value);
     }
     // Audio (APU)
     else if (address >= 0xFF10 && address <= 0xFF3F) {
       //  apu_write(address, value);
     }
     else if (address >= 0xFF40 && address <= 0xFF4B) {
-     //   ppu_write_register(address, value);
+       ppu_write_register(address, value);
     }
     else if (address == 0xFF46) {
       //  dma_transfer(value);
@@ -78,13 +82,14 @@ static void io_write(uint16_t address, uint8_t value)
 
 u8 bus_read(u16 address) 
 {
-    printf("bus read in : adress %d \n", address);
     if (address < 0x900 && ctx.bios_enabled == 0x00) {
+        printf("bus read in bios : adress %d \n", address);
         return bios_mem[address];
     } ///  Bios Managment
     
     if (address < 0x8000) {
-       return cart_read(address);         //ROM Data
+        printf("bus read in cart : adress %d \n", address);
+        return cart_read(address);         //ROM Data
     } else if (address < 0xA000) {
      //   return ppu_vram_read(address);     //Char/Map Data
     } else if (address < 0xC000) {
@@ -102,7 +107,8 @@ u8 bus_read(u16 address)
     } else if (address == 0xFFFF) {
      //   return cpu_get_ie_register();        //CPU ENABLE REGISTER...
     }
-   // return hram_read(address);
+//    return hram_read(address);
+   return (0);
 }
 
 void bus_write(u16 address, u8 value) 
@@ -133,7 +139,7 @@ void bus_write(u16 address, u8 value)
     } else if (address < 0xFF00) {
         return;                            // reserved
     } else if (address < 0xFF80) {
-      //  io_write(address, value);          //IO Registers
+       io_write(address, value);          //IO Registers
     } else if (address == 0xFFFF) {
      //   cpu_set_ie_register(value);        //CPU SET ENABLE REGISTER
     } else {

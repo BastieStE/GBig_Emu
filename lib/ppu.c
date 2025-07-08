@@ -34,9 +34,216 @@ void ppu_init() {
     ppu.cycleCounter = 0;
 }
 
-void updatePPU(int cycles) {
-    ppu.cycleCounter += cycles;
+void triggerVBlankInterrupt(void)
+{
+    NOT_YET
+}
 
+uint8_t getBackgroundPixel(int bgX, int bgY) {
+    // If BG disabled (LCDC bit 0 = 0), return color 0 (white).
+    if (!(ppu.LCDC & 0x01)) return 0;
+    // Select background tile map base offset in VRAM (0x9800 or 0x9C00).
+    uint16_t mapOffset = (ppu.LCDC & 0x08) ? 0x1C00 : 0x1800;
+    // Compute tile indices (32x32 map, each tile is 8x8).
+    int tileX = (bgX / 8) & 0x1F;
+    int tileY = (bgY / 8) & 0x1F;
+    uint16_t tileIndexAddr = mapOffset + tileY * 32 + tileX;
+    uint8_t tileNum = ppu.vram[0][tileIndexAddr];
+    // Determine tile data address (two addressing modes).
+    uint16_t tileDataAddr;
+    if (ppu.LCDC & 0x10) {
+        // $8000 method (unsigned)
+        tileDataAddr = tileNum * 16;
+    } else {
+        // $8800 method (signed)
+        tileDataAddr = (int8_t)tileNum * 16 + 0x1000;
+    }
+    // Fetch the two bytes for the scanline within the tile.
+    int line = bgY % 8;
+    uint8_t byte1 = ppu.vram[ppu.current_vram_bank][tileDataAddr + 2*line];
+    uint8_t byte2 = ppu.vram[ppu.current_vram_bank][tileDataAddr + 2*line + 1];
+    // Extract the two bits for this pixel.
+    int bit = 7 - (bgX % 8);
+    uint8_t colorBit0 = (byte1 >> bit) & 1;
+    uint8_t colorBit1 = (byte2 >> bit) & 1;
+    uint8_t colorIndex = colorBit0 | (colorBit1 << 1);
+    return colorIndex;
+}
+
+void drawSprites(int line, uint8_t *bgLine) {
+    // If OBJ (sprite) disabled (LCDC bit 1=0), do nothing.
+    if (!(ppu.LCDC & 0x02)) return;
+    int spriteHeight = (ppu.LCDC & 0x04) ? 16 : 8;
+    int spritesDrawn = 0;
+    static const uint8_t dmgPalette[4] = { 255, 192, 96, 0 };
+    for (int i = 0; i < 40 && spritesDrawn < 10; i++) {
+        int si = i * 4;
+        int spriteY = ppu.oam[si] - 16;
+        int spriteX = ppu.oam[si+1] - 8;
+        uint8_t tile = ppu.oam[si+2];
+        uint8_t attr = ppu.oam[si+3];
+        // Check vertical range
+        if (line < spriteY || line >= spriteY + spriteHeight) continue;
+        // Check horizontal range (skip entirely off-screen sprites)
+        if (spriteX >= SCREEN_WIDTH || spriteX + 7 < 0) continue;
+        // Which line of the tile to draw
+        int yInSprite = line - spriteY;
+        if (attr & 0x40) {  // Y-flip
+            yInSprite = spriteHeight - 1 - yInSprite;
+        }
+        // Handle 8x16 mode: use even tile number for top half
+        if (spriteHeight == 16) {
+            tile &= 0xFE;
+            if (yInSprite >= 8) {
+                tile++;
+                yInSprite -= 8;
+            }
+        }
+        // Fetch sprite tile data (sprites always use $8000 method, bank 0)
+        uint16_t tileAddr = tile * 16;
+        uint8_t byte1 = ppu.vram[0][tileAddr + 2*yInSprite];
+        uint8_t byte2 = ppu.vram[0][tileAddr + 2*yInSprite + 1];
+        for (int px = 0; px < 8; px++) {
+            int xPix = spriteX + px;
+            if (xPix < 0 || xPix >= SCREEN_WIDTH) continue;
+            int bit = (attr & 0x20) ? px : (7 - px);  // X-flip?
+            uint8_t c0 = (byte1 >> bit) & 1;
+            uint8_t c1 = (byte2 >> bit) & 1;
+            uint8_t colorIndex = c0 | (c1 << 1);
+            if (!colorIndex) continue;  // transparent pixel
+            // Sprite priority: if bit7=1 and BG pixel nonzero, skip sprite
+            if ((attr & 0x80) && bgLine[xPix]) continue;
+            // Choose sprite palette
+            uint8_t palette = (attr & 0x10) ? ppu.OBP1 : ppu.OBP0;
+            uint8_t finalColor = (palette >> (colorIndex * 2)) & 0x03;
+            ppu.framebuffer[line * SCREEN_WIDTH + xPix] = dmgPalette[finalColor];
+        }
+        spritesDrawn++;
+    }
+}
+
+void renderScanline() {
+    int y = ppu.LY;
+    uint8_t bgLine[SCREEN_WIDTH];
+    static const uint8_t dmgPalette[4] = { 255, 192, 96, 0 };
+    for (int x = 0; x < SCREEN_WIDTH; x++) {
+        int bgX = (x + ppu.SCX) & 0xFF;
+        int bgY = (y + ppu.SCY) & 0xFF;
+        uint8_t colorIndex = getBackgroundPixel(bgX, bgY);
+        bgLine[x] = colorIndex;
+        // Apply background palette BGP
+        uint8_t paletteIndex = (ppu.BGP >> (colorIndex * 2)) & 0x03;
+        ppu.framebuffer[y * SCREEN_WIDTH + x] = dmgPalette[paletteIndex];
+    }
+    // Draw sprites over the background line
+    drawSprites(y, bgLine);
+}
+
+uint8_t ppu_read_register( uint16_t address) {
+ switch (address) {
+            case 0xFF40: return ppu.LCDC;
+            case 0xFF41: return ppu.STAT;
+            case 0xFF42: return ppu.SCY;
+            case 0xFF43: return ppu.SCX;
+            case 0xFF44: return ppu.LY;   // Read-only; updated internally.
+            case 0xFF45: return ppu.LYC;
+            case 0xFF47: return ppu.BGP;
+            case 0xFF48: return ppu.OBP0;
+            case 0xFF49: return ppu.OBP1;
+            case 0xFF4A: return ppu.WY;
+            case 0xFF4B: return ppu.WX;
+            // Add additional I/O registers as needed.
+            default:
+                // Return a default value or log an error.
+                return 0;
+        }
+}
+void ppu_write_register(uint16_t addr, uint8_t value) {
+    switch(addr) {
+        case 0xFF40: // LCDC
+            ppu.LCDC = value;
+            // Update mode, enable/disable LCD, etc.
+            break;
+        case 0xFF41: // STAT
+            // Only bits 3-6 writable, bits 0-2 read-only
+            ppu.STAT = (ppu.STAT & 0x07) | (value & 0xF8);
+            break;
+        case 0xFF42: // SCY
+            ppu.SCY = value;
+            break;
+        case 0xFF43: // SCX
+            ppu.SCX = value;
+            break;
+        case 0xFF44: // LY - read-only, ignore writes
+            break;
+        case 0xFF45: // LYC
+            ppu.LYC = value;
+            break;
+        case 0xFF47: // BGP
+            ppu.BGP = value;
+            // Optionally recalc BG palette colors
+            break;
+        case 0xFF48: // OBP0
+            ppu.OBP0 = value;
+            // Optionally recalc OBJ palette 0 colors
+            break;
+        case 0xFF49: // OBP1
+            ppu.OBP1 = value;
+            // Optionally recalc OBJ palette 1 colors
+            break;
+        case 0xFF4A: // WY
+            ppu.WY = value;
+            break;
+        case 0xFF4B: // WX
+            ppu.WX = value;
+            break;
+        default:
+            // Ignore writes to other addresses (GBC only registers)
+            break;
+    }
+}
+
+
+uint8_t ppu_read( uint16_t address) {
+    if (address >= 0x8000 && address <= 0x9FFF) {
+        // Reading from VRAM.
+        uint16_t offset = address - 0x8000;
+        return ppu.vram[ppu.current_vram_bank][offset];
+    } else if (address >= 0xFE00 && address <= 0xFE9F) {
+        // Reading from OAM memory.
+        uint16_t offset = address - 0xFE00;
+        return ppu.oam[offset];
+    } else if (address >= 0xFF00 && address <= 0xFF7F) {
+        // Reading from I/O registers.
+            return ppu_read_register(address);
+        }
+    // return a default value.
+    return 0;
+}
+
+
+void ppu_write( uint16_t address, uint8_t value) {
+    if (address >= 0x8000 && address <= 0x9FFF) {
+        // Writing to VRAM; account for active bank.
+        uint16_t offset = address - 0x8000;
+        ppu.vram[ppu.current_vram_bank][offset] = value;
+    } else if (address >= 0xFE00 && address <= 0xFE9F) {
+        // Writing to OAM memory.
+        uint16_t offset = address - 0xFE00;
+        ppu.oam[offset] = value;
+    } else if (address >= 0xFF00 && address <= 0xFF7F) {
+        // Writing to I/O registers.
+        ppu_write_register(address, value);
+    } else {
+        // Addresses not handled by the PPU (if any) can be ignored or handled elsewhere.
+    }
+}
+
+
+
+void updatePPU(int cycles) {
+    puts("UPDATE PPU");
+    ppu.cycleCounter += cycles;
     switch (ppu.mode) {
         case PPU_MODE_OAM:
             if (ppu.cycleCounter >= 80) {
@@ -84,135 +291,3 @@ void updatePPU(int cycles) {
     }
 
 }
-
-void triggerVBlankInterrupt(void)
-{
-    NOT_YET
-}
-
-uint8_t getBackgroundPixel( int bgX, int bgY) {
-
-    NOT_YET
-}
-
-void drawSprites( int line) {
-
-    NOT_YET
-    for (int i = 0; i < 40; i++) {
-        // Each sprite uses 4 bytes in OAM.
-        int spriteIndex = i * 4;
-        uint8_t spriteY = ppu.oam[spriteIndex] - 16;  // Sprites are offset by 16 in Y.
-        uint8_t spriteX = ppu.oam[spriteIndex + 1] - 8; // and by 8 in X.
-        uint8_t tileNum = ppu.oam[spriteIndex + 2];
-        uint8_t attributes = ppu.oam[spriteIndex + 3];
-    }
-}
-
-void renderScanline() {
-    int y = ppu.LY;  // Current scanline
-    for (int x = 0; x < SCREEN_WIDTH; x++) {
-        // Calculate effective background coordinates (wrapping at 256):
-        int bgX = (x + ppu.SCX) & 0xFF;
-        int bgY = (y + ppu.SCY) & 0xFF;
-
-        // Fetch the color index for the background pixel.
-        uint8_t colorIndex = getBackgroundPixel( bgX, bgY);
-        // Write the pixel to the framebuffer using the palette lookup.
-        ppu.framebuffer[y * SCREEN_WIDTH + x] = ppu.palette[colorIndex];
-    }
-
-    // After drawing the background (and possibly window), draw sprites on top.
-    drawSprites(y);
-}
-uint8_t ppu_read_register( uint16_t address) {
- switch (address) {
-            case 0xFF40: return ppu.LCDC;
-            case 0xFF41: return ppu.STAT;
-            case 0xFF42: return ppu.SCY;
-            case 0xFF43: return ppu.SCX;
-            case 0xFF44: return ppu.LY;   // Read-only; updated internally.
-            case 0xFF45: return ppu.LYC;
-            case 0xFF47: return ppu.BGP;
-            case 0xFF48: return ppu.OBP0;
-            case 0xFF49: return ppu.OBP1;
-            case 0xFF4A: return ppu.WY;
-            case 0xFF4B: return ppu.WX;
-            // Add additional I/O registers as needed.
-            default:
-                // Return a default value or log an error.
-                return 0;
-        }
-}
-
-uint8_t ppu_read( uint16_t address) {
-    if (address >= 0x8000 && address <= 0x9FFF) {
-        // Reading from VRAM.
-        uint16_t offset = address - 0x8000;
-        return ppu.vram[ppu.current_vram_bank][offset];
-    } else if (address >= 0xFE00 && address <= 0xFE9F) {
-        // Reading from OAM memory.
-        uint16_t offset = address - 0xFE00;
-        return ppu.oam[offset];
-    } else if (address >= 0xFF00 && address <= 0xFF7F) {
-        // Reading from I/O registers.
-        switch (address) {
-            case 0xFF40: return ppu.LCDC;
-            case 0xFF41: return ppu.STAT;
-            case 0xFF42: return ppu.SCY;
-            case 0xFF43: return ppu.SCX;
-            case 0xFF44: return ppu.LY;   // Read-only; updated internally.
-            case 0xFF45: return ppu.LYC;
-            case 0xFF47: return ppu.BGP;
-            case 0xFF48: return ppu.OBP0;
-            case 0xFF49: return ppu.OBP1;
-            case 0xFF4A: return ppu.WY;
-            case 0xFF4B: return ppu.WX;
-            // Add additional I/O registers as needed.
-            default:
-                // Return a default value or log an error.
-                return 0;
-        }
-    }
-    // Addresses not mapped to PPU memory return a default value.
-    return 0;
-}
-
-
-void ppu_write( uint16_t address, uint8_t value) {
-    if (address >= 0x8000 && address <= 0x9FFF) {
-        // Writing to VRAM; account for active bank.
-        uint16_t offset = address - 0x8000;
-        ppu.vram[ppu.current_vram_bank][offset] = value;
-    } else if (address >= 0xFE00 && address <= 0xFE9F) {
-        // Writing to OAM memory.
-        uint16_t offset = address - 0xFE00;
-        ppu.oam[offset] = value;
-    } else if (address >= 0xFF00 && address <= 0xFF7F) {
-        // Writing to I/O registers.
-        switch (address) {
-            case 0xFF40:
-                ppu.LCDC = value;
-                // Optionally reset or update internal state when toggling LCD.
-                break;
-            case 0xFF41:
-                // Only upper 5 bits writable; lower 3 bits are read-only.
-                ppu.STAT = (ppu.STAT & 0x07) | (value & 0xF8);
-                break;
-            case 0xFF42: ppu.SCY  = value; break;
-            case 0xFF43: ppu.SCX  = value; break;
-            case 0xFF45: ppu.LYC  = value; break;
-            case 0xFF47: ppu.BGP  = value; break;
-            case 0xFF48: ppu.OBP0 = value; break;
-            case 0xFF49: ppu.OBP1 = value; break;
-            case 0xFF4A: ppu.WY   = value; break;
-            case 0xFF4B: ppu.WX   = value; break;
-            // Add additional I/O registers as needed.
-            default:
-                // Unhandled I/O register write: could log or ignore.
-                break;
-        }
-    } else {
-        // Addresses not handled by the PPU (if any) can be ignored or handled elsewhere.
-    }
-}
-
