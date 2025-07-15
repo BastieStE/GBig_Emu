@@ -18,9 +18,9 @@ typedef struct {
     uint8_t oam[160];
 
     uint32_t palette[4];
-    //  Framebuffer 
-    // This holds the fully rendered screen (for example, one 32-bit value per pixel).
-    uint32_t framebuffer[SCREEN_WIDTH * SCREEN_HEIGHT];
+    
+    uint32_t framebuffer[144][160]; // 32-bit ARGB or RGBA pixels
+
 
     //  I/O Registers 
     uint8_t LCDC;   // LCD Control (0xFF40)
@@ -48,10 +48,10 @@ typedef struct {
 
 
 
-void ppu_init();
+ppu_context *ppu_init();
 void ppu_tick();
-u8 ppu_vram_read(u16 address);
-void ppu_vram_write(u16 address, u8 value);
+u8 ppu_read(u16 address);
+void ppu_write(u16 address, u8 value);
 uint8_t ppu_read_register(uint16_t address);
 void ppu_write_register(uint16_t addr, uint8_t value);
 void updatePPU(int cycles);

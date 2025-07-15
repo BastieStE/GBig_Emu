@@ -13,6 +13,7 @@ typedef struct
     u8 bios_enabled;
     IO_register_t *io_regs;
     cpu_context *cpu;
+    uint8_t hram[0x7F];
 } bus_context;
 
 

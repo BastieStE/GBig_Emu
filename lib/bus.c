@@ -91,9 +91,9 @@ u8 bus_read(u16 address)
         printf("bus read in cart : adress %d \n", address);
         return cart_read(address);         //ROM Data
     } else if (address < 0xA000) {
-     //   return ppu_vram_read(address);     //Char/Map Data
+        return ppu_read(address);     //Char/Map Data
     } else if (address < 0xC000) {
-     //   return cart_read(address);         //Cartridge RAM
+        return cart_read(address);         //Cartridge RAM
     } else if (address < 0xE000) {
         return read_wram(address);         //WRAM (Working RAM)
     } else if (address < 0xFE00) {
@@ -107,13 +107,14 @@ u8 bus_read(u16 address)
     } else if (address == 0xFFFF) {
      //   return cpu_get_ie_register();        //CPU ENABLE REGISTER...
     }
-//    return hram_read(address);
-   return (0);
+    return ctx.hram[address - 0xFF80];
+    return (0);
 }
 
 void bus_write(u16 address, u8 value) 
 {
     if (address == 0xFF50) {
+        debug_breakpoint = true;
         ctx.bios_enabled = value;  // BIOS disable control register
         if (value == 0x01) {
             printf("BIOS disabled, switching to cartridge ROM.\n");
@@ -125,38 +126,37 @@ void bus_write(u16 address, u8 value)
        bios_mem[address] = value;
     } ///  Bios Managment
     if (address < 0x8000) {
-       cart_write(address, value);        //ROM Data
+        cart_write(address, value);        //ROM Data
     } else if (address < 0xA000) {
-     //   ppu_vram_write(address, value);    //Char/Map Data
+        ppu_write(address, value);    //Char/Map Data
     } else if (address < 0xC000) {
-       //cart_write(address, value);        //EXT-RAM
+        cart_write(address, value);        //EXT-RAM
     } else if (address < 0xE000) {
-       // write_wram(address, value);        //WRAM
+        write_wram(address, value);        //WRAM
     } else if (address < 0xFE00) {
         return;                            //reserved echo ram
     } else if (address < 0xFEA0) {
-     //   ppu_oam_write(address, value);     //PPU
+        ppu_write(address, value);     //PPU
     } else if (address < 0xFF00) {
         return;                            // reserved
     } else if (address < 0xFF80) {
        io_write(address, value);          //IO Registers
     } else if (address == 0xFFFF) {
-     //   cpu_set_ie_register(value);        //CPU SET ENABLE REGISTER
+       cpu_set_ie_register(ctx.cpu, value);        //CPU SET ENABLE REGISTER
     } else {
-      //  hram_write(address, value);
+        ctx.hram[address - 0xFF80] = value;
+        return;
     }
 }
 
-u16 bus_read16(u16 address) 
-{
+u16 bus_read16(u16 address) {
     u16 lo = bus_read(address);
     u16 hi = bus_read(address + 1);
-
     return lo | (hi << 8);
 }
 
-void bus_write16(u16 address, u16 value) 
-{
-    bus_write(address + 1, (value >> 8) & 0xFF);
-    bus_write(address, value & 0xFF);
+
+void bus_write16(u16 address, u16 value) {
+    bus_write(address, value & 0xFF);              // Low byte at addr
+    bus_write(address + 1, (value >> 8) & 0xFF);    // High byte at addr+1
 }

@@ -64,7 +64,7 @@ typedef void (*IN_PROC)(cpu_context *);
 
 
 
-bool cpu_step();
+int cpu_step(cpu_context *ctx);
 cpu_context cpu_init();
 
 // bus register funtions

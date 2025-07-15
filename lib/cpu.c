@@ -80,17 +80,18 @@ static bool cpu_interrupt(cpu_context *ctx)
     return false;
 }
 
-bool cpu_step(cpu_context *ctx) 
+int cpu_step(cpu_context *ctx) 
 {
-    if (ctx->cycles > 0) {ctx->cycles--;return true;}
-
+    if (ctx->cycles > 0) {ctx->cycles--;return ctx->cycles;} // breaks if cyclke isn't 0
 
     if (!cpu_interrupt(ctx)) {
+        if (ctx->regi.pc == 0x00FE)
+            debug_breakpoint = true;
 
         fetch_instruction(ctx);
         execute_instruction(ctx);
     }
-    return true;
+    return 0;
 }
 
 

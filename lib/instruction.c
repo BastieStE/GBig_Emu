@@ -102,7 +102,7 @@ void execute_instruction(cpu_context *cpu) {
             rotate_right(cpu, &cpu->regi.a);
             break;
         case 0x20:
-            jump_relative_cond(cpu, cpu->regi.f & ZERO_FLAG);
+            jump_relative_cond(cpu, !ZERO_FLAG);
             break;
         case 0x21:
             load_immediate_16(cpu, &cpu->regi.hl);
@@ -127,7 +127,7 @@ void execute_instruction(cpu_context *cpu) {
             decimal_adjust(cpu);
             break;
         case 0x28:
-            jump_relative_cond(cpu, !(cpu->regi.f & ZERO_FLAG));
+            jump_relative_cond(cpu, ZERO_FLAG);
             break;
         case 0x29:
             add_16(cpu, &cpu->regi.hl);

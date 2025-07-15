@@ -21,6 +21,6 @@ typedef uint64_t u64;
 #define BETWEEN(a, b, c) ((a >= b) && (a <= c) || (a <= b) && (a >= c))
 #define NOT_YET {fprintf(stderr, "%s is not ready\n", __func__); return;}
 
-
+extern bool debug_breakpoint;
 
 #endif /* !COMMON_H_ */

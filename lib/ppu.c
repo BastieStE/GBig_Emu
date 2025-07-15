@@ -2,7 +2,7 @@
 
 static ppu_context ppu;
 
-void ppu_init() {
+ppu_context *ppu_init() {
     // Clear VRAM, OAM, and the framebuffer.
     memset(ppu.vram, 0, sizeof(ppu.vram));
     memset(ppu.oam, 0, sizeof(ppu.oam));
@@ -32,6 +32,7 @@ void ppu_init() {
     // Start in OAM search mode with a cleared cycle counter.
     ppu.mode = PPU_MODE_OAM;
     ppu.cycleCounter = 0;
+    return &ppu;
 }
 
 void triggerVBlankInterrupt(void)
@@ -39,105 +40,6 @@ void triggerVBlankInterrupt(void)
     NOT_YET
 }
 
-uint8_t getBackgroundPixel(int bgX, int bgY) {
-    // If BG disabled (LCDC bit 0 = 0), return color 0 (white).
-    if (!(ppu.LCDC & 0x01)) return 0;
-    // Select background tile map base offset in VRAM (0x9800 or 0x9C00).
-    uint16_t mapOffset = (ppu.LCDC & 0x08) ? 0x1C00 : 0x1800;
-    // Compute tile indices (32x32 map, each tile is 8x8).
-    int tileX = (bgX / 8) & 0x1F;
-    int tileY = (bgY / 8) & 0x1F;
-    uint16_t tileIndexAddr = mapOffset + tileY * 32 + tileX;
-    uint8_t tileNum = ppu.vram[0][tileIndexAddr];
-    // Determine tile data address (two addressing modes).
-    uint16_t tileDataAddr;
-    if (ppu.LCDC & 0x10) {
-        // $8000 method (unsigned)
-        tileDataAddr = tileNum * 16;
-    } else {
-        // $8800 method (signed)
-        tileDataAddr = (int8_t)tileNum * 16 + 0x1000;
-    }
-    // Fetch the two bytes for the scanline within the tile.
-    int line = bgY % 8;
-    uint8_t byte1 = ppu.vram[ppu.current_vram_bank][tileDataAddr + 2*line];
-    uint8_t byte2 = ppu.vram[ppu.current_vram_bank][tileDataAddr + 2*line + 1];
-    // Extract the two bits for this pixel.
-    int bit = 7 - (bgX % 8);
-    uint8_t colorBit0 = (byte1 >> bit) & 1;
-    uint8_t colorBit1 = (byte2 >> bit) & 1;
-    uint8_t colorIndex = colorBit0 | (colorBit1 << 1);
-    return colorIndex;
-}
-
-void drawSprites(int line, uint8_t *bgLine) {
-    // If OBJ (sprite) disabled (LCDC bit 1=0), do nothing.
-    if (!(ppu.LCDC & 0x02)) return;
-    int spriteHeight = (ppu.LCDC & 0x04) ? 16 : 8;
-    int spritesDrawn = 0;
-    static const uint8_t dmgPalette[4] = { 255, 192, 96, 0 };
-    for (int i = 0; i < 40 && spritesDrawn < 10; i++) {
-        int si = i * 4;
-        int spriteY = ppu.oam[si] - 16;
-        int spriteX = ppu.oam[si+1] - 8;
-        uint8_t tile = ppu.oam[si+2];
-        uint8_t attr = ppu.oam[si+3];
-        // Check vertical range
-        if (line < spriteY || line >= spriteY + spriteHeight) continue;
-        // Check horizontal range (skip entirely off-screen sprites)
-        if (spriteX >= SCREEN_WIDTH || spriteX + 7 < 0) continue;
-        // Which line of the tile to draw
-        int yInSprite = line - spriteY;
-        if (attr & 0x40) {  // Y-flip
-            yInSprite = spriteHeight - 1 - yInSprite;
-        }
-        // Handle 8x16 mode: use even tile number for top half
-        if (spriteHeight == 16) {
-            tile &= 0xFE;
-            if (yInSprite >= 8) {
-                tile++;
-                yInSprite -= 8;
-            }
-        }
-        // Fetch sprite tile data (sprites always use $8000 method, bank 0)
-        uint16_t tileAddr = tile * 16;
-        uint8_t byte1 = ppu.vram[0][tileAddr + 2*yInSprite];
-        uint8_t byte2 = ppu.vram[0][tileAddr + 2*yInSprite + 1];
-        for (int px = 0; px < 8; px++) {
-            int xPix = spriteX + px;
-            if (xPix < 0 || xPix >= SCREEN_WIDTH) continue;
-            int bit = (attr & 0x20) ? px : (7 - px);  // X-flip?
-            uint8_t c0 = (byte1 >> bit) & 1;
-            uint8_t c1 = (byte2 >> bit) & 1;
-            uint8_t colorIndex = c0 | (c1 << 1);
-            if (!colorIndex) continue;  // transparent pixel
-            // Sprite priority: if bit7=1 and BG pixel nonzero, skip sprite
-            if ((attr & 0x80) && bgLine[xPix]) continue;
-            // Choose sprite palette
-            uint8_t palette = (attr & 0x10) ? ppu.OBP1 : ppu.OBP0;
-            uint8_t finalColor = (palette >> (colorIndex * 2)) & 0x03;
-            ppu.framebuffer[line * SCREEN_WIDTH + xPix] = dmgPalette[finalColor];
-        }
-        spritesDrawn++;
-    }
-}
-
-void renderScanline() {
-    int y = ppu.LY;
-    uint8_t bgLine[SCREEN_WIDTH];
-    static const uint8_t dmgPalette[4] = { 255, 192, 96, 0 };
-    for (int x = 0; x < SCREEN_WIDTH; x++) {
-        int bgX = (x + ppu.SCX) & 0xFF;
-        int bgY = (y + ppu.SCY) & 0xFF;
-        uint8_t colorIndex = getBackgroundPixel(bgX, bgY);
-        bgLine[x] = colorIndex;
-        // Apply background palette BGP
-        uint8_t paletteIndex = (ppu.BGP >> (colorIndex * 2)) & 0x03;
-        ppu.framebuffer[y * SCREEN_WIDTH + x] = dmgPalette[paletteIndex];
-    }
-    // Draw sprites over the background line
-    drawSprites(y, bgLine);
-}
 
 uint8_t ppu_read_register( uint16_t address) {
  switch (address) {
@@ -224,6 +126,7 @@ uint8_t ppu_read( uint16_t address) {
 
 void ppu_write( uint16_t address, uint8_t value) {
     if (address >= 0x8000 && address <= 0x9FFF) {
+        puts("writing on VRAM");
         // Writing to VRAM; account for active bank.
         uint16_t offset = address - 0x8000;
         ppu.vram[ppu.current_vram_bank][offset] = value;
@@ -240,9 +143,69 @@ void ppu_write( uint16_t address, uint8_t value) {
 }
 
 
+uint8_t get_tile_pixel_color(uint8_t tile_index, uint8_t x, uint8_t y) {
+
+    uint16_t tile_addr = 0x8000 + (tile_index * 16);
+    uint8_t low_byte  = ppu_read(tile_addr + y * 2);
+    uint8_t high_byte = ppu_read(tile_addr + y * 2 + 1);
+
+    uint8_t bit = 7 - x;
+    uint8_t lo = (low_byte >> bit) & 0x01;
+    uint8_t hi = (high_byte >> bit) & 0x01;
+
+    return (hi << 1) | lo; // 2-bit color index (0–3)
+}
+
+uint32_t get_color_from_palette(uint8_t color_index, uint8_t BGP) {
+    uint8_t palette_bits = (BGP >> (color_index * 2)) & 0x03;
+
+    // Map to actual grayscale colors (ARGB format here)
+    switch (palette_bits) {
+        case 0: return 0xFFFFFFFF; // White
+        case 1: return 0xAAAAAAFF; // Light Gray
+        case 2: return 0x555555FF; // Dark Gray
+        case 3: return 0x000000FF; // Black
+        default: return 0xFF00FFFF; // Magenta = error
+    }
+}
+
+void draw_background_scanline(uint8_t line) {
+    uint8_t SCX = ppu_read(0xFF43); // Scroll X
+    uint8_t SCY = ppu_read(0xFF42); // Scroll Y
+    uint8_t BGP = ppu_read(0xFF47); // Background palette
+
+    uint16_t tilemap_base = 0x9800;
+
+    for (uint8_t x = 0; x < 160; x++) {
+        // Actual BG pixel position
+        uint8_t bg_x = (x + SCX) & 0xFF;
+        uint8_t bg_y = (line + SCY) & 0xFF;
+
+        // Which tile we're in
+        uint8_t tile_col = bg_x / 8;
+        uint8_t tile_row = bg_y / 8;
+
+        // Pixel within tile
+        uint8_t tile_x = bg_x % 8;
+        uint8_t tile_y = bg_y % 8;
+
+        // Read tile index from tile map
+        uint16_t tilemap_index = tilemap_base + (tile_row * 32) + tile_col;
+        uint8_t tile_index = ppu_read(tilemap_index); // Unsigned (BIOS uses 0x8000)
+
+        // Get color index (0–3) from tile data
+        uint8_t color_index = get_tile_pixel_color(tile_index, tile_x, tile_y);
+
+        // Map color index via palette
+        uint32_t color = get_color_from_palette(color_index, BGP);
+
+        ppu.framebuffer[line][x] = color;
+    }
+}
+
 
 void updatePPU(int cycles) {
-    puts("UPDATE PPU");
+    
     ppu.cycleCounter += cycles;
     switch (ppu.mode) {
         case PPU_MODE_OAM:
@@ -251,14 +214,16 @@ void updatePPU(int cycles) {
                 // Transition from OAM Search to Pixel Transfer
                 ppu.mode = PPU_MODE_VRAM;
             }
+
             break;
 
         case PPU_MODE_VRAM:
             if (ppu.cycleCounter >= 172) {
                 ppu.cycleCounter -= 172;
-                renderScanline(ppu);
+                draw_background_scanline(ppu.LY);
                 ppu.mode = PPU_MODE_HBLANK;
             }
+
             break;
 
         case PPU_MODE_HBLANK:
@@ -275,6 +240,7 @@ void updatePPU(int cycles) {
                     ppu.mode = PPU_MODE_OAM;
                 }
             }
+
             break;
 
         case PPU_MODE_VBLANK:
@@ -289,5 +255,4 @@ void updatePPU(int cycles) {
             }
             break;
     }
-
 }

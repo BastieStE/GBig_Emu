@@ -17,6 +17,7 @@ typedef struct {
     const ppu_context * const ppu;
 } debug_ctx;
 
+extern bool debug_breakpoint;
 
 void print_cpu_registers();
 debug_ctx init_debug(int argc, char **argv, bus_context *bus_ctx, ppu_context *ppu_ctx, cpu_context *cpu_ctx);
